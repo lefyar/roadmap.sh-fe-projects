@@ -48,7 +48,7 @@ body {
   border-radius: 10px;
 }
 
-/* .testimonial-content-1::after {
+.testimonial-content-1::after {
   content: "";
   display: block;
   position: absolute;
@@ -58,8 +58,8 @@ body {
   border-width: 12px;
   border-color: #000000 transparent transparent transparent;
   left: 32.7%;
-  top: 54%;
-} */
+  top: 26.5%;
+}
 
 .testimonial-card-2 {
   display: flex;

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accessible Form Ui</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <form action="#">
+        <div class="form-input">
+          <label for="name"
+            >Full Name
+            <input
+              type="text"
+              id="name"
+              placeholder="What should we call you?"
+              required
+            />
+          </label>
+          <label for="email"
+            >Email
+            <input
+              type="email"
+              id="email"
+              placeholder="Your email address"
+              aria-invalid="true"
+              required
+            />
+            <div class="error-message email-error">Invalid email</div>
+          </label>
+          <label for="password"
+            >Enter password
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter a password"
+              required
+              aria-invalid="true"
+            />
+          </label>
+          <label for="confirm-password"
+            >Confirm password
+            <input
+              type="password"
+              id="confirm-password"
+              placeholder="Confirm password"
+              required
+            />
+          </label>
+          <input type="submit" value="Update Profile" />
+        </div>
+        <div class="profile-completeness">
+            <div class="progress-bar">
+              <div class="progress">
+                <span>65%</span>
+              </div>
+            </div>
+            <div>Profile Completeness</div>
+          <div class="checklist">
+            <ul>
+              <li><del>Create an account</del></li>
+              <li><del>Update Roadmap Progress</del></li>
+              <li><del>Setup Public Profile</del></li>
+              <li>Complete your first project</li>
+              <li>Invite your friends</li>
+            </ul>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

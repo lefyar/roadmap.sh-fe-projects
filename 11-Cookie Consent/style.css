@@ -1,4 +1,79 @@
-body{
-    font-family: Arial, Helvetica, sans-serif; 
-    
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #161616;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
 }
+
+.content button {
+  background-color: #2c2c2c;
+  width: 50%;
+  color: #ffffff;
+  font-weight: 600;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+.content button:hover {
+  background-color: #1e1e1e;
+}
+
+.cookie-consent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: start;
+  border-radius: 10px;
+  gap: 30px;
+  padding: 20px;
+  position: fixed;
+  bottom: 5%;
+  width: 20%;
+  background-color: #2c2c2c;
+}
+
+.cookie-consent-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cookie-consent p {
+  margin: 0;
+  padding: 0;
+}
+
+.cookie-consent img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.cookie-consent button {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  font-weight: 600;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cookie-consent button:hover {
+  background-color: #0e0e0e;
+}
+
+

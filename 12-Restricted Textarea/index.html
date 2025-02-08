@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Restricted Textarea</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Write your Message</h1>
+      <div class="textarea">
+        <textarea
+          id="myTextarea"
+          placeholder="Start typing"
+          maxlength="250"
+        ></textarea>
+        <div class="counter">
+          <p id="0-250">Real-time Character Counter.</p>
+          <p id="1-250" class="detail-counter">Counter should go up as you keep typing.</p>
+          <p id="250-250" class="detail-counter">Stop user from typing more character.</p>
+          <p id="charCounter">0/250</p>
+        </div>
+      </div>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>

@@ -1,16 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Accordion Component</title>
-    <link rel="stylesheet" href="./style.css">
-</head>
-<body>
-    <div>
-        
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="accordion">
+      <div class="accordion-title">
+        <h1>Accordion</h1>
+        <p>
+          A UI component that allows users to toggle between hiding and showing
+          content sections.
+        </p>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <div>What is accordion?</div>
+          <img src="./arrow-up-svgrepo-com.svg" alt="arrow" class="arrow" />
+        </div>
+        <div class="accordion-content">
+          <p>
+            An accordion is a UI component that allows users to toggle between
+            hiding and showing content sections.
+          </p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <div>How does it work?</div>
+          <img src="./arrow-up-svgrepo-com.svg" alt="arrow" class="arrow" />
+        </div>
+        <div class="accordion-content">
+          <p>
+            When a user clicks on a header, the corresponding content expands
+            while collapsing any previously opened section.
+          </p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <div>Why use an accordion?</div>
+          <img src="./arrow-up-svgrepo-com.svg" alt="arrow" class="arrow" />
+        </div>
+        <div class="accordion-content">
+          <p>
+            Accordions help organize content in a compact and user-friendly way,
+            especially for long lists of information.
+          </p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <div>Framework terbaik?</div>
+          <img src="./arrow-up-svgrepo-com.svg" alt="arrow" class="arrow" />
+        </div>
+        <div class="accordion-content">
+          <p>Next JS adalah framework terbaik di dunia.</p>
+        </div>
+      </div>
     </div>
 
     <script src="./script.js"></script>
-</body>
+  </body>
 </html>

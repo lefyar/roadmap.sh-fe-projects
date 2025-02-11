@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
   flatpickr("#birthdate", {
     dateFormat: "d-m-Y",
     maxDate: "today",
-    allowInput: true,
   });
 
   document.getElementById("age-form").addEventListener("submit", function (e) {

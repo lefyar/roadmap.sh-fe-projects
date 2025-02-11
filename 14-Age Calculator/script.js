@@ -1,13 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Inisialisasi Flatpickr
   flatpickr("#birthdate", {
     dateFormat: "d-m-Y",
     maxDate: "today",
   });
 
-  // Form submit handler
   document.getElementById("age-form").addEventListener("submit", function (e) {
-    e.preventDefault(); // Mencegah halaman refresh
+    e.preventDefault();
 
     const birthdateInput = document.getElementById("birthdate").value;
     if (!birthdateInput) {
@@ -15,9 +13,14 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const birthdate = luxon.DateTime.fromISO(birthdateInput);
+    const birthdate = luxon.DateTime.fromFormat(birthdateInput, "dd-MM-yyyy");
+    if (!birthdate.isValid) {
+      alert("Please enter a valid birthdate.");
+      return;
+    }
+
     const now = luxon.DateTime.now();
-    const diff = now.diff(birthdate, ["days", "months", "years"]).toObject();
+    const diff = now.diff(birthdate, ["years", "months", "days"]).toObject();
 
     const result = `You are ${Math.floor(diff.years)} years, ${Math.floor(
       diff.months

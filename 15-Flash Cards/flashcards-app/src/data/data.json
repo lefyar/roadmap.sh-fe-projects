@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "question": "What is React?",
+    "answer": "A JavaScript library for building user interfaces."
+  },
+  {
+    "id": 2,
+    "question": "What is Vite?",
+    "answer": "A fast build tool for modern web projects."
+  },
+  {
+    "id": 3,
+    "question": "What is a component in React?",
+    "answer": "A reusable piece of UI."
+  },
+  {
+    "id": 4,
+    "question": "What is JSX?",
+    "answer": "A syntax extension for JavaScript."
+  },
+  {
+    "id": 5,
+    "question": "What is a state in React?",
+    "answer": "Data that changes over time."
+  },
+  {
+    "id": 6,
+    "question": "What is a prop in React?",
+    "answer": "Data passed from a parent component to a child component."
+  },
+  {
+    "id": 7,
+    "question": "What is a context in React?",
+    "answer": "A way to share data between components without passing props down the component tree."
+  },
+  {
+    "id": 8,
+    "question": "What is a ref in React?",
+    "answer": "A reference to a DOM element or a React component."
+  },
+  {
+    "id": 9,
+    "question": "What is a hook in React?",
+    "answer": "A function that allows you to use state and other React features without writing a class."
+  },
+  {
+    "id": 10,
+    "question": "What is a callback in React?",
+    "answer": "A function passed as an argument to another function."
+  },
+  {
+    "id": 11,
+    "question": "Framework terbaik di dunia?",
+    "answer": "NEXT JS JAYA JAYA JAYA"
+  }
+]

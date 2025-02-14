@@ -1,4 +1,8 @@
-# React + Vite
+# Flash Cards
+
+A flash card app with pre-defined JavaScript questions and answers.
+
+# React + Vite README
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

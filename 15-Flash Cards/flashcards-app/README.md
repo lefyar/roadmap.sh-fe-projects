@@ -1,6 +1,6 @@
 # Flash Cards
 
-A flash card app with pre-defined JavaScript questions and answers.
+A flash card app with pre-defined JavaScript questions and answers. | [Live Preview](https://reyfaldyflashcards.netlify.app/)
 
 ![Question Page](./src/assets/fc-question.png)
 ![Answer Page](./src/assets/fc-answer.png)

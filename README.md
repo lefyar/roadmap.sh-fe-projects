@@ -5,7 +5,7 @@ Projects ideas from [roadmap.sh](https://roadmap.sh/) Front-End Roadmap
 [Changelog Component](https://roadmap.sh/projects/changelog-component), [Testimonial Cards](https://roadmap.sh/projects/testimonial-cards), [Datepicker UI](https://roadmap.sh/projects/datepicker-ui), \
 [Accessible Form UI](https://roadmap.sh/projects/accessible-form-ui), [Image Grid Layout](https://roadmap.sh/projects/image-grid), [Tooltip UI](https://roadmap.sh/projects/tooltip-ui), \
 [Simple Tabs](https://roadmap.sh/projects/simple-tabs), [Cookie Consent](https://roadmap.sh/projects/cookie-consent), [Restricted Textarea](https://roadmap.sh/projects/restricted-textarea). \
-[Accordion Component](https://roadmap.sh/projects/accordion), [Age Calculator](https://roadmap.sh/projects/age-calculator)
+[Accordion Component](https://roadmap.sh/projects/accordion), [Age Calculator](https://roadmap.sh/projects/age-calculator), [Flash Cards](https://roadmap.sh/projects/flash-cards)
 
 ## Live Preview
 1. [Single Page CV](https://reyfaldy.github.io/roadmap.sh-fe-projects/01-Single%20Page%20CV/)
@@ -22,3 +22,4 @@ Projects ideas from [roadmap.sh](https://roadmap.sh/) Front-End Roadmap
 12. [Restricted Textarea](https://reyfaldy.github.io/roadmap.sh-fe-projects/12-Restricted%20Textarea/)
 13. [Accordion Component](https://reyfaldy.github.io/roadmap.sh-fe-projects/13-Accordion%20Component)
 14. [Age Calculator](https://reyfaldy.github.io/roadmap.sh-fe-projects/14-Age%20Calculator/)
+15. [Flash Cards](https://reyfaldyflashcards.netlify.app/)

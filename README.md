@@ -24,3 +24,4 @@ Projects ideas from [roadmap.sh](https://roadmap.sh/) Front-End Roadmap
 13. [Accordion Component](https://reyfaldy.github.io/roadmap.sh-fe-projects/13-Accordion%20Component)
 14. [Age Calculator](https://reyfaldy.github.io/roadmap.sh-fe-projects/14-Age%20Calculator/)
 15. [Flash Cards](https://reyfaldyflashcards.netlify.app/)
+16. [Custom Dropdown](https://reyfaldy.github.io/roadmap.sh-fe-projects/16-Custom%20Dropdown/)

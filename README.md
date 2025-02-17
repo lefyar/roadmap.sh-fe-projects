@@ -5,7 +5,8 @@ Projects ideas from [roadmap.sh](https://roadmap.sh/) Front-End Roadmap
 [Changelog Component](https://roadmap.sh/projects/changelog-component), [Testimonial Cards](https://roadmap.sh/projects/testimonial-cards), [Datepicker UI](https://roadmap.sh/projects/datepicker-ui), \
 [Accessible Form UI](https://roadmap.sh/projects/accessible-form-ui), [Image Grid Layout](https://roadmap.sh/projects/image-grid), [Tooltip UI](https://roadmap.sh/projects/tooltip-ui), \
 [Simple Tabs](https://roadmap.sh/projects/simple-tabs), [Cookie Consent](https://roadmap.sh/projects/cookie-consent), [Restricted Textarea](https://roadmap.sh/projects/restricted-textarea). \
-[Accordion Component](https://roadmap.sh/projects/accordion), [Age Calculator](https://roadmap.sh/projects/age-calculator), [Flash Cards](https://roadmap.sh/projects/flash-cards)
+[Accordion Component](https://roadmap.sh/projects/accordion), [Age Calculator](https://roadmap.sh/projects/age-calculator), [Flash Cards](https://roadmap.sh/projects/flash-cards), \
+[Custom Dropdown](https://roadmap.sh/projects/custom-dropdown)
 
 ## Live Preview
 1. [Single Page CV](https://reyfaldy.github.io/roadmap.sh-fe-projects/01-Single%20Page%20CV/)

@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("clear-token").addEventListener("click", () => {
     localStorage.removeItem("github_token");
     alert("Token removed!");
-    displayStoredToken(); // Update tampilan
+    displayStoredToken();
   });
 
   function displayStoredToken() {

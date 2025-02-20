@@ -1,0 +1,147 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #121212;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.app {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 1.5em;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 10px;
+  font-size: 1.05em;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+
+.add-btn {
+  padding: 10px 15px;
+  background-color: white;
+  color: black;
+  font-size: 1.2em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.add-btn:hover {
+  background-color: #9a9a9a;
+  color: white;
+}
+
+.lanes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.lane {
+  background: #1e1e1e;
+  padding: 15px;
+  border-radius: 8px;
+  width: 300px;
+}
+
+.lane-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.lane-header h2 {
+  font-size: 18px;
+}
+
+.lane-actions button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  margin-left: 10px;
+}
+
+.refresh-btn:hover {
+  transform: rotate(180deg);
+  transition: 0.3s;
+}
+
+.delete-btn:hover {
+  color: red;
+  transition: 0.3s;
+}
+
+.posts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.post {
+  background: #2a2a2a;
+  padding: 10px;
+  border-radius: 8px;
+  height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.post-title {
+  font-size: 17px;
+  font-weight: normal;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.post-info {
+  font-size: 12px;
+  opacity: 0.8;
+  display: flex;
+  justify-content: space-between;
+}
+
+.post-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  gap: 5px;
+  opacity: 0.8;
+}
+
+.post-link {
+  color: white;
+  text-decoration: none;
+}
+
+.post-link:hover {
+  text-decoration: underline;
+}

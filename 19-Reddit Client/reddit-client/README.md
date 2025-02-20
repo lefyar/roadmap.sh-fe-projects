@@ -1,6 +1,7 @@
 # Reddit Client
 A browser-based Reddit client that displays multiple subreddits in separate, customizable lanes. | [Live Preview](https://reyfaldyredditclient.netlify.app/)
 
+![Reddit Client](./src/assets/reddit-client.png)
 
 # React + Vite README
 

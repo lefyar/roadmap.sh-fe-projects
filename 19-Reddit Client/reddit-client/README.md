@@ -1,4 +1,8 @@
-# React + Vite
+# Reddit Client
+A browser-based Reddit client that displays multiple subreddits in separate, customizable lanes. | [Live Preview](https://reyfaldyredditclient.netlify.app/)
+
+
+# React + Vite README
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

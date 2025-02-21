@@ -3,9 +3,10 @@ Projects ideas from [roadmap.sh](https://roadmap.sh/) Front-End Roadmap
 
 ## List of Projects
 **Beginner** \
-|	[Single-Page CV] - [Live][live-single-page-cv]	|	[Basic HTML Website] - [Live][live-basic-html-website]	|	[Personal Portfolio] - [Live][live-personal-portfolio]	|	[Changelog Component] - [Live][live-changelog-component]	|	[Testimonial Cards] - [Live][live-testimonial-cards]	| \
-|	[Datepicker UI] - [Live][live-datepicker-ui]	|	[Accessible Form UI] - [Live][live-accessible-form-ui]	|	[Image Grid Layout] - [live][live-image-grid-layout]	|	[Tooltip UI] - [Live][live-tooltip-ui]	|	[Simple Tabs] - [Live][live-simple-tabs]	|	[Cookie Consent] - [Live][live-cookie-consent]	| \
-|	[Restricted Textarea] - [Live][live-restricted-textarea]	|	[Accordion Component] - [Live][live-accordion-component]	|	[Age Calculator] - [Live][live-age-calculator]	|	[Flash Cards] - [Live][live-flash-cards]	|
+|  [Single-Page CV] - [Live][live-single-page-cv]	|	[Basic HTML Website] - [Live][live-basic-html-website]	|	[Personal Portfolio] - [Live][live-personal-portfolio]	|  [Changelog Component] - [Live][live-changelog-component]	| \
+|  [Testimonial Cards] - [Live][live-testimonial-cards]  |	[Datepicker UI] - [Live][live-datepicker-ui]	|	[Accessible Form UI] - [Live][live-accessible-form-ui]	|	[Image Grid Layout] - [Live][live-image-grid-layout]	| \
+|  [Tooltip UI] - [Live][live-tooltip-ui]	|	[Simple Tabs] - [Live][live-simple-tabs]	|	[Cookie Consent] - [Live][live-cookie-consent]	|  [Restricted Textarea] - [Live][live-restricted-textarea]	|	\
+|  [Accordion Component] - [Live][live-accordion-component]	|	[Age Calculator] - [Live][live-age-calculator]	|	[Flash Cards] - [Live][live-flash-cards]	|
 \
 \
 **Intermediate** \

@@ -6,7 +6,8 @@ Projects ideas from [roadmap.sh](https://roadmap.sh/) Front-End Roadmap
 |  [Single-Page CV] - [Live][live-single-page-cv]	|	[Basic HTML Website] - [Live][live-basic-html-website]	|	[Personal Portfolio] - [Live][live-personal-portfolio]	|  [Changelog Component] - [Live][live-changelog-component]	| \
 |  [Testimonial Cards] - [Live][live-testimonial-cards]  |	[Datepicker UI] - [Live][live-datepicker-ui]	|	[Accessible Form UI] - [Live][live-accessible-form-ui]	|	[Image Grid Layout] - [Live][live-image-grid-layout]	| \
 |  [Tooltip UI] - [Live][live-tooltip-ui]	|	[Simple Tabs] - [Live][live-simple-tabs]	|	[Cookie Consent] - [Live][live-cookie-consent]	|  [Restricted Textarea] - [Live][live-restricted-textarea]	|	\
-|  [Accordion Component] - [Live][live-accordion-component]	|	[Age Calculator] - [Live][live-age-calculator]	|	[Flash Cards] - [Live][live-flash-cards]	| [Temperature Converter] - [Live][live-temperature-converter]  |
+|  [Accordion Component] - [Live][live-accordion-component]	|	[Age Calculator] - [Live][live-age-calculator]	|	[Flash Cards] - [Live][live-flash-cards]	| [Temperature Converter] - [Live][live-temperature-converter]  | \
+|  [Pomodoro Timer] - [Live][live-pomodoro-timer] |
 \
 \
 **Intermediate** \
@@ -72,3 +73,6 @@ Projects ideas from [roadmap.sh](https://roadmap.sh/) Front-End Roadmap
 
 [Temperature Converter]: https://roadmap.sh/projects/temperature-converter
 [live-temperature-converter]: https://reyfaldy.github.io/roadmap.sh-fe-projects/20-Temperature%20Converter/
+
+[Pomodoro Timer]: https://roadmap.sh/projects/pomodoro-timer
+[live-pomodoro-timer]: https://reyfaldypomodoro.netlify.app/

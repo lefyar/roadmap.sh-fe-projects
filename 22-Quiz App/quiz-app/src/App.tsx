@@ -1,4 +1,4 @@
-import Quiz from "./components/quiz";
+import Quiz from "./components/QuizApp";
 
 export default function App() {
   return (

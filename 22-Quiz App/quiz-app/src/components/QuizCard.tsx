@@ -1,4 +1,6 @@
-type quzCardsProps = {
+import { Quizzes } from "../data/quizzes";
+
+type QuizCardProps = {
   quiz: {
     id: number;
     question: string;
@@ -13,16 +15,18 @@ export default function QuizCard({
   quiz,
   selectedAnswer,
   handleAnswerClick,
-}: quzCardsProps) {
+}: QuizCardProps) {
   return (
-    <div className="bg-[#1b1b1b] text-[#f1f1f1] flex flex-col items-center justify-between p-10 border-2 border-[#f1f1f1] rounded-md text-center w-150 h-70">
-      <h1 className="text-2xl font-bold">{quiz.question}</h1>
-      <div className="flex flex-wrap justify-center gap-2">
+    <div className="flex flex-col items-center p-6 border-2 border-[#f1f1f1] rounded-lg text-center w-full max-w-xl mx-4 md:mx-0 bg-[#1b1b1b] text-[#f1f1f1] shadow-lg">
+      <h1 className="text-xl md:text-2xl font-bold break-words">
+        {quiz.question}
+      </h1>
+      <div className="flex flex-col md:flex-row flex-wrap justify-center gap-3 w-full mt-6">
         {quiz.options.map((option, index) => (
           <button
             key={index}
             onClick={() => handleAnswerClick(option)}
-            className={`w-50 px-4 py-2 rounded text-[#f1f1f1] font-semibold transition cursor-pointer ${
+            className={`w-full md:w-48 px-4 py-2 rounded text-[#f1f1f1] font-semibold transition cursor-pointer text-sm md:text-base ${
               selectedAnswer
                 ? option === quiz.answer
                   ? "bg-green-500"
@@ -37,6 +41,9 @@ export default function QuizCard({
           </button>
         ))}
       </div>
+      <p className="text-xs md:text-sm text-[#777] mt-4">
+        {quiz.id} of {Quizzes.length} questions
+      </p>
     </div>
   );
 }

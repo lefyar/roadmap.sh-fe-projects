@@ -8,13 +8,7 @@ export const Quizzes = [
   {
     id: 2,
     question: "Who is the 8th president of Indonesia?",
-    options: [
-      "Soekarno",
-      "Suharto",
-      "Joko Widodo",
-      "BJ Habibie",
-      "Prabowo Subianto",
-    ],
+    options: ["Soekarno", "Joko Widodo", "BJ Habibie", "Prabowo Subianto"],
     answer: "Prabowo Subianto",
   },
   {

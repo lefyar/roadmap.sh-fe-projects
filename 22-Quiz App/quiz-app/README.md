@@ -3,16 +3,16 @@
 A quiz app where it will present users with a series of multiple-choice questions and after each question, the app will provide immediate feedback on whether the selected answer is correct or incorrect. | [Live Preview](https://reyfaldyquizapp.netlify.app/)
 
 ### Start Screen
-![Start Screen](../src/assets/start-screen.png)
+![Start Screen](./src/assets/start-screen.png)
 
 ### Wrong Answer
-![Wrong Answer](../src/assets/wrong-answer.png)
+![Wrong Answer](./src/assets/wrong-answer.png)
 
 ### Right Answer
-![Right Answer](../src/assets/right-answer.png)
+![Right Answer](./src/assets/right-answer.png)
 
 ### Result Screen
-![Result Screen](../src/assets/result-screen.png)
+![Result Screen](./src/assets/result-screen.png)
 
 
 # React + TypeScript + Vite README

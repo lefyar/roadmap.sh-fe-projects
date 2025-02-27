@@ -32,7 +32,7 @@ export default function Quiz() {
       <div className="flex flex-col items-center p-6 border-2 border-[#f1f1f1] rounded-lg text-center w-full max-w-xl mx-4 md:mx-0 bg-[#1b1b1b] text-[#f1f1f1] shadow-lg gap-4">
         <h1 className="text-2xl font-bold">Results</h1>
         <p className="text-lg text-[#f1f1f1]">
-          You scored {score} out of {Quizzes.length}
+          You scored {score} out of {Quizzes.length} questions.
         </p>
         <button
           onClick={handleClick}

@@ -1,14 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { fetchWeather } from "../../lib/fetchWeather";
-
-interface WeatherData {
-  resolvedAddress: string;
-  currentConditions: {
-    temp: number;
-    conditions: string;
-  };
-}
+import { WeatherData } from "../types/types";
 
 export default function Home() {
   const [location, setLocation] = useState("");
@@ -90,16 +83,26 @@ export default function Home() {
   console.log("Weather Data:", weather);
 
   return (
-    <div>
-      <h1>Weather Web App</h1>
-      <div>
+    <div className="w-full h-screen flex flex-col items-center justify-center space-y-4 bg-[#101010] text-[#f1f1f1]">
+      <h1 className="font-bold">Weather Web App</h1>
+      <div className="flex space-x-2 items-center">
         <input
           type="text"
           value={location}
           onChange={(e) => setLocation(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              getWeather();
+            }
+          }}
           placeholder="Enter location"
+          className="p-3 rounded-md hover:border-[#f1f1f1] bg-[#1b1b1b] text-[#f1f1f1]"
         />
-        <button onClick={getWeather} disabled={loading}>
+        <button
+          onClick={getWeather}
+          disabled={loading}
+          className="p-3 rounded-md bg-[#2c2c2c]"
+        >
           {loading ? "Loading..." : "Search"}
         </button>
         {suggestions.length > 0 && !weather && (
@@ -118,14 +121,21 @@ export default function Home() {
           </ul>
         )}
         {error && <p>{error}</p>}
-        {weather && (
-          <div>
-            <h2>{weather.resolvedAddress}</h2>
-            <p>{weather.currentConditions.temp}°C</p>
-            <p>{weather.currentConditions.conditions}</p>
-          </div>
-        )}
       </div>
+      {weather && (
+        <div className="flex flex-col items-center w-3/4 space-y-4">
+          <h2>{weather.resolvedAddress}</h2>
+          <div className="flex flex-wrap gap-4 w-full">
+            {weather.days.map((day, index) => (
+              <div key={index} className="bg-[#2c2c2c] p-4 rounded-md w-[120px] h-auto">
+                <p>{day.datetime}</p>
+                <p>{day.conditions}</p>
+                <p>{day.temp}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

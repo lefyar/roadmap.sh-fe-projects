@@ -10,3 +10,11 @@ export interface WeatherData {
     temp: number;
   }[];
 }
+
+
+export interface SearchWeatherProps {
+  location: string;
+  setLocation: (location: string) => void;
+  getWeather: () => void;
+  loading: boolean;
+}

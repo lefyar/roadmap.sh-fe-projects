@@ -11,10 +11,19 @@ export interface WeatherData {
   }[];
 }
 
-
 export interface SearchWeatherProps {
   location: string;
   setLocation: (location: string) => void;
   getWeather: () => void;
   loading: boolean;
+}
+
+export interface WeatherCardProps {
+  datetime: string;
+  conditions: string;
+  temp: number;
+}
+
+export interface WeatherDisplayProps {
+  weather: WeatherData | null;
 }

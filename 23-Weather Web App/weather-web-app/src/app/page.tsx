@@ -1,6 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import SearchWeather from "../components/SearchWeather";
+import WeatherDisplay from "@/components/WeatherDisplay";
 import getUserLocation from "@/hooks/useLocation";
 import { useWeather } from "@/hooks/useWeather";
 
@@ -17,7 +18,7 @@ export default function Home() {
         }
       })
       .catch(console.error);
-  }, []);
+  }, []); // eslint-disable-line
 
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center space-y-4 bg-[#101010] text-[#f1f1f1]">
@@ -30,23 +31,7 @@ export default function Home() {
       />
       {error && <p className="text-red-500">{error}</p>}
       {loading && <p>Loading...</p>}
-      {weather && (
-        <div className="flex flex-col items-center w-3/4 space-y-4">
-          <h2>{weather.resolvedAddress}</h2>
-          <div className="flex flex-wrap gap-4 w-full">
-            {weather.days.map((day, index) => (
-              <div
-                key={index}
-                className="bg-[#2c2c2c] p-4 rounded-md w-[120px] h-auto"
-              >
-                <p>{day.datetime}</p>
-                <p>{day.conditions}</p>
-                <p>{day.temp}°C</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      {weather && <WeatherDisplay weather={weather} />}
     </div>
   );
 }

@@ -33,6 +33,7 @@ These projects are from [roadmap.sh](https://roadmap.sh/) as part of the Front-E
 | [Temperature Converter](https://roadmap.sh/projects/temperature-converter) | [Live](https://reyfaldy.github.io/roadmap.sh-fe-projects/20-Temperature%20Converter/) |
 | [Pomodoro Timer](https://roadmap.sh/projects/pomodoro-timer) | [Live](https://reyfaldypomodoro.netlify.app/) |
 | [Quiz App](https://roadmap.sh/projects/quiz-app) | [Live](https://reyfaldyquizapp.netlify.app/) |
+| [Weather Web App](https://roadmap.sh/projects/weather-app) | [Live (soon)](#)
 
 ## Notes
 - All projects are created as part of my learning.

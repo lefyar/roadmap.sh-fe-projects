@@ -2,7 +2,7 @@
 
 Build a browser-local collection of subreddit lanes. The hosted demo uses labeled sample posts, and every lane links to its subreddit.
 
-[Open the demo](https://roadmap-frontend-projects.vercel.app/19-Reddit%20Client/)
+[Open the demo](https://lefyar-roadmap-fe-projects.vercel.app/19-Reddit%20Client/)
 
 Run `npm ci` and `npm run dev` for a local Vite session.
 

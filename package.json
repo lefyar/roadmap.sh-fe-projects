@@ -1,8 +1,11 @@
 {
   "name": "roadmap-frontend-projects",
   "private": true,
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
-    "setup": "node scripts/pages.mjs install",
-    "build": "node scripts/pages.mjs build"
+    "setup": "node scripts/build-site.mjs install",
+    "build": "node scripts/build-site.mjs build"
   }
 }

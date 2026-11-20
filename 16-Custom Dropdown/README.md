@@ -2,4 +2,4 @@
 
 Select an item with the pointer or keyboard, and press Escape to close the list.
 
-[Open the demo](https://lefyar.github.io/roadmap.sh-fe-projects/16-Custom%20Dropdown/)
+[Open the demo](https://roadmap-frontend-projects.vercel.app/16-Custom%20Dropdown/)

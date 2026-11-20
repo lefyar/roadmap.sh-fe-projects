@@ -1,0 +1,6 @@
+**/.env
+**/.env.*
+**/.next
+**/dist
+**/out
+**/*.tsbuildinfo

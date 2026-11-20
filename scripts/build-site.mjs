@@ -26,9 +26,6 @@ function runNpm(args, cwd, env = process.env) {
 if (mode === 'install') {
   for (const [folder, app] of apps) runNpm(['ci', '--no-audit', '--no-fund'], join(root, folder, app));
 } else if (mode === 'build') {
-  const base = (process.env.PAGES_BASE_PATH ?? '').replace(/\/$/, '');
-  if (base && !/^\/[\w.-]+$/.test(base)) throw new Error('PAGES_BASE_PATH must be empty or a repository path such as /roadmap.sh-fe-projects');
-
   await rm(destination, { recursive: true, force: true });
   await mkdir(destination);
   for (const name of ['index.html', 'site.css', 'site.js', 'contact.js']) {
@@ -50,7 +47,7 @@ if (mode === 'install') {
       runNpm(['run', 'lint', '--', '--max-warnings=0'], workspace);
       runNpm(['run', 'build'], workspace, {
         ...process.env,
-        ...(isWeather && { NEXT_PUBLIC_BASE_PATH: `${base}/${encodeURIComponent(folder)}` }),
+        ...(isWeather && { NEXT_PUBLIC_BASE_PATH: `/${encodeURIComponent(folder)}` }),
       });
       await cp(join(workspace, isWeather ? 'out' : 'dist'), target, { recursive: true });
     } else {

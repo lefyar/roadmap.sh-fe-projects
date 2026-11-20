@@ -2,4 +2,4 @@
 
 A single-page r?sum? with semantic markup and a print stylesheet.
 
-[Open the demo](https://lefyar.github.io/roadmap.sh-fe-projects/01-Single%20Page%20CV/)
+[Open the demo](https://roadmap-frontend-projects.vercel.app/01-Single%20Page%20CV/)

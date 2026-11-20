@@ -43,10 +43,13 @@ function renderTasks() {
                     <input type="checkbox" ${
                       task.completed ? "checked" : ""
                     } onclick="toggleTask(${index})">
-                    <span>${task.description}</span>
+                    <span></span>
                     </div>
                     <button class="delete" onclick="deleteTask(${index})">&#128465;</button>
                 `;
+    li.querySelector("span").textContent = task.description;
+    li.querySelector("input").setAttribute("aria-label", task.description);
+    li.querySelector("button").setAttribute("aria-label", "Delete " + task.description);
     taskList.appendChild(li);
   });
 }

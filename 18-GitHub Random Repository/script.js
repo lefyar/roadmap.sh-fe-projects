@@ -9,42 +9,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const tokenInput = document.getElementById("token-input");
   const saveTokenButton = document.getElementById("save-token");
 
-  function getToken() {
-    return localStorage.getItem("github_token") || "";
-  }
+  let token = "";
+  localStorage.removeItem("github_token");
+  const tokenStatus = document.getElementById("stored-token");
+  tokenStatus.textContent = "Using public access.";
 
   function saveToken() {
-    const newToken = tokenInput.value.trim();
-    if (newToken) {
-      localStorage.setItem("github_token", newToken);
-      alert("Token saved!");
-      displayStoredToken();
-    }
+    token = tokenInput.value.trim();
+    tokenInput.value = "";
+    tokenStatus.textContent = token ? "Token active for this page." : "Using public access.";
   }
 
   document.getElementById("clear-token").addEventListener("click", () => {
-    localStorage.removeItem("github_token");
-    alert("Token removed!");
-    displayStoredToken();
+    tokenInput.value = "";
+    saveToken();
   });
-
-  function displayStoredToken() {
-    const storedToken = getToken();
-    document.getElementById("stored-token").textContent = storedToken
-      ? `Stored Token: ${
-          storedToken.length > 10
-            ? storedToken.slice(0, 10) + "..."
-            : storedToken
-        }`
-      : "Stored Token: None";
-  }
-
-  displayStoredToken();
 
   saveTokenButton.addEventListener("click", saveToken);
 
   async function fetchRepository(language) {
-    const token = getToken();
+
 
     try {
       if (!language) {
@@ -56,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const randomPage = Math.floor(Math.random() * 10) + 1;
       const response = await fetch(
-        `${apiUrl}?q=language:${language}&sort=stars&order=desc&page=${randomPage}`,
+        `${apiUrl}?q=language:${encodeURIComponent(language)}&sort=stars&order=desc&page=${randomPage}`,
         {
           headers: token ? { Authorization: `token ${token}` } : {},
         }
@@ -67,6 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      if (!response.ok) throw new Error("Request failed");
       const data = await response.json();
       if (!data.items || data.items.length === 0) {
         showStatus("No repositories found.", "gray");
@@ -82,17 +67,21 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function displayRepository(repo) {
-    resultContainer.innerHTML = `
-            <div class="repo-card">
-                <h3><a href="${repo.html_url}" target="_blank">${
-      repo.name
-    }</a></h3>
-                <p>${repo.description || "No description available."}</p>
-                <p>⭐ ${repo.stargazers_count} | 🍴 ${repo.forks_count} | 🛠 ${
-      repo.open_issues_count
-    }</p>
-            </div>
-        `;
+    const card = document.createElement("div");
+    card.className = "repo-card";
+    const title = document.createElement("h3");
+    const link = document.createElement("a");
+    link.href = "https://github.com/" + repo.full_name.split("/").map(encodeURIComponent).join("/");
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = repo.name;
+    title.append(link);
+    const description = document.createElement("p");
+    description.textContent = repo.description || "No description available.";
+    const stats = document.createElement("p");
+    stats.textContent = `${repo.stargazers_count} stars | ${repo.forks_count} forks | ${repo.open_issues_count} open issues`;
+    card.append(title, description, stats);
+    resultContainer.replaceChildren(card);
     statusMessage.textContent = "";
     refreshButton.style.display = "block";
   }

@@ -14,19 +14,19 @@ export default function Home() {
       .then((city) => {
         if (city) {
           setLocation(city);
-          getWeather();
+          getWeather(city);
         }
       })
       .catch(console.error);
   }, []); // eslint-disable-line
 
   return (
-    <div className="w-full h-screen flex flex-col items-center justify-center space-y-6 bg-gradient-to-b from-[#181818] to-[#101010] text-[#f1f1f1]">
+    <div className="w-full min-h-screen py-8 px-3 flex flex-col items-center justify-center space-y-6 bg-gradient-to-b from-[#181818] to-[#101010] text-[#f1f1f1]">
       <h1 className="font-bold text-3xl tracking-wide text-[#f1f1f1] drop-shadow-lg">Weather Web App</h1>
       <SearchWeather
         location={location}
         setLocation={setLocation}
-        getWeather={getWeather}
+        getWeather={() => getWeather()}
         loading={loading}
       />
       {error && <p className="text-red-500 text-lg">{error}</p>}

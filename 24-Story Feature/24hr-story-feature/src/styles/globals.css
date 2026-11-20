@@ -1,11 +1,21 @@
 @import "tailwindcss";
 
-@plugin "tailwindcss-animate";
-
-@custom-variant dark (&:is(.dark *));
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
+:root { color-scheme: dark; font-family: "Segoe UI", sans-serif; background: #19221f; color: #faf5e9; }
+main { min-height: 100vh; padding: clamp(1.25rem, 6vw, 5rem); }
+.album { max-width: 58rem; margin: auto; }
+.album header { border-bottom: 1px solid #65746a; margin-bottom: 1.5rem; padding-bottom: 1.5rem; }
+h1 { font: normal clamp(3.5rem, 9vw, 7rem)/1.15 Georgia, serif; letter-spacing: -.065em; }
+.album p { margin-block: .75rem; color: #c8d2c7; }
+button { cursor: pointer; }
+button:focus-visible { outline: 3px solid #ffce78; outline-offset: 3px; }
+button:disabled { opacity: .45; cursor: default; }
+.upload, .viewer-bar button { background: #e1edc6; color: #213025; padding: .7rem 1.2rem; border-radius: 2rem; font-weight: 600; }
+.empty { border: 1px dashed #768276; padding: 3rem 1rem; text-align: center; border-radius: .75rem; }
+.photos { display: grid; grid-template-columns: repeat(auto-fill,minmax(min(11rem,100%),1fr)); gap: 1rem; }
+.photos button { padding: .45rem; background: #f0ebda; color: #29332d; text-align: left; }
+.photos img { width: 100%; aspect-ratio: 4/5; object-fit: cover; }
+.photos time { display: block; padding: .4rem; font-size: .85rem; }
+dialog { margin: auto; width: min(95vw,42rem); background: #15201b; color: inherit; border-radius: .75rem; }
+dialog::backdrop { background: #08100ded; }
+.full-photo { width: 100%; height: min(60dvh,40rem); object-fit: contain; }
+.viewer-bar { display: flex; align-items: center; justify-content: space-between; padding: .75rem; }

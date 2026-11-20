@@ -12,6 +12,7 @@ export default function SearchWeather({
     <div className="flex flex-col items-center w-full">
       <div className="flex space-x-2">
         <input
+          aria-label="City or location"
           type="text"
           value={location}
           onChange={(e) => {
@@ -27,7 +28,7 @@ export default function SearchWeather({
         />
         <button
           onClick={getWeather}
-          disabled={loading}
+          disabled={loading || !location.trim()}
           className={`p-3 rounded-md ${
             loading ? "bg-[#222222] cursor-not-allowed" : "bg-[#2c2c2c] hover:bg-[#222222] cursor-pointer"
           }`}

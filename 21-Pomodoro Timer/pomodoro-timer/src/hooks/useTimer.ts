@@ -29,14 +29,14 @@ export const useTimer = () => {
     return 'work';
   }, [config.sessionsBeforeLongBreak]);
 
-  const getSessionDuration = useCallback((sessionType: SessionType): number => {
+  const getSessionDuration = useCallback((sessionType: SessionType, durations = config): number => {
     switch (sessionType) {
       case 'work':
-        return config.workMinutes * 60;
+        return durations.workMinutes * 60;
       case 'shortBreak':
-        return config.shortBreakMinutes * 60;
+        return durations.shortBreakMinutes * 60;
       case 'longBreak':
-        return config.longBreakMinutes * 60;
+        return durations.longBreakMinutes * 60;
     }
   }, [config]);
 
@@ -85,7 +85,7 @@ export const useTimer = () => {
     setConfig(newConfig);
     setTimerState(prev => ({
       ...prev,
-      timeRemaining: getSessionDuration(prev.currentSession),
+      timeRemaining: getSessionDuration(prev.currentSession, newConfig),
     }));
   };
 

@@ -1,0 +1,39 @@
+--- a/index.html
++++ b/index.html
+@@ -191,6 +191,14 @@
+               </div>
+             </div>
+           </article>
++          <article class="project reveal collection">
++            <div class="project-content">
++              <p class="project-event">Frontend development</p>
++              <h3>Roadmap.sh Frontend Projects</h3>
++              <p class="project-description">24 projects exploring accessible interfaces, browser storage and API integration, from a single-page CV to a weather dashboard and a 24-hour photo diary.</p>
++              <div class="project-links"><a class="text-link" href="https://github.com/lefyar/roadmap.sh-fe-projects">Explore the collection &rarr;</a></div>
++            </div>
++          </article>
+         </div>
+       </section>
+ 
+--- a/styles.css
++++ b/styles.css
+@@ -679,3 +679,9 @@
+     transform: none;
+   }
+ }
++
++.collection { grid-column: 1 / -1; }
++.site-header { position: sticky; z-index: 8; }
++.nav-floating .site-header { top: .4rem; background: transparent; border-color: transparent; }
++.nav-floating .header-inner { padding-inline: clamp(.65rem, 2vw, 1.5rem); border-radius: 1.4rem; background: var(--background); box-shadow: 0 4px 24px #0005, inset 0 0 0 1px var(--line); }
++@media (max-width: 47rem) { main, .section { scroll-margin-top: 8rem; } }
+--- a/script.js
++++ b/script.js
+@@ -51,6 +51,7 @@
+ let scrollFrame;
+ 
+ function updateScrollProgress() {
++  document.body.classList.toggle("nav-floating", window.scrollY > 48);
+   const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+   const progress = scrollableHeight > 0 ? window.scrollY / scrollableHeight : 0;
+   document.documentElement.style.setProperty("--scroll-progress", Math.min(progress, 1));

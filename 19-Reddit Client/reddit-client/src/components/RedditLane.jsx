@@ -32,18 +32,16 @@ function RedditLane({ subreddit, onDelete }) {
       <div className="lane-header">
         <h2>{`r/${subreddit}`}</h2>
         <div className="lane-actions">
-          <button className="refresh-btn" onClick={fetchPosts}>
-            ↻
-          </button>
-          <button className="delete-btn" onClick={() => onDelete(subreddit)}>
-            ✖
-          </button>
+          <button className="refresh-btn" onClick={fetchPosts} disabled={loading}>Refresh</button>
+          <button className="delete-btn" onClick={() => onDelete(subreddit)}>Remove</button>
         </div>
       </div>
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
-        <p>{error}</p>
+        <p role="alert">{error}. Use Refresh to retry.</p>
+      ) : posts.length === 0 ? (
+        <p>No posts in this subreddit yet.</p>
       ) : (
         <div className="posts">
           {posts.map((post) => (
@@ -63,8 +61,8 @@ function RedditLane({ subreddit, onDelete }) {
               <div className="post-info">
                 <p>Posted by {post.author}</p>
                 <div className="post-meta">
-                  <span>⬆ {post.ups}</span>
-                  <span>💬 {post.num_comments}</span>
+                  <span>{post.ups} votes</span>
+                  <span>{post.num_comments} comments</span>
                 </div>
               </div>
             </div>

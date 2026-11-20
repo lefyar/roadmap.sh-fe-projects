@@ -97,7 +97,7 @@ p {
   background-color: #ffffff;
 }
 
-button {
+.changelog-link {
   background-color: #48ffc2;
   width: 50%;
   color: #ffffff;
@@ -109,13 +109,15 @@ button {
   transition: background-color 0.3s;
 }
 
-button a {
+.changelog-link {
+  display: inline-block;
+  text-align: center;
   color: #000000;
   font-weight: bold;
   text-decoration: none;
 }
 
-button:hover {
+.changelog-link:hover {
   background-color: #00ff9b;
 }
 
@@ -133,7 +135,7 @@ button:hover {
     padding: 50px;
   }
 
-  button {
+  .changelog-link {
     width: 100%;
   }
 }

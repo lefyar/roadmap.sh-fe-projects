@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
 
   try {
     const response = await fetch(
-      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=metric&include=current&key=${API_KEY}`
+      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${encodeURIComponent(location)}?unitGroup=metric&include=days,current&key=${API_KEY}`
     );
 
     if (!response.ok) {
@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
 
     const data = await response.json();
     return NextResponse.json(data);
-  } catch (error) {
-    return NextResponse.json({ error: error }, { status: 500 });
+  } catch {
+    return NextResponse.json({ error: "Weather service unavailable" }, { status: 500 });
   }
 }

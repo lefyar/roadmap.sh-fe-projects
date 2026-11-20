@@ -34,7 +34,7 @@ input {
   font-size: 1.05em;
   border-radius: 5px;
   border: none;
-  outline: none;
+  min-width: 0;
 }
 
 .add-btn {
@@ -64,7 +64,7 @@ input {
   background: #1e1e1e;
   padding: 15px;
   border-radius: 8px;
-  width: 300px;
+  width: min(100%, 350px);
 }
 
 .lane-header {
@@ -83,12 +83,13 @@ input {
   border: none;
   color: white;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 14px;
+  padding-block: 8px;
   margin-left: 10px;
 }
 
 .refresh-btn:hover {
-  transform: rotate(180deg);
+  text-decoration: underline;
   transition: 0.3s;
 }
 
@@ -107,7 +108,8 @@ input {
   background: #2a2a2a;
   padding: 10px;
   border-radius: 8px;
-  height: 110px;
+  min-height: 110px;
+  gap: 12px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -145,3 +147,6 @@ input {
 .post-link:hover {
   text-decoration: underline;
 }
+
+.lane-header, .post-info { flex-wrap: wrap; gap: 6px; }
+.post { overflow-wrap: anywhere; }

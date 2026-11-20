@@ -42,6 +42,7 @@ export const Settings: React.FC<SettingsProps> = ({
                 Work Duration (minutes)
               </label>
               <input
+                required
                 type="number"
                 min="1"
                 max="60"
@@ -59,6 +60,7 @@ export const Settings: React.FC<SettingsProps> = ({
                 Short Break Duration (minutes)
               </label>
               <input
+                required
                 type="number"
                 min="1"
                 max="30"
@@ -76,6 +78,7 @@ export const Settings: React.FC<SettingsProps> = ({
                 Long Break Duration (minutes)
               </label>
               <input
+                required
                 type="number"
                 min="1"
                 max="60"
@@ -93,6 +96,7 @@ export const Settings: React.FC<SettingsProps> = ({
                 Sessions Before Long Break
               </label>
               <input
+                required
                 type="number"
                 min="1"
                 max="10"

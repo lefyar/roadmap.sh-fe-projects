@@ -8,15 +8,15 @@ export function useWeather() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const getWeather = async () => {
-    if (!location) return;
+  const getWeather = async (city = location) => {
+    if (!city.trim()) return;
     setError(null);
     setLoading(true);
     try {
-      const data = await fetchWeather(location);
+      const data = await fetchWeather(city);
       setWeather(data);
     } catch {
-      setError(`Failed to fetch weather for ${location}`);
+      setError(`Failed to fetch weather for ${city}`);
     } finally {
       setLoading(false);
     }

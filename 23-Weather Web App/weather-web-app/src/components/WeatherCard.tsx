@@ -6,7 +6,7 @@ export default function WeatherCard({
   temp,
 }: WeatherCardProps) {
   return (
-    <div className="bg-[#2c2c2c] p-4 rounded-md w-full h-full">
+    <div className="bg-[#2c2c2c] p-4 rounded-md min-w-36">
       <p>{datetime}</p>
       <p>{conditions}</p>
       <p>{temp}°C</p>

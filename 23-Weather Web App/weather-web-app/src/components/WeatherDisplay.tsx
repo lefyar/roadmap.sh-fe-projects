@@ -6,7 +6,8 @@ export default function WeatherDisplay ({ weather }: WeatherDisplayProps) {
 
     return (
         <div className="flex flex-col items-center w-3/4 space-y-4">
-          <h2>{weather.resolvedAddress}</h2>
+          <h2 className="text-xl font-semibold">{weather.resolvedAddress}</h2>
+          <p>{weather.currentConditions.temp}°C · {weather.currentConditions.conditions}</p>
           <div className="flex overflow-x-scroll gap-4 w-full pb-4 bg-[#1b1b1b] p-4 rounded-md">
             {weather.days.map((day, index) => (
               <WeatherCard

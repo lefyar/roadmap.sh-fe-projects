@@ -5,14 +5,26 @@ export type Story = { created: number; image: string };
 const key = "roadmap.photo-stories.v1";
 const day = 24 * 60 * 60 * 1000;
 
+function writeStories(list: Story[]) {
+  try {
+    localStorage.setItem(key, JSON.stringify(list));
+  } catch {
+    // ignore storage failures
+  }
+}
+
 function readStories(): Story[] {
   const saved = JSON.parse(localStorage.getItem(key) || "[]");
   if (!Array.isArray(saved)) return [];
   const active: Story[] = saved.filter(item => item && Number.isFinite(item.created) &&
     item.created + day > Date.now() && typeof item.image === "string" &&
     item.image.startsWith("data:image/jpeg;base64,"));
-  if (active.length !== saved.length) localStorage.setItem(key, JSON.stringify(active));
+  if (active.length !== saved.length) writeStories(active);
   return active;
+}
+
+function removeStory(list: Story[], story: Story): Story[] {
+  return list.filter(item => item.created !== story.created);
 }
 
 async function resizePhoto(file: File) {
@@ -72,7 +84,7 @@ export default function Stories() {
     try {
       const image = await resizePhoto(file);
       const updated = [{ image, created: Date.now() }, ...readStories()];
-      localStorage.setItem(key, JSON.stringify(updated));
+      writeStories(updated);
       setStories(updated);
       setMessage("Photo added.");
     } catch {

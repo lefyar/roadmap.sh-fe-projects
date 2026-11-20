@@ -71,9 +71,10 @@
       </form>
 
       <div class="profile-completeness">
-        <div class="progress-bar">
-          <div class="progress" id="progressBar">
-            <span id="progressText">Profile Completeness</span>
+        <div class="progress-bar" role="progressbar" aria-labelledby="progressText" aria-valuemin="0" aria-valuemax="5" aria-valuenow="3" aria-valuetext="3 of 5 steps complete">
+          <div class="progress">
+            <span id="progressText">Profile completeness</span>
+            <strong aria-hidden="true">3 / 5</strong>
           </div>
         </div>
         <div class="checklist">

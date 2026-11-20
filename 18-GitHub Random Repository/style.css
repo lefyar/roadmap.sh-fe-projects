@@ -1,16 +1,18 @@
-:root { color-scheme: light; color: #233047; background: #f7f9fc; font: 1rem/1.5 system-ui, sans-serif; }
+@import url("../theme.css");
+
+:root { color: var(--ui-ink); background: var(--ui-canvas); font: 1rem/1.5 system-ui, sans-serif; }
 * { box-sizing: border-box; }
 body { margin: 0; padding: clamp(2rem, 9vw, 5rem) 1rem; }
-.container { width: min(100%, 36rem); margin: auto; padding: clamp(1rem, 4vw, 1.8rem); background: #fff; border: 1px solid #c6cfde; border-radius: .9rem; }
+.container { width: min(100%, 36rem); margin: auto; padding: clamp(1rem, 4vw, 1.8rem); background: var(--ui-surface); border: 1px solid var(--ui-line); border-radius: .9rem; }
 h1 { margin: 0; font-size: clamp(1.5rem, 6vw, 2rem); line-height: 1.15; }
 label { display: block; margin-bottom: .35rem; font-weight: 650; }
 form { margin-block: 1.2rem; }
-select, button { min-height: 2.75rem; border-radius: .45rem; border: 1px solid #758499; background: #fff; color: inherit; padding: .45rem .65rem; font: inherit; }
-button { background: #3653a0; color: #fff; border-color: #3653a0; cursor: pointer; }
+select, button { min-height: 2.75rem; border-radius: .45rem; border: 1px solid var(--ui-control); background: var(--ui-surface); color: inherit; padding: .45rem .65rem; font: inherit; }
+button { background: var(--ui-action); color: var(--ui-on-action); border-color: var(--ui-action); cursor: pointer; }
 button:disabled { opacity: .65; cursor: wait; }
-:focus-visible { outline: 2px solid #3653a0; outline-offset: 3px; }
-.repo-card { border: 1px solid #c6cfde; padding: 1rem; border-radius: .65rem; background: #f6f8fe; overflow-wrap: anywhere; }
+:focus-visible { outline: 2px solid var(--ui-accent); outline-offset: 3px; }
+.repo-card { border: 1px solid var(--ui-line); padding: 1rem; border-radius: .65rem; background: var(--ui-raised); overflow-wrap: anywhere; }
 .repo-card h2 { margin: 0; font-size: 1.1rem; }
-.repo-card a { color: #29458a; }
+.repo-card a { color: var(--ui-accent); }
 .repo-card p { margin-bottom: 0; }
-#status-message { margin-block: .5rem; color: #525f73; }
+#status-message { margin-block: .5rem; color: var(--ui-muted); }

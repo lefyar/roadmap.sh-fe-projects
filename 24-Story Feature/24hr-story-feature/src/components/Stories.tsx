@@ -1,91 +1,96 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import ViewStory from "./ViewStory";
+import { encodePhoto, expiresAt, readStories, storageKey, storyLifetime, writeStories, type Story } from "../storyStorage";
 
-export type Story = { id: string; created: number; image: string };
-const key = "roadmap.photo-stories.v1";
-const day = 24 * 60 * 60 * 1000;
+const maxFileSize = 15 * 1024 * 1024;
+const postingTime = new Intl.DateTimeFormat(undefined, { hour: "numeric", minute: "2-digit" });
+const postingDate = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" });
 
-function writeStories(list: Story[]) {
-  localStorage.setItem(key, JSON.stringify(list));
-}
-
-function readStories(): Story[] {
-  const stored = localStorage.getItem(key);
-  let saved;
-  try { saved = JSON.parse(stored || "[]"); } catch { return []; }
-  if (!Array.isArray(saved)) return [];
-  const active: Story[] = saved.filter(item => item && Number.isFinite(item.created) &&
-    item.created + day > Date.now() && typeof item.image === "string" &&
-    item.image.startsWith("data:image/jpeg;base64,"))
-    .map(item => ({ ...item, id: typeof item.id === "string" ? item.id : String(item.created) }));
-  if (active.length !== saved.length) {
-    try { writeStories(active); } catch { /* Expired photos are still hidden. */ }
-  }
-  return active;
-}
-
-async function resizePhoto(file: File) {
-  const url = URL.createObjectURL(file);
-  try {
-    const photo = new Image();
-    photo.src = url;
-    await photo.decode();
-    const scale = Math.min(1, 1080 / Math.max(photo.width, photo.height));
-    const canvas = document.createElement("canvas");
-    canvas.width = Math.max(1, Math.round(photo.width * scale));
-    canvas.height = Math.max(1, Math.round(photo.height * scale));
-    const context = canvas.getContext("2d");
-    if (!context) throw new Error("Canvas unavailable");
-    context.fillStyle = "#fff";
-    context.fillRect(0, 0, canvas.width, canvas.height);
-    context.drawImage(photo, 0, 0, canvas.width, canvas.height);
-    return canvas.toDataURL("image/jpeg", 0.75);
-  } finally {
-    URL.revokeObjectURL(url);
-  }
-}
+type Notice = { text: string; error?: boolean };
 
 export default function Stories() {
   const [stories, setStories] = useState<Story[]>([]);
-  const [selected, select] = useState<string | null>(null);
-  const [message, setMessage] = useState("");
+  const [selected, setSelected] = useState<string | null>(null);
+  const [notice, setNotice] = useState<Notice | null>(null);
   const [busy, setBusy] = useState(false);
   const picker = useRef<HTMLInputElement>(null);
+  const addButton = useRef<HTMLButtonElement>(null);
+  const opener = useRef<HTMLButtonElement>(null);
+  const index = stories.findIndex(story => story.id === selected);
 
-  useEffect(() => {
-    function refresh() {
-      try {
-        setStories(readStories());
-      } catch {
-        setMessage("Your saved photos could not be opened.");
-      }
+  const refresh = useCallback(() => {
+    try {
+      setStories(readStories());
+    } catch {
+      setStories(current => current.filter(story => expiresAt(story) > Date.now()));
+      setNotice({ text: "Browser storage is unavailable. Check your browser settings.", error: true });
     }
-    refresh();
-    window.addEventListener("storage", refresh);
-    window.addEventListener("focus", refresh);
-    const timer = window.setInterval(refresh, 10000);
-    return () => {
-      window.clearInterval(timer);
-      window.removeEventListener("storage", refresh);
-      window.removeEventListener("focus", refresh);
-    };
   }, []);
 
+  useEffect(() => {
+    const syncStorage = (event: StorageEvent) => {
+      if (event.key === storageKey || event.key === null) refresh();
+    };
+    refresh();
+    window.addEventListener("storage", syncStorage);
+    window.addEventListener("focus", refresh);
+    return () => {
+      window.removeEventListener("storage", syncStorage);
+      window.removeEventListener("focus", refresh);
+    };
+  }, [refresh]);
+
+  useEffect(() => {
+    if (stories.length === 0) return;
+    const now = Date.now();
+    const nextExpiry = stories.reduce((soonest, story) => Math.min(soonest, expiresAt(story)), now + storyLifetime);
+    const delay = Math.max(0, nextExpiry - now);
+    const timer = window.setTimeout(refresh, delay);
+    return () => window.clearTimeout(timer);
+  }, [stories, refresh]);
+
+  const closeViewer = useCallback(() => {
+    setSelected(null);
+    window.requestAnimationFrame(() => {
+      const target = opener.current?.isConnected ? opener.current : addButton.current;
+      target?.focus();
+    });
+  }, []);
+
+  useEffect(() => {
+    if (selected !== null && index === -1) closeViewer();
+  }, [selected, index, closeViewer]);
+
   async function upload(file?: File) {
-    if (!file) return;
-    if (!file.type.startsWith("image/") || file.size > 15 * 1024 * 1024) {
-      setMessage("Choose an image smaller than 15 MB.");
+    if (!file || busy) return;
+    if ((file.type && !file.type.startsWith("image/")) || file.size > maxFileSize) {
+      setNotice({ text: "Choose an image up to 15 MB.", error: true });
       return;
     }
+
     setBusy(true);
+    setNotice(null);
     try {
-      const image = await resizePhoto(file);
-      const updated = [{ id: crypto.randomUUID(), image, created: Date.now() }, ...readStories()];
+      let image: string;
+      try {
+        image = await encodePhoto(file);
+      } catch {
+        setNotice({ text: "This image couldn?t be opened. Try a JPEG or PNG.", error: true });
+        return;
+      }
+
+      const story = { id: crypto.randomUUID(), image, created: Date.now() };
+      const updated = [story, ...readStories()];
       writeStories(updated);
       setStories(updated);
-      setMessage("Photo added.");
-    } catch {
-      setMessage("Could not save this photo. Try a smaller JPEG or PNG, or check browser storage.");
+      setNotice({ text: "Story added." });
+    } catch (error) {
+      const full = error instanceof DOMException && error.name === "QuotaExceededError";
+      setNotice({
+        text: full ? "Browser storage is full. Delete a story or try a smaller image."
+          : "Couldn?t save the story. Check your browser storage settings and try again.",
+        error: true,
+      });
     } finally {
       setBusy(false);
     }
@@ -96,37 +101,61 @@ export default function Stories() {
       const remaining = readStories().filter(item => item.id !== story.id);
       writeStories(remaining);
       setStories(remaining);
-      if (selected === story.id) select(null);
-      setMessage("Photo deleted.");
+      closeViewer();
+      setNotice({ text: "Story deleted." });
     } catch {
-      setMessage("Could not delete this photo. Check browser storage and try again.");
+      setNotice({ text: "Couldn?t delete this story. Check your browser storage settings and try again.", error: true });
     }
   }
 
-  return <section className="album">
-    <header><h1>Photo diary</h1><p>Photos stay in this browser for 24 hours.</p></header>
-    <input ref={picker} type="file" accept="image/*" hidden onChange={event => {
-      void upload(event.target.files?.[0]);
-      event.target.value = "";
-    }} />
-    <button className="upload" disabled={busy} onClick={() => picker.current?.click()}>
-      {busy ? "Saving photo…" : "+ Add a photo"}
-    </button>
-    <p role="status">{message}</p>
-    {stories.length === 0 ? <p className="empty">No photos yet.</p> :
-      <div className="photos">{stories.map(story => (
-        <div key={story.id} className="photo-item">
-          <button className="photo"
-            onClick={() => select(story.id)} aria-label={`View photo from ${new Date(story.created).toLocaleTimeString()}`}>
-            <img src={story.image} alt="" /><time>{new Date(story.created).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}</time>
-          </button>
-          <button className="delete-photo"
-            onClick={() => removeStory(story)}
-            aria-label={`Delete photo from ${new Date(story.created).toLocaleTimeString()}`}>×</button>
-        </div>
-      ))}</div>}
-    {stories.some(story => story.id === selected) &&
-      <ViewStory stories={stories} index={stories.findIndex(story => story.id === selected)}
-        select={select} />}
-  </section>;
+  return (
+    <section className="stories" aria-labelledby="stories-title">
+      <header className="stories-header">
+        <h1 id="stories-title">Stories</h1>
+        <p>Photos stay in this browser and disappear after 24 hours.</p>
+      </header>
+
+      <input ref={picker} type="file" accept="image/*" hidden onChange={event => {
+        void upload(event.target.files?.[0]);
+        event.target.value = "";
+      }} />
+
+      <div className="story-tray">
+        <button className="story-add" ref={addButton} type="button" aria-disabled={busy}
+          onClick={() => { if (!busy) picker.current?.click(); }}>
+          <span className="add-mark" aria-hidden="true" />
+          <span>{busy ? "Saving?" : "Add story"}</span>
+        </button>
+        {stories.length === 0 ? <p className="story-empty">No stories yet.</p> :
+          <ul className="story-list" role="list" aria-label="Active stories">
+            {stories.map((story, position) => (
+              <li key={story.id}>
+                <button className="story-preview" type="button" aria-haspopup="dialog"
+                  aria-label={`View story from ${postingDate.format(story.created)}, ${position + 1} of ${stories.length}`}
+                  onClick={event => {
+                    setNotice(null);
+                    opener.current = event.currentTarget;
+                    setSelected(story.id);
+                  }}>
+                  <img src={story.image} alt="" />
+                  <time dateTime={new Date(story.created).toISOString()}>{postingTime.format(story.created)}</time>
+                </button>
+              </li>
+            ))}
+          </ul>}
+      </div>
+
+      <p className="story-notice" role="status" data-error={notice?.error}>{index < 0 ? notice?.text : ""}</p>
+
+      {index >= 0 && <ViewStory story={stories[index]} index={index} total={stories.length}
+        onMove={step => {
+          const next = stories[index + step];
+          if (next) {
+            setNotice(null);
+            setSelected(next.id);
+          }
+        }}
+        onClose={closeViewer} onDelete={removeStory} error={notice?.error ? notice.text : ""} />}
+    </section>
+  );
 }

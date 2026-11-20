@@ -1,4 +1,6 @@
-:root { color-scheme: light; color: #233047; background: #f7f9fc; font: 1rem/1.55 system-ui, sans-serif; }
+@import url("../theme.css");
+
+:root { color: var(--ui-ink); background: var(--ui-canvas); font: 1rem/1.55 system-ui, sans-serif; }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 body { margin: 0; padding: clamp(2rem, 9vw, 5rem) 1rem; }
@@ -6,12 +8,12 @@ body { margin: 0; padding: clamp(2rem, 9vw, 5rem) 1rem; }
 h1, h2 { line-height: 1.2; }
 h1 { margin: 0; }
 h2 { margin: 0; font-size: 1.25rem; }
-button { font: inherit; font-weight: 650; background: #fff; color: #29458a; border: 1px solid #6e80a7; border-radius: .5rem; min-height: 2.75rem; padding: .5rem .75rem; cursor: pointer; }
-button:hover { background: #edf2ff; }
-:focus-visible { outline: 2px solid #33529b; outline-offset: 3px; }
-.cookie-consent { padding: 1.15rem; background: #fff; border: 1px solid #bdcadb; border-radius: .8rem; margin-top: 1rem; }
-.cookie-category { margin-top: .75rem; padding-bottom: .65rem; border-bottom: 1px solid #d5dce6; }
-.cookie-category p, .cookie-consent-header p { margin: .35rem 0 0; color: #526077; }
+button { font: inherit; font-weight: 650; background: var(--ui-surface); color: var(--ui-accent); border: 1px solid var(--ui-control); border-radius: .5rem; min-height: 2.75rem; padding: .5rem .75rem; cursor: pointer; }
+button:hover { background: var(--ui-hover); }
+:focus-visible { outline: 2px solid var(--ui-accent); outline-offset: 3px; }
+.cookie-consent { padding: 1.15rem; background: var(--ui-surface); border: 1px solid var(--ui-line); border-radius: .8rem; margin-top: 1rem; }
+.cookie-category { margin-top: .75rem; padding-bottom: .65rem; border-bottom: 1px solid var(--ui-line); }
+.cookie-category p, .cookie-consent-header p { margin: .35rem 0 0; color: var(--ui-muted); }
 .cookie-toggle { display: flex; align-items: center; gap: .55rem; font-weight: 650; }
-.cookie-toggle input { width: 1.1rem; height: 1.1rem; accent-color: #33529b; }
+.cookie-toggle input { width: 1.1rem; height: 1.1rem; accent-color: var(--ui-action); }
 .cookie-consent-actions { display: flex; flex-wrap: wrap; margin-top: 1rem; gap: .5rem; }

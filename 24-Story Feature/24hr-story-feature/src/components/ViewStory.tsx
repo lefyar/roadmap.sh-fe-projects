@@ -1,34 +1,71 @@
 import { useEffect, useRef } from "react";
-import type { Story } from "./Stories";
+import type { Story } from "../storyStorage";
 
-export default function ViewStory({ stories, index, select }: {
-  stories: Story[]; index: number; select: (id: string | null) => void;
-}) {
+type ViewStoryProps = {
+  story: Story;
+  index: number;
+  total: number;
+  onMove: (step: number) => void;
+  onClose: () => void;
+  onDelete: (story: Story) => void;
+  error: string;
+};
+
+const postingDate = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" });
+
+export default function ViewStory({ story, index, total, onMove, onClose, onDelete, error }: ViewStoryProps) {
   const dialog = useRef<HTMLDialogElement>(null);
+  const close = useRef<HTMLButtonElement>(null);
+  const pointer = useRef<{ id: number; x: number; y: number } | null>(null);
+
   useEffect(() => {
     const element = dialog.current;
     element?.showModal();
+    close.current?.focus();
     return () => element?.close();
   }, []);
-  function move(step: number) {
-    const next = stories[index + step];
-    if (next) select(next.id);
-  }
-  const touchX = useRef(0);
-  return <dialog ref={dialog} aria-label="Photo viewer" onCancel={event => { event.preventDefault(); select(null); }}
-    onKeyDown={e => {
-      if (e.key === "ArrowLeft") move(-1);
-      if (e.key === "ArrowRight") move(1);
-    }}>
-    <div className="viewer-bar"><span aria-live="polite">Photo {index + 1} of {stories.length}</span>
-      <button onClick={() => select(null)}>Close</button></div>
-    <img className="full-photo" src={stories[index].image} alt="Selected diary photo"
-      onTouchStart={e => { touchX.current = e.touches[0].clientX; }}
-      onTouchEnd={e => {
-        const delta = e.changedTouches[0].clientX - touchX.current;
-        if (Math.abs(delta) > 50) move(delta < 0 ? 1 : -1);
-      }} />
-    <div className="viewer-bar"><button disabled={!index} onClick={() => move(-1)}>Previous</button>
-      <button disabled={index === stories.length - 1} onClick={() => move(1)}>Next</button></div>
-  </dialog>;
+
+  return (
+    <dialog className="story-viewer" ref={dialog} aria-label="Story viewer"
+      onCancel={event => { event.preventDefault(); onClose(); }}
+      onKeyDown={event => {
+        if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+          event.preventDefault();
+          onMove(event.key === "ArrowLeft" ? -1 : 1);
+        }
+      }}>
+      <div className="viewer-header">
+        <p aria-live="polite">Story {index + 1} of {total}</p>
+        <button className="viewer-button" type="button" ref={close} onClick={onClose}>Close</button>
+      </div>
+
+      <div className="viewer-stage"
+        onPointerDown={event => {
+          if (event.isPrimary && event.pointerType !== "mouse") {
+            pointer.current = { id: event.pointerId, x: event.clientX, y: event.clientY };
+          }
+        }}
+        onPointerCancel={() => { pointer.current = null; }}
+        onPointerUp={event => {
+          const start = pointer.current;
+          if (!start || start.id !== event.pointerId) return;
+          pointer.current = null;
+          const distance = event.clientX - start.x;
+          if (Math.abs(distance) >= 48 && Math.abs(distance) > Math.abs(event.clientY - start.y)) {
+            onMove(distance < 0 ? 1 : -1);
+          }
+        }}>
+        <img src={story.image} alt={`Story photo posted ${postingDate.format(story.created)}`} draggable={false} />
+      </div>
+
+      <div className="viewer-actions">
+        <div className="viewer-navigation">
+          <button className="viewer-button" type="button" aria-disabled={index === 0} onClick={() => onMove(-1)}>Previous</button>
+          <button className="viewer-button" type="button" aria-disabled={index === total - 1} onClick={() => onMove(1)}>Next</button>
+        </div>
+        <button className="viewer-delete" type="button" onClick={() => onDelete(story)}>Delete story</button>
+      </div>
+      <p className="viewer-error" role="status">{error}</p>
+    </dialog>
+  );
 }

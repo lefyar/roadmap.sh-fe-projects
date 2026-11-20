@@ -18,7 +18,7 @@ export const Controls: React.FC<ControlsProps> = ({
     <div className="flex justify-center space-x-4 mt-6">
       <button
         onClick={isRunning ? onPause : onStart}
-        className="flex items-center justify-center gap-2 px-4 min-h-11 rounded-md bg-rose-700 text-white hover:bg-rose-800"
+        className="flex items-center justify-center gap-2 px-4 min-h-11 rounded-md bg-[var(--ui-action)] text-white hover:bg-[var(--ui-action-hover)]"
       >
         {isRunning ? <Pause size={18} aria-hidden="true" /> : <Play size={18} aria-hidden="true" />}
         {isRunning ? 'Pause timer' : 'Start timer'}
@@ -26,7 +26,7 @@ export const Controls: React.FC<ControlsProps> = ({
       
       <button
         onClick={onReset}
-        className="flex items-center justify-center gap-2 px-4 min-h-11 rounded-md bg-white border border-slate-300 hover:bg-slate-100"
+        className="flex items-center justify-center gap-2 px-4 min-h-11 rounded-md bg-[var(--ui-surface)] border border-[color:var(--ui-control)] hover:bg-[var(--ui-hover)]"
       >
         <RotateCcw size={18} aria-hidden="true" /> Reset timer
       </button>

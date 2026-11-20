@@ -1,10 +1,12 @@
+@import url("../theme.css");
+
 :root {
-  --background-color: #ffffff;
-  --primary-color: #1a1a1a;
-  --secondary-color: #a1214b;
-  --hover-color: #2354a2;
-  --card-bg: #ffffff;
-  --border-color: rgba(0, 0, 0, 0.1);
+  --background-color: var(--ui-canvas);
+  --primary-color: var(--ui-ink);
+  --secondary-color: var(--ui-accent);
+  --hover-color: var(--ui-ink);
+  --card-bg: var(--ui-surface);
+  --border-color: var(--ui-line);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -16,7 +18,7 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   min-height: 100vh;
   transition: background-color 0.35s ease, color 0.35s ease;
@@ -36,7 +38,7 @@ a {
 
 main a { text-decoration: underline; text-underline-offset: .2em; }
 
-nav a[aria-current="page"] { color: var(--hover-color); text-decoration: underline; text-underline-offset: .25em; }
+nav a[aria-current="page"] { color: var(--secondary-color); text-decoration: underline; text-underline-offset: .25em; }
 
 a:hover {
   color: var(--hover-color);
@@ -57,7 +59,8 @@ svg {
 header {
   width: 100%;
   border-bottom: 1px solid var(--border-color);
-  padding-bottom: 14px;
+  padding: 1rem max(1rem, calc((100% - 1160px) / 2));
+  background: var(--card-bg);
   margin-bottom: 0;
   transition: border-color 0.35s ease;
 }
@@ -73,13 +76,21 @@ main {
 
 .hero {
   text-align: center;
-  padding: 0 0 40px 0;
+  padding: 0 0 clamp(1.25rem, 4vw, 2.5rem);
 }
 
 .hero h1,
 .hero p {
   transition: color 0.35s ease;
 }
+
+.hero h1 {
+  font-size: clamp(2rem, 6vw, 3.6rem);
+  line-height: 1.08;
+  letter-spacing: -.04em;
+}
+
+.hero p { color: var(--ui-muted); }
 
 .content {
   display: flex;
@@ -96,19 +107,29 @@ main {
 .education {
   display: flex;
   flex-direction: column;
-  border: solid 2px var(--primary-color);
-  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--ui-radius);
   padding: 20px;
   background-color: var(--card-bg);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.projects:hover,
-.experience:hover,
-.education:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+.projects { background-color: var(--ui-raised); border-color: var(--ui-control); }
+
+.content h2 {
+  margin-bottom: 1rem;
+  text-align: left;
 }
+
+.projects h2 { font-size: 1.65rem; line-height: 1.2; }
+.projects li + li { border-top: 1px solid var(--border-color); padding-top: .85rem; }
+.projects p { color: var(--ui-muted); margin: .35rem 0 .85rem; }
+.projects a { color: var(--primary-color); }
+.projects a:hover { color: var(--secondary-color); }
+
+.content article + article { margin-top: 1.15rem; }
+.content article p { color: var(--ui-muted); }
+.experience a { color: var(--ui-muted); }
+.experience a:hover { color: var(--secondary-color); }
 
 .projects h3,
 .experience h3,
@@ -129,24 +150,25 @@ main {
 .review {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
 }
 
 .review p {
   text-align: left;
   padding: 0;
   margin: 0;
-  height: 100px;
+  min-height: 3em;
   transition: color 0.35s ease;
 }
 
 blockquote {
   text-align: left;
-  border: solid 2px var(--primary-color);
+  border: 1px solid var(--border-color);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 10px;
+  padding: 1rem;
   margin: 10px 10px;
   background-color: var(--card-bg);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -166,8 +188,8 @@ input,
 textarea {
   padding: 10px;
   border-radius: 5px;
-  border: 2px solid var(--primary-color);
-  background-color: var(--card-bg);
+  border: 1px solid var(--ui-control);
+  background-color: var(--ui-raised);
   color: var(--primary-color);
   font: inherit;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -175,32 +197,30 @@ textarea {
 
 input:focus,
 textarea:focus {
-  outline: none;
+  outline: 2px solid var(--secondary-color);
+  outline-offset: 2px;
   border-color: var(--secondary-color);
-  box-shadow: 0 0 0 3px rgba(241, 53, 109, 0.25);
 }
 
 button {
   font: inherit;
   padding: 10px;
   border-radius: 5px;
-  border: 2px solid var(--primary-color);
-  background-color: var(--primary-color);
-  color: var(--background-color);
+  border: 1px solid transparent;
+  background-color: var(--ui-action);
+  color: var(--ui-on-action);
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
 button:hover {
-  background-color: var(--card-bg);
-  color: var(--primary-color);
+  background-color: var(--ui-action-hover);
 }
 
 .footer {
-  margin-top: 40px;
+  margin-top: auto;
   padding: 16px;
-  color: var(--primary-color);
-  opacity: 0.85;
+  color: var(--ui-muted);
   transition: color 0.35s ease;
 }
 
@@ -216,13 +236,9 @@ button:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  main,
-  .projects,
-  .experience,
-  .education {
-    animation: none;
-    transition: none;
-  }
+  main { animation: none; }
+  .review blockquote { transition: none; }
+  .review blockquote:hover { transform: none; }
 }
 
 @media screen and (max-width: 768px) {
@@ -295,7 +311,7 @@ button:hover {
     align-items: center;
     padding: 16px;
     width: 90%;
-    border: 2px solid var(--primary-color);
+    border: 1px solid var(--border-color);
     border-radius: 5px;
     gap: 5px;
     background-color: var(--card-bg);
@@ -307,14 +323,14 @@ button:hover {
     justify-content: center;
     width: min(100%, 34rem);
     gap: 10px;
-    border: 2px solid var(--primary-color);
+    border: 1px solid var(--border-color);
     border-radius: 10px;
     padding: 20px;
     background-color: var(--card-bg);
   }
 
   .review blockquote {
-    width: 90%;
+    width: 100%;
     margin: 0;
   }
 }
@@ -353,7 +369,7 @@ button:hover {
     justify-content: space-between;
     justify-self: center;
     align-items: center;
-    gap: 10px;
+    gap: clamp(.75rem, 2vw, 1.5rem);
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -366,15 +382,6 @@ button:hover {
     padding: 6px 0;
     transition: color 0.2s ease;
   }
-
-  nav ul li main a { text-decoration: underline; text-underline-offset: .2em; }
-
-nav a[aria-current="page"] { color: var(--hover-color); text-decoration: underline; text-underline-offset: .25em; }
-
-a:hover {
-    color: var(--hover-color);
-  }
-
 
   .content {
     display: grid;
@@ -396,14 +403,14 @@ a:hover {
 
   .review {
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     padding: 0;
     margin: 0;
   }
 
   .review blockquote {
     margin: 0;
-    width: 20em;
+    width: 100%;
   }
 
   .projects-detail,
@@ -425,7 +432,7 @@ a:hover {
   .articles-detail ul li {
     align-items: center;
     width: 100%;
-    border: 2px solid var(--primary-color);
+    border: 1px solid var(--border-color);
     border-radius: 5px;
     padding: 20px;
     gap: 5px;
@@ -437,7 +444,7 @@ a:hover {
     flex-direction: column;
     width: min(100%, 34rem);
     gap: 10px;
-    border: 2px solid var(--primary-color);
+    border: 1px solid var(--border-color);
     border-radius: 10px;
     padding: 20px;
     background-color: var(--card-bg);

@@ -28,7 +28,7 @@ if (mode === 'install') {
 } else if (mode === 'build') {
   await rm(destination, { recursive: true, force: true });
   await mkdir(destination);
-  for (const name of ['index.html', 'site.css', 'site.js', 'contact.js']) {
+  for (const name of ['index.html', 'site.css', 'theme.css', 'site.js', 'contact.js']) {
     await cp(join(root, name), join(destination, name));
   }
 

@@ -1,12 +1,14 @@
+@import url("../theme.css");
+
 /* Theme variables */
 :root {
-  --bg: #ffffff;
-  --text: #1f2933;
-  --border: #dddddd;
-  --tooltip-bg: #000000;
-  --tooltip-text: #ffffff;
-  --icon-bg: #ffffff;
-  --icon-border: #dddddd;
+  --bg: var(--ui-canvas);
+  --text: var(--ui-ink);
+  --border: var(--ui-line);
+  --tooltip-bg: var(--ui-raised);
+  --tooltip-text: var(--ui-ink);
+  --icon-bg: var(--ui-surface);
+  --icon-border: var(--ui-line);
 }
 
 * {

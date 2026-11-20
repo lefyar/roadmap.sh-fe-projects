@@ -1,11 +1,13 @@
+@import url("../theme.css");
+
 /* Theme variables */
 :root {
-  --bg: #f6f7f8;
-  --card: #ffffff;
-  --text: #1f2933;
-  --muted: #4e5b6d;
-  --icon-bg: #ffffff;
-  --icon-border: rgba(0, 0, 0, 0.1);
+  --bg: var(--ui-canvas);
+  --card: var(--ui-surface);
+  --text: var(--ui-ink);
+  --muted: var(--ui-muted);
+  --icon-bg: var(--ui-surface);
+  --icon-border: var(--ui-line);
 }
 
 * {
@@ -94,14 +96,14 @@ body {
 .lightbox {
   border: 0;
   border-radius: 1rem;
-  background: #fff;
+  background: var(--ui-raised);
   padding: 1rem;
   max-width: calc(100% - 1.5rem);
   animation: fadeIn 0.25s ease both;
 }
 
 .lightbox::backdrop {
-  background: rgba(0, 0, 0, 0.75);
+  background: var(--ui-backdrop);
   backdrop-filter: blur(2px);
   animation: backdropIn 0.3s ease both;
 }

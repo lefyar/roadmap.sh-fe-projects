@@ -17,7 +17,7 @@ function App() {
   } = useTimer();
 
   return (
-    <main className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4 text-slate-900">
+    <main className="min-h-screen bg-[var(--ui-canvas)] flex flex-col items-center justify-center p-4 text-[color:var(--ui-ink)]">
       <div className="w-full max-w-md">
         <h1 className="mb-4 text-center text-3xl font-bold tracking-tight">Pomodoro Timer</h1>
         <TimerDisplay

@@ -1,0 +1,31 @@
+:root {
+  color-scheme: dark;
+  --ui-canvas: #09090a;
+  --ui-surface: #111112;
+  --ui-raised: #1b1b1d;
+  --ui-hover: #252527;
+  --ui-line: #37373b;
+  --ui-control: #76767d;
+  --ui-ink: #f5f4f3;
+  --ui-muted: #bab8be;
+  --ui-accent: #ff606a;
+  --ui-action: #d5293c;
+  --ui-action-hover: #db3447;
+  --ui-on-action: #fff;
+  --ui-tint: #2e1519;
+  --ui-backdrop: #000e;
+  --ui-radius: 16px;
+  accent-color: var(--ui-action);
+  caret-color: var(--ui-accent);
+  scrollbar-color: var(--ui-control) var(--ui-canvas);
+}
+
+:where(:focus-visible) {
+  outline: 2px solid var(--ui-accent);
+  outline-offset: 3px;
+}
+
+::selection {
+  color: var(--ui-on-action);
+  background: var(--ui-action);
+}

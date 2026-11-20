@@ -1,17 +1,18 @@
+@import url("../theme.css");
+
 /* Theme variables */
 :root {
-  --bg: #ffffff;
-  --text: #1f1f1f;
-  --muted: #666666;
-  --card: #ffffff;
-  --border: #cccccc;
-  --border-focus: #000000;
-  --valid: #22c55e;
-  --error: #ef4444;
-  --progress-track: #cecece;
-  --progress-fill: #000000;
-  --del-color: #414141;
-  --badge-gradient: linear-gradient(135deg, #e6f4ea, #ffffff);
+  --bg: var(--ui-canvas);
+  --text: var(--ui-ink);
+  --muted: var(--ui-muted);
+  --card: var(--ui-surface);
+  --border: var(--ui-control);
+  --border-focus: var(--ui-accent);
+  --valid: var(--ui-ink);
+  --error: var(--ui-accent);
+  --progress-track: var(--ui-line);
+  --progress-fill: var(--ui-accent);
+  --del-color: var(--ui-muted);
 }
 
 * {
@@ -37,21 +38,22 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  gap: 1rem;
+  width: min(calc(100% - 2rem), 33rem);
+  padding: clamp(1rem, 4vw, 2rem);
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-radius);
   background-color: var(--card);
   color: var(--text);
-  max-width: 600px;
-  margin: 0 auto;
+  margin: 1rem auto;
   animation: slideIn 0.5s ease both;
 }
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  width: 100%;
+  gap: 12px;
 }
 
 fieldset.form-field {
@@ -79,28 +81,20 @@ label + label {
 input[type="text"],
 input[type="email"],
 input[type="password"] {
+  min-height: 44px;
   padding: 10px 12px;
   border-radius: 6px;
   border: 1.5px solid var(--border);
-  font-size: 15px;
-  background-color: var(--card);
+  font-size: 1rem;
+  background-color: var(--ui-raised);
   color: var(--text);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-input:focus {
-  outline: none;
+input:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
   border-color: var(--border-focus);
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
-}
-
-input[type="text"]:valid:not(:placeholder-shown),
-input[type="email"]:valid:not(:placeholder-shown) {
-  border-color: var(--valid);
-}
-
-input:invalid:not(:placeholder-shown) {
-  border-color: var(--error);
 }
 
 .error-message {
@@ -108,19 +102,20 @@ input:invalid:not(:placeholder-shown) {
   font-size: 0.75rem;
   padding-left: 2px;
   font-weight: 500;
-  min-height: 18px;
   animation: fadeIn 0.2s ease both;
 }
 
+.error-message:empty { display: none; }
+
 .password-strength {
-  margin-top: -2px;
+  color: var(--muted);
   font-size: 0.75rem;
 }
 
 .strength-meter {
   height: 5px;
   border-radius: 3px;
-  background-color: var(--progress-track);
+  background-color: var(--progress-fill);
   overflow: hidden;
   transition: width 0.2s ease;
   width: 0;
@@ -138,95 +133,89 @@ input:invalid:not(:placeholder-shown) {
 .strength-meter[data-score="0"] { width: 0%; }
 
 #strengthText {
-  display: inline-block;
-  margin-left: 6px;
-  font-style: italic;
+  display: block;
+  margin-top: .2rem;
 }
 
+#strengthText:empty { display: none; }
+
 .radio-group {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .5rem;
 }
 
 .radio-option {
-  display: inline-flex;
+  display: flex;
+  flex-direction: row;
   align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
+  gap: .5rem;
+  margin-top: 0;
+  min-height: 44px;
+  padding: .5rem;
   border: 1px solid var(--border);
   border-radius: 8px;
   cursor: pointer;
   transition: border-color 0.2s ease, background 0.2s ease;
 }
 
-.radio-option.selected {
-  border-color: var(--valid);
-  background-color: rgba(34, 197, 94, 0.12);
+.radio-option:has(:checked) {
+  border-color: var(--border-focus);
+  background-color: var(--ui-tint);
 }
 
 .radio-option input {
   width: auto;
+  margin: 0;
+}
+
+@media (max-width: 28rem) {
+  .radio-group { grid-template-columns: 1fr; }
 }
 
 .profile-completeness {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  gap: .75rem;
   color: var(--text);
-  max-width: 600px;
-  margin: 0 auto;
+  width: 100%;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ui-line);
   animation: fadeIn 0.5s ease 0.3s both;
 }
 
 .progress-bar {
-  width: 140px;
-  height: 140px;
-  border-left: 3px solid var(--progress-fill);
-  border-top: 3px solid var(--progress-track);
-  border-right: 3px solid var(--progress-track);
-  background-color: var(--progress-track);
-  border-radius: 50%;
-  overflow: hidden;
-  position: relative;
+  display: grid;
+  gap: .5rem;
+}
+
+.progress-bar::after {
+  content: "";
+  height: .35rem;
+  border-radius: 1rem;
+  background: linear-gradient(to right, var(--progress-fill) 60%, var(--progress-track) 60%);
 }
 
 .progress {
-  background: var(--badge-gradient);
-  height: 100%;
-  width: 0;
-  transition: width 0.6s ease;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 10px;
-  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: .5rem;
 }
 
-.progress span {
-  font-size: 0.7rem;
-  font-weight: 600;
-}
+.progress strong { color: var(--muted); font-variant-numeric: tabular-nums; }
+.progress span { font-weight: 650; }
 
 .checklist {
-  display: flex;
-  flex-direction: column;
-  background-color: var(--progress-track);
-  color: var(--text);
-  border-radius: 10px;
-  margin-top: 12px;
+  font-size: .9rem;
 }
 
 .checklist ul {
-  list-style-type: none;
-  padding: 20px;
+  padding-inline-start: 1.25rem;
   margin: 0;
 }
 
-.checklist li {
-  margin-bottom: 10px;
+.checklist li + li {
+  margin-top: .35rem;
 }
 
 del {
@@ -239,19 +228,20 @@ del {
 
 input[type="submit"] {
   width: 100%;
+  min-height: 44px;
   padding: 10px 20px;
-  margin-top: 20px;
+  margin-top: .4rem;
   border-radius: 6px;
   border: none;
-  background-color: var(--progress-fill);
-  color: #ffffff;
+  background-color: var(--ui-action);
+  color: var(--ui-on-action);
   font-size: 16px;
   cursor: pointer;
   transition: background 0.2s ease;
 }
 
 input[type="submit"]:hover {
-  opacity: 0.9;
+  background-color: var(--ui-action-hover);
 }
 
 @keyframes fadeIn {
@@ -260,20 +250,13 @@ input[type="submit"]:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  body { animation: none; }
-  .container { animation: none; }
+  body, .container, .profile-completeness, .checklist li:not([data-completed="true"]),
+  .error-message { animation: none; }
+  .strength-meter { transition: none; }
 }
 
-@media (max-width: 480px) {
-  .container {
-    width: 90%;
-    padding: 14px;
-  }
-  .radio-group {
-    flex-direction: column;
-  }
-}
-form h1 { margin-bottom: .4rem; line-height: 1.2; }
-.form-note { margin-bottom: 1rem; }
-#formStatus { color: var(--text); min-height: 1.5em; }
+form h1 { margin: 0; line-height: 1.2; }
+.form-note { color: var(--muted); margin: 0 0 .4rem; }
+#formStatus { color: var(--text); margin: 0; }
+#formStatus:empty { margin-top: -12px; }
 input[aria-invalid="true"] { border-color: var(--error); }

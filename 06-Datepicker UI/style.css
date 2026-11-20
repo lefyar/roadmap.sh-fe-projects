@@ -1,18 +1,19 @@
+@import url("../theme.css");
+
 :root {
-  color-scheme: light;
   font-family: system-ui, sans-serif;
-  --page: #f2f6fa;
-  --card: #fff;
-  --ink: #1a293b;
-  --line: #9eafc0;
-  --accent: #215d99;
-  --on-accent: #fff;
+  --page: var(--ui-canvas);
+  --card: var(--ui-surface);
+  --ink: var(--ui-ink);
+  --line: var(--ui-control);
+  --accent: var(--ui-accent);
+  --on-accent: var(--ui-on-action);
 }
 * { box-sizing: border-box; }
 body { min-height: 100vh; margin: 0; display: grid; place-items: center; padding: 1rem; background: var(--page); color: var(--ink); }
 .picker, dialog { width: min(100%, 28rem); border: 1px solid var(--line); border-radius: 1rem; padding: 1.25rem; background: var(--card); color: var(--ink); }
 dialog { width: min(calc(100% - 2rem), 25rem); }
-dialog::backdrop { background: #122035a6; }
+dialog::backdrop { background: var(--ui-backdrop); }
 header, footer, .date-row { display: flex; align-items: center; gap: .45rem; }
 header, footer { justify-content: space-between; }
 h1 { font-size: clamp(1.3rem, 6vw, 1.8rem); margin: 0; }
@@ -24,7 +25,7 @@ button:hover { border-color: var(--accent); }
 button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .date-row { flex-wrap: wrap; }
 .date-row input { min-width: 8rem; flex: 1; }
-#openButton, [aria-selected="true"] button { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+#openButton, [aria-selected="true"] button { background: var(--ui-action); color: var(--on-accent); border-color: var(--accent); }
 table { width: 100%; border-spacing: .16rem; table-layout: fixed; margin: .75rem 0; text-align: center; }
 th { font-weight: 650; font-size: .875rem; }
 td > button { width: 100%; min-height: 2.25rem; padding: 0; border-color: transparent; }

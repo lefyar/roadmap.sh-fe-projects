@@ -1,15 +1,17 @@
+@import url("../theme.css");
+
 /* Theme variables */
 :root {
-  --bg: #f6f7f9;
-  --text: #1f2933;
-  --muted: #6b7685;
-  --card: #ffffff;
-  --border: #dfe5ed;
-  --accent: #2e7d32;
-  --accent-light: #81c784;
-  --tag-new: #22c55e;
-  --tag-improved: #3b82f6;
-  --tag-fixed: #ec4899;
+  --bg: var(--ui-canvas);
+  --text: var(--ui-ink);
+  --muted: var(--ui-muted);
+  --card: var(--ui-surface);
+  --border: var(--ui-line);
+  --accent: var(--ui-action);
+  --accent-light: var(--ui-accent);
+  --tag-new: var(--ui-accent);
+  --tag-improved: var(--ui-ink);
+  --tag-fixed: var(--ui-muted);
 }
 
 * {
@@ -44,8 +46,11 @@ h1 {
   justify-content: center;
   align-items: center;
   gap: 20px;
+  padding-block: clamp(1.5rem, 5vw, 3.5rem);
   position: relative;
 }
+
+.container > p { color: var(--muted); }
 
 .changelog {
   display: flex;
@@ -100,14 +105,14 @@ h1 {
   width: fit-content;
 }
 
-.status-new { background-color: rgba(34, 197, 94, 0.18); color: #135d31; }
-.status-improved { background-color: rgba(59, 130, 246, 0.18); color: #1d4ed8; }
-.status-fixed { background-color: rgba(236, 72, 153, 0.18); color: #be185d; }
+.status-new { background-color: var(--ui-tint); color: var(--tag-new); }
+.status-improved { background-color: var(--ui-raised); color: var(--tag-improved); }
+.status-fixed { background-color: var(--ui-raised); color: var(--tag-fixed); }
 
 .changelog-link {
   background-color: var(--accent);
   width: 100%;
-  color: var(--bg);
+  color: var(--ui-on-action);
   border: none;
   padding: 12px 20px;
   border-radius: 8px;
@@ -118,7 +123,7 @@ h1 {
 }
 
 .changelog-link:hover {
-  background-color: #225e27;
+  background-color: var(--ui-action-hover);
   transform: translateY(-1px);
 }
 

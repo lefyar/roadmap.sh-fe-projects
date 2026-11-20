@@ -1,15 +1,17 @@
+@import url("../theme.css");
+
 /* Theme variables */
 :root {
-  --bg: #ffffff;
-  --text: #1f2933;
-  --muted: #4c596a;
-  --card: #ffffff;
-  --border: #dddddd;
-  --icon-bg: #ffffff;
-  --icon-border: #d6d6d6;
-  --textarea-bg: #f0f0f0;
-  --textarea-focus: #0077b6;
-  --toast-bg: #2c2c2c;
+  --bg: var(--ui-canvas);
+  --text: var(--ui-ink);
+  --muted: var(--ui-muted);
+  --card: var(--ui-surface);
+  --border: var(--ui-control);
+  --icon-bg: var(--ui-surface);
+  --icon-border: var(--ui-line);
+  --textarea-bg: var(--ui-raised);
+  --textarea-focus: var(--ui-accent);
+  --toast-bg: var(--ui-raised);
 }
 
 * {
@@ -57,7 +59,7 @@ h1 {
 
 .textarea:focus-within {
   border-color: var(--textarea-focus);
-  box-shadow: 0 0 0 3px rgba(0, 119, 182, 0.18);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-accent) 30%, transparent);
 }
 
 textarea {
@@ -71,7 +73,6 @@ textarea {
   font-size: 1rem;
   color: var(--text);
   background: transparent;
-  outline: none;
   transition: box-shadow 0.2s ease;
 }
 
@@ -109,8 +110,8 @@ textarea::-webkit-scrollbar-thumb {
 }
 
 .copy-btn {
-  background: var(--textarea-focus);
-  color: #ffffff;
+  background: var(--ui-action);
+  color: var(--ui-on-action);
   border: none;
   padding: 6px 12px;
   border-radius: 6px;

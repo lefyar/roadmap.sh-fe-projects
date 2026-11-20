@@ -1,21 +1,23 @@
+@import url("../theme.css");
+
 /* Theme variables */
 :root {
-  --bg: #f9fafb;
-  --card: #ffffff;
-  --text: #111827;
-  --muted: #6b7280;
-  --border: #e5e7eb;
-  --input-bg: #ffffff;
-  --input-focus: #2563eb;
-  --accent: #087853;
-  --result-main: #111827;
-  --result-secondary: #6b7280;
-  --icon-bg: #ffffff;
-  --icon-border: #e5e7eb;
-  --error: #dc2626;
-  --error-bg: #fef2f2;
-  --error-border: #fecaca;
-  --toast-bg: #111827;
+  --bg: var(--ui-canvas);
+  --card: var(--ui-surface);
+  --text: var(--ui-ink);
+  --muted: var(--ui-muted);
+  --border: var(--ui-line);
+  --input-bg: var(--ui-raised);
+  --input-focus: var(--ui-accent);
+  --accent: var(--ui-action);
+  --result-main: var(--ui-ink);
+  --result-secondary: var(--ui-muted);
+  --icon-bg: var(--ui-surface);
+  --icon-border: var(--ui-line);
+  --error: var(--ui-accent);
+  --error-bg: var(--ui-tint);
+  --error-border: var(--ui-accent);
+  --toast-bg: var(--ui-raised);
 }
 
 * {
@@ -67,7 +69,7 @@ h1 {
 input {
   width: 100%;
   padding: 12px 14px;
-  border: 2px solid var(--border);
+  border: 2px solid var(--ui-control);
   border-radius: 8px;
   background-color: var(--input-bg);
   color: var(--text);
@@ -76,9 +78,9 @@ input {
 }
 
 input:focus {
-  outline: none;
+  outline: 2px solid var(--input-focus);
+  outline-offset: 2px;
   border-color: var(--input-focus);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 button {
@@ -104,7 +106,7 @@ button:hover {
   padding: 16px;
   text-align: left;
   border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.03);
+  background-color: var(--ui-raised);
 }
 
 .result p {
@@ -139,7 +141,7 @@ button:hover {
 }
 
 .copy-btn:hover {
-  color: var(--accent);
+  color: var(--ui-accent);
   border-color: var(--accent);
   opacity: 1;
   transform: translateY(0);

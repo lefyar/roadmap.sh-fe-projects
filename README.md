@@ -38,7 +38,12 @@ I'm Edma Reyfaldy. I built these 24 projects as I worked through the front-end r
 | [Pomodoro Timer](./21-Pomodoro%20Timer/) | [Open app](https://roadmap-frontend-projects.vercel.app/21-Pomodoro%20Timer/) | [Brief](https://roadmap.sh/projects/pomodoro-timer) |
 | [Quiz App](./22-Quiz%20App/) | [Open app](https://roadmap-frontend-projects.vercel.app/22-Quiz%20App/) | [Brief](https://roadmap.sh/projects/quiz-app) |
 | [Weather Web App](./23-Weather%20Web%20App/) | [Open app](https://roadmap-frontend-projects.vercel.app/23-Weather%20Web%20App/) | [Brief](https://roadmap.sh/projects/weather-app) |
-| [24-hour Photo Diary](./24-Story%20Feature/) | [Open app](https://roadmap-frontend-projects.vercel.app/24-Story%20Feature/) | [Brief](https://roadmap.sh/projects/stories-feature) |
+
+### Advanced
+
+| Project source | Demo | Challenge |
+| --- | --- | --- |
+| [24-Hour Story Feature](./24-Story%20Feature/) | [Open app](https://roadmap-frontend-projects.vercel.app/24-Story%20Feature/) | [Brief](https://roadmap.sh/projects/stories-feature) |
 
 ## Run locally
 

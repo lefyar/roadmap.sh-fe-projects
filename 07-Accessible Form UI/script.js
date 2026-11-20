@@ -28,20 +28,24 @@ function updateStrength() {
   const score = [value.length >= 8, /[A-Z]/.test(value), /[a-z]/.test(value), /\d/.test(value),
     /[^A-Za-z0-9]/.test(value)].filter(Boolean).length;
   meter.dataset.score = value.length >= 8 ? score : 0;
-  strength.textContent = value.length < 8 ? "Enter at least 8 characters."
-    : (["", "Weak", "Weak", "Fair", "Strong", "Very strong"][score]);
+  if (value.length < 8) {
+    strength.textContent = password.getAttribute("aria-invalid") === "true" ? "" : "Enter at least 8 characters.";
+    return;
+  }
+  strength.textContent = ["", "Weak", "Weak", "Fair", "Strong", "Very strong"][score];
 }
 
 form.addEventListener("input", event => {
   status.textContent = "";
-  if (event.target === password) updateStrength();
   if (submitted) fields.forEach(validate);
+  if (event.target === password) updateStrength();
 });
 
 form.addEventListener("submit", event => {
   event.preventDefault();
   submitted = true;
   const results = fields.map(validate);
+  updateStrength();
   const firstInvalid = results.indexOf(false);
   if (firstInvalid !== -1) {
     status.textContent = "Check the highlighted fields.";

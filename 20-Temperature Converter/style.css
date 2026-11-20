@@ -1,16 +1,18 @@
+@import url("../theme.css");
+
 /* Theme variables */
 :root {
-  --bg: #f9fafb;
-  --card: #ffffff;
-  --text: #111827;
-  --muted: #6b7280;
-  --border: #e5e7eb;
-  --input-bg: #ffffff;
-  --accent: #2563eb;
-  --accent-soft: #dbeafe;
-  --icon-bg: #ffffff;
-  --icon-border: #e5e7eb;
-  --error: #dc2626;
+  --bg: var(--ui-canvas);
+  --card: var(--ui-surface);
+  --text: var(--ui-ink);
+  --muted: var(--ui-muted);
+  --border: var(--ui-line);
+  --input-bg: var(--ui-raised);
+  --accent: var(--ui-accent);
+  --accent-soft: var(--ui-tint);
+  --icon-bg: var(--ui-surface);
+  --icon-border: var(--ui-line);
+  --error: var(--ui-accent);
 }
 
 * {
@@ -90,13 +92,14 @@ h1 {
   font-size: 0.95rem;
   color: var(--text);
   background-color: var(--input-bg);
-  border: 1px solid var(--border);
+  border: 1px solid var(--ui-control);
   border-radius: 8px;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .form-field input[type="number"]:focus {
-  outline: none;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
@@ -112,14 +115,15 @@ h1 {
   font-size: 0.95rem;
   color: var(--text);
   background-color: var(--input-bg);
-  border: 1px solid var(--border);
+  border: 1px solid var(--ui-control);
   border-radius: 8px;
   cursor: pointer;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .form-field select:focus {
-  outline: none;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
@@ -127,7 +131,7 @@ h1 {
 .result {
   min-height: 40px;
   padding: 12px 14px;
-  background-color: rgba(0, 0, 0, 0.03);
+  background-color: var(--ui-raised);
   border-radius: 8px;
   border: 1px dashed var(--border);
   display: flex;
@@ -152,8 +156,8 @@ h1 {
 
 .convert-btn {
   padding: 10px 20px;
-  background-color: var(--accent);
-  color: #ffffff;
+  background-color: var(--ui-action);
+  color: var(--ui-on-action);
   font-weight: 600;
   border: none;
   border-radius: 8px;

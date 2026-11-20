@@ -30,16 +30,16 @@ export const TimerDisplay: React.FC<TimerDisplayProps> = ({
   onSettingsClick,
 }) => {
   return (
-    <section className="w-full max-w-md mx-auto border border-slate-300 bg-white rounded-2xl p-5">
+    <section className="w-full max-w-md mx-auto border border-[color:var(--ui-line)] bg-[var(--ui-surface)] rounded-2xl p-5">
       <div className="flex items-center justify-between gap-2 mb-5">
         <h2 className="flex items-center gap-2 text-lg font-semibold" aria-live="polite">
-          <Timer aria-hidden="true" className="h-5 w-5 text-rose-700" />
+          <Timer aria-hidden="true" className="h-5 w-5 text-[color:var(--ui-muted)]" />
           {sessionLabels[currentSession]}
         </h2>
       <button
         type="button"
         onClick={onSettingsClick}
-        className="flex items-center gap-1.5 rounded-md border border-slate-300 px-2.5 py-2 hover:bg-slate-50"
+        className="flex min-h-11 items-center gap-1.5 rounded-md border border-[color:var(--ui-control)] px-2.5 py-2 hover:bg-[var(--ui-hover)]"
         aria-haspopup="dialog"
       >
         <Settings2 size={17} aria-hidden="true" /> Settings
@@ -51,7 +51,7 @@ export const TimerDisplay: React.FC<TimerDisplayProps> = ({
           {formatTime(timeRemaining)}
         </div>
 
-        <div className="text-sm text-slate-600 mb-2">
+        <div className="text-sm text-[color:var(--ui-muted)] mb-2">
           Completed Sessions: {completedSessions} · Focus: {focusMinutes} min
         </div>
 

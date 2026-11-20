@@ -1,7 +1,8 @@
+@import url("../../../theme.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root { color-scheme: light; }
-:focus-visible { outline: 3px solid #9f1239; outline-offset: 3px; }
-dialog::backdrop { background: #0f172a75; }
+:focus-visible { outline: 3px solid var(--ui-accent); outline-offset: 3px; }
+dialog::backdrop { background: var(--ui-backdrop); }

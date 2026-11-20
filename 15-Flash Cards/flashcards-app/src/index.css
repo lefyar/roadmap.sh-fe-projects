@@ -1,14 +1,16 @@
-:root { color-scheme: light; background: #f3f8f5; color: #1e3329; font: 1rem/1.5 system-ui, sans-serif; }
+@import url("../../../theme.css");
+
+:root { background: var(--ui-canvas); color: var(--ui-ink); font: 1rem/1.5 system-ui, sans-serif; }
 * { box-sizing: border-box; }
 body { margin: 0; padding: clamp(2rem, 8vw, 6rem) 1rem 2rem; }
 .container { max-width: 37rem; margin: auto; }
 h1 { margin: 0 0 1rem; font-size: clamp(1.8rem, 7vw, 2.5rem); }
 h2 { margin: 0 0 1rem; font-size: clamp(1.15rem, 5vw, 1.5rem); line-height: 1.25; }
-.flashcard { margin-block: 1.25rem; min-height: 10rem; padding: clamp(1rem, 5vw, 1.75rem); background: #fff; border: 1px solid #b0c6b8; border-radius: .85rem; }
+.flashcard { margin-block: 1.25rem; min-height: 10rem; padding: clamp(1rem, 5vw, 1.75rem); background: var(--ui-surface); border: 1px solid var(--ui-line); border-radius: .85rem; }
 .progress-bar { display: grid; gap: .3rem; }
-progress { width: 100%; height: .8rem; accent-color: #2d694d; }
+progress { width: 100%; height: .8rem; accent-color: var(--ui-action); }
 .navigation-buttons { display: flex; justify-content: space-between; gap: .5rem; }
-button { min-height: 2.75rem; padding: .45rem .9rem; color: #fff; background: #276044; border: 1px solid #276044; border-radius: .55rem; font: inherit; font-weight: 650; cursor: pointer; }
-button:hover:not(:disabled) { background: #1e4b35; }
-button:disabled { color: #496255; background: #e8efeb; border-color: #c0d1c6; cursor: default; }
-:focus-visible { outline: 2px solid #276044; outline-offset: 3px; }
+button { min-height: 2.75rem; padding: .45rem .9rem; color: var(--ui-on-action); background: var(--ui-action); border: 1px solid var(--ui-action); border-radius: .55rem; font: inherit; font-weight: 650; cursor: pointer; }
+button:hover:not(:disabled) { background: var(--ui-action-hover); }
+button:disabled { color: var(--ui-muted); background: var(--ui-raised); border-color: var(--ui-line); cursor: default; }
+:focus-visible { outline: 2px solid var(--ui-accent); outline-offset: 3px; }

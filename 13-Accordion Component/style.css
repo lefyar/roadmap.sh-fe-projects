@@ -1,15 +1,17 @@
+@import url("../theme.css");
+
 /* Theme variables */
 :root {
-  --bg: #ffffff;
-  --text: #1f2933;
-  --muted: #505c6c;
-  --header-bg: #000000;
-  --header-text: #ffffff;
-  --header-hover: #424242;
-  --content-bg: #ffffff;
-  --content-border: #000000;
-  --icon-bg: #ffffff;
-  --icon-border: #dddddd;
+  --bg: var(--ui-canvas);
+  --text: var(--ui-ink);
+  --muted: var(--ui-muted);
+  --header-bg: var(--ui-surface);
+  --header-text: var(--ui-ink);
+  --header-hover: var(--ui-hover);
+  --content-bg: var(--ui-raised);
+  --content-border: var(--ui-line);
+  --icon-bg: var(--ui-surface);
+  --icon-border: var(--ui-line);
 }
 
 * {
@@ -77,7 +79,7 @@ body {
 }
 
 .accordion-header:focus-visible {
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-accent) 40%, transparent);
 }
 
 .accordion-header:hover {

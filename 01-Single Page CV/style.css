@@ -1,3 +1,5 @@
+@import url("../theme.css");
+
 html {
   font-family: "Roboto", system-ui, -apple-system, sans-serif;
   font-size: 16px;
@@ -15,15 +17,15 @@ body {
 
 /* Theme variables */
 :root {
-  --bg: #ffffff;
-  --text: #333333;
-  --muted: #666666;
-  --hr: #000000;
-  --h2: #187334;
-  --h3: rgb(0, 94, 195);
-  --link: #1a5db0;
-  --btn-bg: #ffffff;
-  --btn-text: #000000;
+  --bg: var(--ui-canvas);
+  --text: var(--ui-ink);
+  --muted: var(--ui-muted);
+  --hr: var(--ui-line);
+  --h2: var(--ui-accent);
+  --h3: var(--ui-ink);
+  --link: var(--ui-accent);
+  --btn-bg: var(--ui-surface);
+  --btn-text: var(--ui-ink);
 }
 
 hr {
@@ -142,7 +144,18 @@ main {
   }
 }
 @media print {
-  body { background: white; color: black; }
+  :root {
+    color-scheme: light;
+    --bg: white;
+    --text: #171717;
+    --muted: #555;
+    --hr: #333;
+    --h2: #8b1829;
+    --h3: #171717;
+    --link: #8b1829;
+    --btn-bg: white;
+  }
+  header, main { animation: none; }
   .header, .main { width: 100%; max-width: none; box-shadow: none; padding: 0; }
   section { break-inside: avoid; }
 }

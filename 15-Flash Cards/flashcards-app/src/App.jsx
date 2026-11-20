@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Flashcard from "./components/Flashcard";
 import ProgressBar from "./components/ProgressBar";
 import NavigationButtons from "./components/NavigationButtons";
@@ -9,17 +9,29 @@ function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = () => {
-    if (currentIndex < data.length - 1) setCurrentIndex(currentIndex + 1);
+    setCurrentIndex((index) => Math.min(index + 1, data.length - 1));
   };
 
   const handlePrev = () => {
-    if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
+    setCurrentIndex((index) => Math.max(index - 1, 0));
   };
+
+  useEffect(() => {
+    if (data.length === 0) return;
+    const onKey = (event) => {
+      if (event.key === "ArrowRight") handleNext();
+      else if (event.key === "ArrowLeft") handlePrev();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [data.length]);
 
   return (
     <div className="container">
       <h1>Flashcards App</h1>
-      {data.length > 0 ? (
+      {data.length === 0 ? (
+        <p>No flashcards available yet.</p>
+      ) : (
         <>
           <ProgressBar current={currentIndex + 1} total={data.length} />
           <Flashcard
@@ -33,8 +45,6 @@ function App() {
             isNextDisabled={currentIndex === data.length - 1}
           />
         </>
-      ) : (
-        <p>Loading flashcards...</p>
       )}
     </div>
   );

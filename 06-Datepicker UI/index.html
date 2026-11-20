@@ -1,63 +1,239 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Datepicker UI</title>
-    <link rel="stylesheet" href="./style.css" />
+    <title data-i18n="pageTitle">Datepicker UI</title>
   </head>
   <body>
     <div class="container">
+      <button id="themeToggle" type="button" aria-label="Toggle theme">🌙</button>
+      <button id="langToggle" type="button" aria-label="Switch language">EN → ID</button>
       <div class="datepicker-input">
-        <input type="text" placeholder="dd/mm/yyyy" />
-        <button>
-          <img
-            src="./calendar-days-svgrepo-com.svg"
-            alt="calendar-icon"
-          />
+        <input type="text" id="dateInput" placeholder="dd/mm/yyyy" readonly aria-label="Selected date" />
+        <button id="openButton" type="button" aria-label="Open calendar">
+          <img src="./calendar-days-svgrepo-com.svg" alt="calendar-icon" />
         </button>
       </div>
-      <div class="calendar">
+      <div id="calendar" class="calendar" hidden role="dialog" aria-modal="true" aria-label="Calendar">
         <div class="calendar-header">
-          <button>
-            <img
-              class="arrows"
-              src="./left-arrow-svgrepo-com.svg"
-              alt="left-arrow"
-            />
-          </button>
-          <span>December 2022</span>
-          <button>
-            <img
-              class="arrows"
-              src="./right-arrow-svgrepo-com.svg"
-              alt="right-arrow"
-            />
-          </button>
+          <button id="prevButton" type="button" class="arrows" aria-label="Previous month">❮</button>
+          <span class="month-year" data-i18n="monthYear">December 2022</span>
+          <button id="nextButton" type="button" class="arrows" aria-label="Next month">❯</button>
         </div>
         <div class="calendar-body">
-          <div class="calendar-weekdays">
-            <span>S</span>
-            <span>M</span>
-            <span>T</span>
-            <span>W</span>
-            <span>T</span>
-            <span>F</span>
-            <span>S</span>
-          </div>
-          <div class="calendar-days">
-            <span></span> <span></span> <span></span> <span></span>
-            <span>1</span> <span>2</span> <span>3</span> <span>4</span>
-            <span>5</span> <span>6</span> <span>7</span> <span>8</span>
-            <span>9</span> <span>10</span> <span>11</span> <span>12</span>
-            <span>13</span> <span>14</span> <span>15</span> <span>16</span>
-            <span>17</span> <span>18</span> <span>19</span> <span>20</span>
-            <span>21</span> <span>22</span> <span>23</span> <span>24</span>
-            <span>25</span> <span>26</span> <span>27</span> <span>28</span>
-            <span>29</span> <span>30</span> <span>31</span>
-          </div>
+          <div class="calendar-weekdays" role="row"></div>
+          <div class="calendar-days" role="grid" aria-label="Month grid"></div>
         </div>
+        <button id="todayButton" class="today-btn" data-i18n="goToToday">Go to today</button>
+        <button id="closeButton" type="button" class="close-btn" aria-label="Close">Close</button>
       </div>
     </div>
+    <script>
+      (function () {
+        "use strict";
+
+        var I18N = {
+          en: {
+            pageTitle: "Datepicker UI",
+            placeholders: { date: "dd/mm/yyyy" },
+            months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+            weekdays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+            monthYear: "December 2022",
+            goToToday: "Go to today"
+          },
+          id: {
+            pageTitle: "Datepicker UI",
+            placeholders: { date: "dd/mm/yyyy" },
+            months: ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"],
+            weekdays: ["Ahad", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"],
+            monthYear: "Desember 2022",
+            goToToday: "Pergi ke hari ini"
+          }
+        };
+
+        function currentLang() {
+          return localStorage.getItem("datepicker-lang") || "en";
+        }
+
+        function currentTheme() {
+          var saved = localStorage.getItem("datepicker-theme");
+          if (saved) return saved;
+          return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+
+        function applyTheme() {
+          var theme = currentTheme();
+          document.documentElement.dataset.theme = theme;
+          document.getElementById("themeToggle").textContent = theme === "dark" ? "☀️" : "🌙";
+        }
+
+        function lang() { return I18N[currentLang()]; }
+
+        var calendar = {
+          month: new Date().getMonth(),
+          year: new Date().getFullYear(),
+          selected: null, // Date object
+          focused: null // Date object
+        };
+
+        function pad(n) { return n < 10 ? "0" + n : String(n); }
+
+        function fmtDate(date) {
+          return pad(date.getDate()) + "/" + pad(date.getMonth() + 1) + "/" + date.getFullYear();
+        }
+
+        function isSameDay(a, b) {
+          return a.getDate() === b.getDate() && a.getMonth() === b.getMonth() && a.getFullYear() === b.getFullYear();
+        }
+
+        function renderWeekdays() {
+          var row = document.querySelector(".calendar-weekdays");
+          var dict = lang();
+          row.innerHTML = "";
+          dict.weekdays.forEach(function (w) {
+            var span = document.createElement("span");
+            span.textContent = w;
+            row.appendChild(span);
+          });
+        }
+
+        function renderMonth() {
+          var dict = lang();
+          var header = document.querySelector(".month-year");
+          header.textContent = dict.months[calendar.month] + " " + calendar.year;
+
+          var grid = document.querySelector(".calendar-days");
+          grid.innerHTML = "";
+
+          var first = new Date(calendar.year, calendar.month, 1);
+          var startDow = first.getDay(); // 0=Sun
+          var daysInMonth = new Date(calendar.year, calendar.month + 1, 0).getDate();
+          var today = new Date();
+
+          for (var i = 0; i < startDow; i++) {
+            var blank = document.createElement("span");
+            grid.appendChild(blank);
+          }
+
+          for (var day = 1; day <= daysInMonth; day++) {
+            var span = document.createElement("span");
+            span.textContent = day;
+            var date = new Date(calendar.year, calendar.month, day);
+            var classes = [];
+            if (calendar.selected && isSameDay(date, calendar.selected)) classes.push("selected");
+            if (calendar.focused && isSameDay(date, calendar.focused)) classes.push("focused");
+            if (isSameDay(date, today)) classes.push("today");
+            span.className = classes.join(" ");
+            span.setAttribute("role", "gridcell");
+            span.setAttribute("tabindex", isSameDay(date, calendar.focused) ? "0" : "-1");
+            span.setAttribute("aria-selected", calendar.selected && isSameDay(date, calendar.selected) ? "true" : "false");
+            span.setAttribute("aria-label", dict.months[calendar.month] + " " + day + ", " + calendar.year + (isSameDay(date, today) ? " (Today)" : ""));
+            span.dataset.date = fmtDate(date);
+
+            span.addEventListener("click", function () {
+              calendar.selected = new Date(parseInt(this.dataset.date.slice(6, 10), 10), parseInt(this.dataset.date.slice(3, 5), 10) - 1, parseInt(this.dataset.date.slice(0, 2), 10));
+              document.getElementById("dateInput").value = this.dataset.date;
+              renderMonth();
+            });
+
+            span.addEventListener("keydown", function (e) {
+              var index = Array.prototype.indexOf.call(grid.children, span);
+              var cols = 7;
+              var moves = {
+                ArrowRight: 1, ArrowLeft: -1,
+                ArrowDown: cols, ArrowUp: -cols
+              };
+              if (moves[e.key] !== undefined) {
+                e.preventDefault();
+                var next = Math.min(grid.children.length - 1, Math.max(0, index + moves[e.key]));
+                calendar.focused = new Date(parseInt(grid.children[next].dataset.date.slice(6, 10), 10), parseInt(grid.children[next].dataset.date.slice(3, 5), 10) - 1, parseInt(grid.children[next].dataset.date.slice(0, 2), 10));
+                grid.children[next].focus();
+                renderMonth();
+              } else if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                calendar.selected = calendar.focused || new Date(parseInt(span.dataset.date.slice(6, 10), 10), parseInt(span.dataset.date.slice(3, 5), 10) - 1, parseInt(span.dataset.date.slice(0, 2), 10));
+                document.getElementById("dateInput").value = calendar.selected && fmtDate(calendar.selected);
+                renderMonth();
+              } else if (e.key === "Escape") {
+                e.preventDefault();
+                calendar.calendarHidden();
+              }
+            });
+
+            grid.appendChild(span);
+          }
+        }
+
+        calendar.calendarHidden = function () {
+          document.getElementById("calendar").hidden = true;
+          document.getElementById("openButton").focus();
+        };
+
+        document.getElementById("prevButton").addEventListener("click", function () {
+          calendar.month -= 1;
+          if (calendar.month < 0) { calendar.month = 11; calendar.year -= 1; }
+          renderMonth();
+        });
+
+        document.getElementById("nextButton").addEventListener("click", function () {
+          calendar.month += 1;
+          if (calendar.month > 11) { calendar.month = 0; calendar.year += 1; }
+          renderMonth();
+        });
+
+        document.getElementById("todayButton").addEventListener("click", function () {
+          calendar.year = new Date().getFullYear();
+          calendar.month = new Date().getMonth();
+          renderMonth();
+          document.querySelector(".selected, .today") && (document.querySelector(".selected, .today").focus());
+        });
+
+        document.getElementById("openButton").addEventListener("click", function () {
+          var calendarEl = document.getElementById("calendar");
+          calendarEl.hidden = false;
+          calendar.focused = calendar.selected || new Date();
+          renderMonth();
+          setTimeout(function () {
+            var focused = calendar.focused ? document.querySelector('.calendar-days [data-date="' + fmtDate(calendar.focused) + '"]') : null;
+            if (focused) focused.focus();
+          }, 0);
+        });
+
+        document.getElementById("closeButton").addEventListener("click", calendar.calendarHidden);
+
+        document.addEventListener("click", function (e) {
+          var cal = document.getElementById("calendar");
+          var openButton = document.getElementById("openButton");
+          if (!cal.hidden && !cal.contains(e.target) && !openButton.contains(e.target)) {
+            calendar.calendarHidden();
+          }
+        });
+
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" && !document.getElementById("calendar").hidden) {
+            calendar.calendarHidden();
+          }
+        });
+
+        document.getElementById("themeToggle").addEventListener("click", function () {
+          var next = currentTheme() === "dark" ? "light" : "dark";
+          localStorage.setItem("datepicker-theme", next);
+          applyTheme();
+        });
+
+        document.getElementById("langToggle").addEventListener("click", function () {
+          var next = currentLang() === "en" ? "id" : "en";
+          localStorage.setItem("datepicker-lang", next);
+          renderMonth();
+        });
+
+        document.querySelector(".datepicker-input input").placeholder = I18N[currentLang()].placeholders.date;
+
+        applyTheme();
+        renderWeekdays();
+        renderMonth();
+      })();
+    </script>
   </body>
 </html>

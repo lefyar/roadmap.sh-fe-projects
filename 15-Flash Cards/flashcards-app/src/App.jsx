@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import Flashcard from "./components/Flashcard";
 import ProgressBar from "./components/ProgressBar";
 import NavigationButtons from "./components/NavigationButtons";
@@ -17,7 +17,6 @@ function App() {
   };
 
   useEffect(() => {
-    if (data.length === 0) return;
     const onKey = (event) => {
       if (event.key === "ArrowRight") handleNext();
       else if (event.key === "ArrowLeft") handlePrev();
@@ -29,9 +28,7 @@ function App() {
   return (
     <div className="container">
       <h1>Flashcards App</h1>
-      {data.length === 0 ? (
-        <p>No flashcards available yet.</p>
-      ) : (
+      {data.length > 0 ? (
         <>
           <ProgressBar current={currentIndex + 1} total={data.length} />
           <Flashcard
@@ -45,6 +42,8 @@ function App() {
             isNextDisabled={currentIndex === data.length - 1}
           />
         </>
+      ) : (
+        <p>No flashcards to show yet.</p>
       )}
     </div>
   );

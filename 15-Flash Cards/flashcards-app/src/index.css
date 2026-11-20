@@ -63,6 +63,14 @@ h1 {
   transition: width 0.3s ease;
 }
 
+.progress-bar-text {
+  position: absolute;
+  color: #00ff9d;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
 .navigation-buttons {
   width: 100%;
   display: flex;

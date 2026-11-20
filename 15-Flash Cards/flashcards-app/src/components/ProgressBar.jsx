@@ -1,14 +1,22 @@
 import PropTypes from "prop-types";
 
 function ProgressBar({ current, total }) {
-  const progressPercentage = (current / total) * 100;
+  const progressPercentage = Math.max(0, Math.min(100, (current / total) * 100));
 
   return (
-    <div className="progress-bar">
+    <div
+      className="progress-bar"
+      role="progressbar"
+      aria-valuenow={current}
+      aria-valuemin={1}
+      aria-valuemax={total}
+      aria-label="Flashcard progress"
+    >
       <div
         className="progress-bar-fill"
         style={{ width: `${progressPercentage}%` }}
-      ></div>
+      />
+      <span className="progress-bar-text">{current}/{total}</span>
     </div>
   );
 }

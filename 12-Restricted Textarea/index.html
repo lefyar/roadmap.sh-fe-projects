@@ -1,28 +1,147 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Restricted Textarea</title>
-    <link rel="stylesheet" href="./style.css" />
+    <title data-i18n="pageTitle">Restricted Textarea</title>
   </head>
   <body>
+    <button id="themeToggle" type="button" class="icon-btn" aria-label="Toggle theme">🌙</button>
+    <button id="langToggle" type="button" class="icon-btn" aria-label="Switch language">EN → ID</button>
     <div class="container">
-      <h1>Write your Message</h1>
+      <h1 data-i18n="title">Write your Message</h1>
       <div class="textarea">
         <textarea
           id="myTextarea"
           placeholder="Start typing"
-          maxlength="250"
+          aria-label="Message"
+          aria-describedby="counter"
+          data-max-length="250"
         ></textarea>
         <div class="counter">
-          <p id="0-250">Real-time Character Counter.</p>
-          <p id="1-250" class="detail-counter">Counter should go up as you keep typing.</p>
-          <p id="250-250" class="detail-counter">Stop user from typing more character.</p>
-          <p id="charCounter">0/250</p>
+          <p class="detail-counter" data-i18n="detail1">Real-time Character Counter.</p>
+          <p class="detail-counter" data-i18n="detail2">Counter should go up as you keep typing.</p>
+          <p class="detail-counter" data-i18n="detail3">Stop user from typing more character.</p>
+          <p id="charCounter" role="status" aria-live="polite" data-i18n="counterLabel">0/250</p>
+          <button type="button" id="copyBtn" class="copy-btn" data-i18n="copy">Copy</button>
         </div>
       </div>
+      <div class="limit-hint" data-i18n="limitHint">Limit: 250 characters</div>
+      <p id="toast" class="toast" role="status" hidden></p>
     </div>
-    <script src="./script.js"></script>
+    <script>
+      (function () {
+        "use strict";
+
+        var I18N = {
+          en: {
+            pageTitle: "Restricted Textarea",
+            title: "Write your Message",
+            detail1: "Real-time Character Counter.",
+            detail2: "Counter should go up as you keep typing.",
+            detail3: "Stop user from typing more character.",
+            counterLabel: "0/250",
+            copy: "Copy",
+            limitHint: "Limit: 250 characters",
+            copied: "Copied!",
+            tooLong: "You've reached the character limit."
+          },
+          id: {
+            pageTitle: "Text Area Terbatas",
+            title: "Tulis Pesan Anda",
+            detail1: "Penghitung Karakter Real-Time.",
+            detail2: "Penghitung harus naik seiring Anda mengetik.",
+            detail3: "Cegah pengguna mengetik lebih banyak.",
+            counterLabel: "0/250",
+            copy: "Salin",
+            limitHint: "Batas: 250 karakter",
+            copied: "Disalin!",
+            tooLong: "Anda sudah mencapai batas karakter."
+          }
+        };
+
+        var MAX = 250;
+        var textarea = document.getElementById("myTextarea");
+        var counter = document.getElementById("charCounter");
+        var copyBtn = document.getElementById("copyBtn");
+        var toast = document.getElementById("toast");
+        var atLimit = false;
+
+        function currentLang() { return localStorage.getItem("textarea-lang") || "en"; }
+        function currentTheme() {
+          var saved = localStorage.getItem("textarea-theme");
+          if (saved) return saved;
+          return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+        function applyTheme() {
+          var theme = currentTheme();
+          document.documentElement.dataset.theme = theme;
+          document.getElementById("themeToggle").textContent = theme === "dark" ? "☀️" : "🌙";
+        }
+        function applyLang() {
+          var lang = currentLang();
+          var dict = I18N[lang];
+          document.documentElement.lang = lang === "en" ? "en" : "id";
+          var els = document.querySelectorAll("[data-i18n]");
+          for (var i = 0; i < els.length; i++) els[i].textContent = dict[els[i].getAttribute("data-i18n")];
+          document.title = dict.pageTitle;
+          counter.textContent = "0/250";
+          document.getElementById("langToggle").textContent = lang === "en" ? "EN → ID" : "ID → EN";
+        }
+
+        function showToast(msg) {
+          toast.textContent = msg;
+          toast.hidden = false;
+          setTimeout(function () { toast.hidden = true; }, 2200);
+        }
+
+        function updateCounter() {
+          var len = textarea.value.length;
+          counter.textContent = len + "/" + MAX;
+          counter.classList.toggle("at-limit", len >= MAX);
+          atLimit = len >= MAX;
+          document.querySelector(".textarea").classList.toggle("at-limit", len >= MAX);
+        }
+
+        textarea.addEventListener("input", updateCounter);
+
+        // Block pastes that would exceed the limit, truncate silently
+        textarea.addEventListener("paste", function (event) {
+          var selection = textarea.value.slice(textarea.selectionStart, textarea.selectionEnd);
+          var pasted = event.clipboardData.getData("text");
+          var after = textarea.value.slice(0, textarea.selectionStart) + pasted + textarea.value.slice(textarea.selectionEnd);
+          if (after.length > MAX) {
+            event.preventDefault();
+            showToast(I18N[currentLang()].tooLong);
+          }
+        });
+
+        // Clipboard copy
+        copyBtn.addEventListener("click", function () {
+          textarea.select();
+          try {
+            document.execCommand("copy");
+          } catch {
+            navigator.clipboard && navigator.clipboard.writeText(textarea.value);
+          }
+          showToast(I18N[currentLang()].copied);
+        });
+
+        document.getElementById("themeToggle").addEventListener("click", function () {
+          var next = currentTheme() === "dark" ? "light" : "dark";
+          localStorage.setItem("textarea-theme", next);
+          applyTheme();
+        });
+        document.getElementById("langToggle").addEventListener("click", function () {
+          var next = currentLang() === "en" ? "id" : "en";
+          localStorage.setItem("textarea-lang", next);
+          applyLang();
+        });
+
+        applyTheme();
+        applyLang();
+        updateCounter();
+      })();
+    </script>
   </body>
 </html>

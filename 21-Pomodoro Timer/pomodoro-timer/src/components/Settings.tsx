@@ -8,6 +8,11 @@ interface SettingsProps {
   onClose: () => void;
 }
 
+function toMinutes(value: string, fallback: number): number {
+  const parsed = parseInt(value, 10);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+}
+
 export const Settings: React.FC<SettingsProps> = ({
   config,
   onUpdate,
@@ -49,7 +54,7 @@ export const Settings: React.FC<SettingsProps> = ({
                 value={localConfig.workMinutes}
                 onChange={(e) => setLocalConfig(prev => ({
                   ...prev,
-                  workMinutes: parseInt(e.target.value)
+                  workMinutes: toMinutes(e.target.value, prev.workMinutes),
                 }))}
                 className="w-full px-3 py-2 bg-[#2c2c2c] text-[#f1f1f1] rounded-md"
               />
@@ -67,7 +72,7 @@ export const Settings: React.FC<SettingsProps> = ({
                 value={localConfig.shortBreakMinutes}
                 onChange={(e) => setLocalConfig(prev => ({
                   ...prev,
-                  shortBreakMinutes: parseInt(e.target.value)
+                  shortBreakMinutes: toMinutes(e.target.value, prev.shortBreakMinutes),
                 }))}
                 className="w-full px-3 py-2 bg-[#2c2c2c] text-[#f1f1f1] rounded-md"
               />
@@ -85,7 +90,7 @@ export const Settings: React.FC<SettingsProps> = ({
                 value={localConfig.longBreakMinutes}
                 onChange={(e) => setLocalConfig(prev => ({
                   ...prev,
-                  longBreakMinutes: parseInt(e.target.value)
+                  longBreakMinutes: toMinutes(e.target.value, prev.longBreakMinutes),
                 }))}
                 className="w-full px-3 py-2 bg-[#2c2c2c] text-[#f1f1f1] rounded-md"
               />
@@ -103,7 +108,7 @@ export const Settings: React.FC<SettingsProps> = ({
                 value={localConfig.sessionsBeforeLongBreak}
                 onChange={(e) => setLocalConfig(prev => ({
                   ...prev,
-                  sessionsBeforeLongBreak: parseInt(e.target.value)
+                  sessionsBeforeLongBreak: toMinutes(e.target.value, prev.sessionsBeforeLongBreak),
                 }))}
                 className="w-full px-3 py-2 bg-[#2c2c2c] text-[#f1f1f1] rounded-md"
               />

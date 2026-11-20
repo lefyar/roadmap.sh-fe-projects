@@ -6,6 +6,7 @@ interface TimerDisplayProps {
   timeRemaining: number;
   currentSession: SessionType;
   completedSessions: number;
+  focusMinutes: number;
   isRunning: boolean;
   onSettingsClick: () => void;
 }
@@ -26,6 +27,7 @@ export const TimerDisplay: React.FC<TimerDisplayProps> = ({
   timeRemaining,
   currentSession,
   completedSessions,
+  focusMinutes,
   isRunning,
   onSettingsClick,
 }) => {
@@ -41,7 +43,7 @@ export const TimerDisplay: React.FC<TimerDisplayProps> = ({
       >
         <Settings2 size={24} />
       </button>
-      
+
       <div className="flex items-center justify-center mb-6">
         <Timer className="w-8 h-8 text-rose-500 mr-2" />
         <h2 className="text-2xl font-semibold text-[#f1f1f1]">
@@ -53,11 +55,11 @@ export const TimerDisplay: React.FC<TimerDisplayProps> = ({
         <div className="text-6xl font-bold text-[#f1f1f1] mb-4" role="timer">
           {formatTime(timeRemaining)}
         </div>
-        
+
         <div className="text-sm text-gray-500 mb-2">
-          Completed Sessions: {completedSessions}
+          Completed Sessions: {completedSessions} · Focus: {focusMinutes} min
         </div>
-        
+
         <div className="flex justify-center space-x-2">
           {Array.from({ length: 4 }).map((_, i) => (
             <div

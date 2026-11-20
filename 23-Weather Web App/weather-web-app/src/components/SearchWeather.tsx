@@ -7,7 +7,6 @@ export default function SearchWeather({
   getWeather,
   loading,
 }: SearchWeatherProps) {
-
   return (
     <div className="flex flex-col items-center w-full">
       <div className="flex space-x-2">
@@ -19,7 +18,9 @@ export default function SearchWeather({
             setLocation(e.target.value);
           }}
           onKeyDown={(e) => {
-            if (e.key === "Enter" && !loading) {
+            if (e.key === "Escape") {
+              setLocation("");
+            } else if (e.key === "Enter" && !loading) {
               getWeather();
             }
           }}

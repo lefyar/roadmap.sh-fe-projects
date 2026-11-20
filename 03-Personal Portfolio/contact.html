@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact | Personal Portfolio</title>
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Personal Portofolio by Edma Reyfaldy" />
-    <meta name="keywords" content="Personal Portofolio, HTML, CSS" />
+    <title data-i18n="pageTitle">Contact | Personal Portfolio</title>
+    <meta name="description" content="Personal Portfolio by Edma Reyfaldy" />
+    <meta name="keywords" content="Personal Portfolio, HTML, CSS" />
     <meta name="author" content="Edma Reyfaldy" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,70 +24,36 @@
       <div class="navigation">
         <nav>
           <ul>
-            <li><a href="./index.html">Home</a></li>
-            <li>/</li>
-            <li><a href="./projects.html">Projects</a></li>
-            <li>/</li>
-            <li><a href="./articles.html">Articles</a></li>
-            <li>/</li>
-            <li><a href="./contact.html">Contact</a></li>
+            <li><a href="./index.html" data-i18n="navHome">Home</a></li>
+            <li><a href="./projects.html" data-i18n="navProjects">Projects</a></li>
+            <li><a href="./articles.html" data-i18n="navArticles">Articles</a></li>
+            <li><a href="./contact.html" data-i18n="navContact" class="active">Contact</a></li>
           </ul>
         </nav>
-        <button class="dark-mode" onclick="toggleDarkMode()">
-          <svg
-            id="sun_icon"
-            style="display: none"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-          </svg>
-
-          <svg
-            id="moon_icon"
-            xmlns=" http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-          </svg>
-        </button>
+        <div class="header-actions">
+          <button class="dark-mode" onclick="toggleDarkMode()">
+            <svg id="sun_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            <svg id="moon_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          </button>
+          <button class="lang-toggle" type="button" onclick="toggleLang()">EN → ID</button>
+        </div>
       </div>
     </header>
     <main>
       <section class="contact-detail">
-        <h1>Contact Me</h1>
-        <form action="mailto:no_reply@example.com" method="post">
-          <label for="name">Name</label>
+        <h1 data-i18n="contactH1">Contact Me</h1>
+        <form class="contact-form" action="mailto:no_reply@example.com" method="post">
+          <label for="name" data-i18n="nameLabel">Name</label>
           <input type="text" id="name" name="name" required />
-          <label for="email">Email</label>
+          <label for="email" data-i18n="emailLabel">Email</label>
           <input type="email" id="email" name="email" required />
-          <label for="message">Message</label>
-          <textarea id="message" name="message" required></textarea>
-          <button type="submit">Submit</button>
+          <label for="message" data-i18n="messageLabel">Message</label>
+          <textarea id="message" name="message" rows="6" required></textarea>
+          <button type="submit" data-i18n="submitLabel">Submit</button>
         </form>
       </section>
     </main>
-    <footer>
-      <p>&copy; 2025 Edma Reyfaldy, All Rights Reserved</p>
-    </footer>
+    <footer class="footer">&copy; 2025 Edma Reyfaldy, All Rights Reserved</footer>
     <script src="./script.js"></script>
   </body>
 </html>

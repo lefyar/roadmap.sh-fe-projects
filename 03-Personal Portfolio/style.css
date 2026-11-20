@@ -1,29 +1,33 @@
-:root {
+:root[data-theme="light"] {
   --background-color: #ffffff;
-  --primary-color: #000000;
+  --primary-color: #1a1a1a;
   --secondary-color: #f1356d;
   --hover-color: #3577f1;
-  --hover-active-color: #470894;
+  --card-bg: #ffffff;
+  --border-color: rgba(0, 0, 0, 0.1);
 }
 
-[theme="dark"] {
-  --background-color: #333;
-  --primary-color: #fff;
+:root[data-theme="dark"],
+:root:not([data-theme="light"]) {
+  --background-color: #16161a;
+  --primary-color: #f5f5f5;
   --secondary-color: #f1356d;
-  --hover-color: #3577f1;
-  --hover-active-color: #470894;
+  --hover-color: #66a7ff;
+  --card-bg: #1f1f24;
+  --border-color: rgba(255, 255, 255, 0.1);
 }
 
 body {
-  font-family: "Montserrat", serif;
+  font-family: "Montserrat", sans-serif;
   background-color: var(--background-color);
   color: var(--primary-color);
-  padding: 0 10px;
-  font-family: "Montserrat", sans-serif;
+  margin: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
+  transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 ul {
@@ -35,6 +39,7 @@ ul {
 a {
   text-decoration: none;
   color: var(--secondary-color);
+  transition: color 0.2s ease;
 }
 
 a:hover {
@@ -45,6 +50,7 @@ h1,
 h2,
 h3 {
   text-align: center;
+  margin: 0;
 }
 
 svg {
@@ -53,14 +59,51 @@ svg {
 }
 
 .dark-mode {
-  background-color: var(--background-color);
+  background-color: var(--card-bg);
   color: var(--primary-color);
   border: solid 2px var(--primary-color);
   cursor: pointer;
   display: flex;
   align-items: center;
-  padding: 5px;
-  border-radius: 5px;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dark-mode:hover {
+  background-color: var(--primary-color);
+  color: var(--background-color);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lang-toggle {
+  padding: 6px 10px;
+  border: solid 2px var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--background-color);
+  border-radius: 6px;
+  font: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.lang-toggle:hover {
+  background-color: var(--background-color);
+  color: var(--primary-color);
+}
+
+header {
+  width: 100%;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 14px;
+  margin-bottom: 30px;
+  transition: border-color 0.35s ease;
 }
 
 main {
@@ -69,11 +112,17 @@ main {
   flex-direction: column;
   align-items: center;
   padding: 100px 0;
+  animation: fadeIn 0.6s ease both;
 }
 
 .hero {
   text-align: center;
-  padding: 0 0 100px 0;
+  padding: 0 0 40px 0;
+}
+
+.hero h1,
+.hero p {
+  transition: color 0.35s ease;
 }
 
 .content {
@@ -82,6 +131,8 @@ main {
   width: 100%;
   justify-content: space-between;
   gap: 20px;
+  max-width: 1160px;
+  margin: 0 auto;
 }
 
 .projects,
@@ -92,6 +143,21 @@ main {
   border: solid 2px var(--primary-color);
   border-radius: 10px;
   padding: 20px;
+  background-color: var(--card-bg);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.projects:hover,
+.experience:hover,
+.education:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="dark"] .projects:hover,
+[data-theme="dark"] .experience:hover,
+[data-theme="dark"] .education:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
 }
 
 .projects h3,
@@ -105,6 +171,9 @@ main {
   width: 100%;
   flex-direction: column;
   margin-top: 20px;
+  max-width: 1160px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .review {
@@ -117,6 +186,7 @@ main {
   padding: 0;
   margin: 0;
   height: 100px;
+  transition: color 0.35s ease;
 }
 
 blockquote {
@@ -128,6 +198,12 @@ blockquote {
   justify-content: space-between;
   padding: 10px;
   margin: 10px 10px;
+  background-color: var(--card-bg);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.review blockquote:hover {
+  transform: translateY(-2px);
 }
 
 form {
@@ -141,8 +217,17 @@ textarea {
   padding: 10px;
   border-radius: 5px;
   border: 2px solid var(--primary-color);
-  background-color: var(--background-color);
+  background-color: var(--card-bg);
   color: var(--primary-color);
+  font: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 3px rgba(241, 53, 109, 0.25);
 }
 
 button {
@@ -153,6 +238,41 @@ button {
   background-color: var(--primary-color);
   color: var(--background-color);
   cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: var(--card-bg);
+  color: var(--primary-color);
+}
+
+.footer {
+  margin-top: 40px;
+  padding: 16px;
+  color: var(--primary-color);
+  opacity: 0.85;
+  transition: color 0.35s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main,
+  .projects,
+  .experience,
+  .education {
+    animation: none;
+    transition: none;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -162,6 +282,7 @@ button {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 12px;
     padding: 20px 0;
   }
 
@@ -189,6 +310,7 @@ button {
     justify-content: center;
     justify-self: center;
     align-items: center;
+    gap: 16px;
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -196,7 +318,7 @@ button {
 
   nav ul li a {
     text-decoration: none;
-    margin: 0 10px;
+    margin: 0;
     color: var(--primary-color);
     font-size: 0.9rem;
   }
@@ -221,12 +343,12 @@ button {
   .projects-detail ul li,
   .articles-detail ul li {
     align-items: center;
-    padding: 20px;
+    padding: 16px;
     width: 90%;
-    height: 15em;
     border: 2px solid var(--primary-color);
     border-radius: 5px;
     gap: 5px;
+    background-color: var(--card-bg);
   }
 
   .contact-detail {
@@ -238,6 +360,12 @@ button {
     border: 2px solid var(--primary-color);
     border-radius: 10px;
     padding: 20px;
+    background-color: var(--card-bg);
+  }
+
+  .review blockquote {
+    width: 90%;
+    margin: 0;
   }
 }
 
@@ -275,6 +403,7 @@ button {
     justify-content: space-between;
     justify-self: center;
     align-items: center;
+    gap: 10px;
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -282,12 +411,17 @@ button {
 
   nav ul li a {
     text-decoration: none;
-    margin: 0 10px;
     color: var(--primary-color);
     font-size: 1.2rem;
+    padding: 6px 0;
+    transition: color 0.2s ease;
   }
 
   nav ul li a:hover {
+    color: var(--hover-color);
+  }
+
+  nav ul li a.active {
     color: var(--hover-color);
   }
 
@@ -316,11 +450,9 @@ button {
     margin: 0;
   }
 
-  blockquote {
-    margin: 0 10px;
-    padding: 10px;
+  .review blockquote {
+    margin: 0;
     width: 20em;
-    height: 100px;
   }
 
   .projects-detail,
@@ -347,6 +479,7 @@ button {
     border-radius: 5px;
     padding: 20px;
     gap: 5px;
+    background-color: var(--card-bg);
   }
 
   .contact-detail {
@@ -357,5 +490,6 @@ button {
     border: 2px solid var(--primary-color);
     border-radius: 10px;
     padding: 20px;
+    background-color: var(--card-bg);
   }
 }

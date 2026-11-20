@@ -1,44 +1,152 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Tabs</title>
-    <link rel="stylesheet" href="./style.css">
-</head>
-<body>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-i18n="pageTitle">Simple Tabs</title>
+  </head>
+  <body>
+    <button id="themeToggle" type="button" class="icon-btn" aria-label="Toggle theme">🌙</button>
+    <button id="langToggle" type="button" class="icon-btn" aria-label="Switch language">EN → ID</button>
     <section class="navbar">
-        <nav>
-            <ul>
-                <li data-tab="tab1" class="active">First Tab</li>
-                <li data-tab="tab2">Second Tab</li>
-                <li data-tab="tab3">Third Tab</li>
-                <li data-tab="tab4">Fourth Tab</li>
-            </ul>
-        </nav>
+      <nav>
+        <ul role="tablist" aria-label="Tabs">
+          <li role="tab" id="tab-trigger-1" aria-selected="true" tabindex="0" data-tab="tab1" data-i18n="tab1">First Tab</li>
+          <li role="tab" id="tab-trigger-2" aria-selected="false" tabindex="-1" data-tab="tab2" data-i18n="tab2">Second Tab</li>
+          <li role="tab" id="tab-trigger-3" aria-selected="false" tabindex="-1" data-tab="tab3" data-i18n="tab3">Third Tab</li>
+          <li role="tab" id="tab-trigger-4" aria-selected="false" tabindex="-1" data-tab="tab4" data-i18n="tab4">Fourth Tab</li>
+        </ul>
+      </nav>
     </section>
     <section class="content">
-        <div id="tab1" class="tab-content active">
-            <h2>First Tab</h2>
-            <div class="content-filler">Lorem ipsum</div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae</p>
-        </div>
-        <div id="tab2" class="tab-content">
-            <h2>Second Tab</h2>
-            <div class="content-filler">Lorem ipsum</div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae</p>
-        </div>
-        <div id="tab3" class="tab-content">
-            <h2>Third Tab</h2>
-            <div class="content-filler">Lorem ipsum</div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae</p>
-        </div>
-        <div id="tab4" class="tab-content">
-            <h2>Fourth Tab</h2>
-            <div class="content-filler">Lorem ipsum</div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae</p>
-        </div>
+      <div id="tab1" class="tab-content active" role="tabpanel" aria-labelledby="tab-trigger-1" data-i18n="content1">
+        <h2 data-i18n="h1">First Tab</h2>
+        <div class="content-filler" data-i18n="filler1">First tab body</div>
+        <p data-i18n="body1">First tab description text here.</p>
+      </div>
+      <div id="tab2" class="tab-content" role="tabpanel" aria-labelledby="tab-trigger-2" data-i18n="content2">
+        <h2 data-i18n="h2">Second Tab</h2>
+        <div class="content-filler" data-i18n="filler2">Second tab body</div>
+        <p data-i18n="body2">Second tab description text here.</p>
+      </div>
+      <div id="tab3" class="tab-content" role="tabpanel" aria-labelledby="tab-trigger-3" data-i18n="content3">
+        <h2 data-i18n="h3">Third Tab</h2>
+        <div class="content-filler" data-i18n="filler3">Third tab body</div>
+        <p data-i18n="body3">Third tab description text here.</p>
+      </div>
+      <div id="tab4" class="tab-content" role="tabpanel" aria-labelledby="tab-trigger-4" data-i18n="content4">
+        <h2 data-i18n="h4">Fourth Tab</h2>
+        <div class="content-filler" data-i18n="filler4">Fourth tab body</div>
+        <p data-i18n="body4">Fourth tab description text here.</p>
+      </div>
     </section>
-    <script src="./script.js"></script>
-</body>
+    <script>
+      (function () {
+        "use strict";
+
+        var I18N = {
+          en: {
+            pageTitle: "Simple Tabs",
+            tab1: "First Tab", tab2: "Second Tab", tab3: "Third Tab", tab4: "Fourth Tab",
+            h1: "First Tab", body1: "First tab description text here.", filler1: "First tab body",
+            h2: "Second Tab", body2: "Second tab description text here.", filler2: "Second tab body",
+            h3: "Third Tab", body3: "Third tab description text here.", filler3: "Third tab body",
+            h4: "Fourth Tab", body4: "Fourth tab description text here.", filler4: "Fourth tab body",
+            content1: "First tab content", content2: "Second tab content",
+            content3: "Third tab content", content4: "Fourth tab content"
+          },
+          id: {
+            pageTitle: "Tab Sederhana",
+            tab1: "Tab Pertama", tab2: "Tab Kedua", tab3: "Tab Ketiga", tab4: "Tab Keempat",
+            h1: "Tab Pertama", body1: "Deskripsi tab pertama di sini.", filler1: "Isi tab pertama",
+            h2: "Tab Kedua", body2: "Deskripsi tab kedua di sini.", filler2: "Isi tab kedua",
+            h3: "Tab Ketiga", body3: "Deskripsi tab ketiga di sini.", filler3: "Isi tab ketiga",
+            h4: "Tab Keempat", body4: "Deskripsi tab keempat di sini.", filler4: "Isi tab keempat",
+            content1: "Konten tab pertama", content2: "Konten tab kedua",
+            content3: "Konten tab ketiga", content4: "Konten tab keempat"
+          }
+        };
+
+        function currentLang() { return localStorage.getItem("tabs-lang") || "en"; }
+        function currentTheme() {
+          var saved = localStorage.getItem("tabs-theme");
+          if (saved) return saved;
+          return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+        function applyTheme() {
+          var theme = currentTheme();
+          document.documentElement.dataset.theme = theme;
+          document.getElementById("themeToggle").textContent = theme === "dark" ? "☀️" : "🌙";
+        }
+        function applyLang() {
+          var lang = currentLang();
+          var dict = I18N[lang];
+          document.documentElement.lang = lang === "en" ? "en" : "id";
+          var els = document.querySelectorAll("[data-i18n]");
+          for (var i = 0; i < els.length; i++) els[i].textContent = dict[els[i].getAttribute("data-i18n")];
+          document.title = dict.pageTitle;
+          document.getElementById("langToggle").textContent = lang === "en" ? "EN → ID" : "ID → EN";
+        }
+
+        function updateTabStates(selectedTabId) {
+          var tabs = document.querySelectorAll('[role="tab"]');
+          var panels = document.querySelectorAll(".tab-content");
+          tabs.forEach(function (tab) {
+            var isActive = tab.id === selectedTabId;
+            tab.setAttribute("aria-selected", String(isActive));
+            tab.setAttribute("tabindex", isActive ? "0" : "-1");
+            tab.classList.toggle("active", isActive);
+          });
+          panels.forEach(function (panel) {
+            panel.classList.remove("entering");
+            setTimeout(function () { panel.classList.toggle("active", panel.id === selectedTabId); }, 0);
+            setTimeout(function () { panel.classList.toggle("entering", panel.id === selectedTabId); }, 50);
+          });
+        }
+
+        function activateTab(tab) {
+          var panels = document.querySelectorAll(".tab-content");
+          var current = document.querySelector('[role="tab"][aria-selected="true"]');
+          if (current && current.id === tab.id) return;
+          updateTabStates(tab.id);
+          tab.focus();
+        }
+
+        function focusTab(index) {
+          var tabs = document.querySelectorAll('[role="tab"]');
+          if (tabs[index]) tabs[index].focus();
+        }
+
+        function initTabs() {
+          var triggers = document.querySelectorAll('[role="tab"]');
+          triggers.forEach(function (tab) {
+            tab.addEventListener("click", function () { activateTab(tab); });
+            tab.addEventListener("keydown", function (event) {
+              var index = Array.prototype.indexOf.call(triggers, tab);
+              if (event.key === "ArrowRight") { event.preventDefault(); focusTab((index + 1) % triggers.length); }
+              else if (event.key === "ArrowLeft") { event.preventDefault(); focusTab((index - 1 + triggers.length) % triggers.length); }
+              else if (event.key === "Home") { event.preventDefault(); focusTab(0); }
+              else if (event.key === "End") { event.preventDefault(); focusTab(triggers.length - 1); }
+              else if (event.key === "Enter" || event.key === " ") { event.preventDefault(); activateTab(tab); }
+            });
+          });
+        }
+
+        document.getElementById("themeToggle").addEventListener("click", function () {
+          var next = currentTheme() === "dark" ? "light" : "dark";
+          localStorage.setItem("tabs-theme", next);
+          applyTheme();
+        });
+        document.getElementById("langToggle").addEventListener("click", function () {
+          var next = currentLang() === "en" ? "id" : "en";
+          localStorage.setItem("tabs-lang", next);
+          applyLang();
+        });
+
+        applyTheme();
+        applyLang();
+        initTabs();
+      })();
+    </script>
+  </body>
 </html>

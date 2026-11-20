@@ -8,28 +8,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const tokenInput = document.getElementById("token-input");
   const saveTokenButton = document.getElementById("save-token");
-
-  let token = "";
-  localStorage.removeItem("github_token");
   const tokenStatus = document.getElementById("stored-token");
-  tokenStatus.textContent = "Using public access.";
 
-  function saveToken() {
-    token = tokenInput.value.trim();
-    tokenInput.value = "";
-    tokenStatus.textContent = token ? "Token active for this page." : "Using public access.";
+  const TOKEN_KEY = "github_token";
+  let token = "";
+
+  function loadToken() {
+    try {
+      return sessionStorage.getItem(TOKEN_KEY) || "";
+    } catch {
+      return "";
+    }
   }
+
+  function setToken(value) {
+    token = value.trim();
+    try {
+      if (token) {
+        sessionStorage.setItem(TOKEN_KEY, token);
+      } else {
+        sessionStorage.removeItem(TOKEN_KEY);
+      }
+    } catch {
+      // ignore storage failures
+    }
+    tokenStatus.textContent = token
+      ? "Token active for this session."
+      : "Using public access.";
+  }
+
+  setToken(loadToken());
 
   document.getElementById("clear-token").addEventListener("click", () => {
     tokenInput.value = "";
-    saveToken();
+    setToken("");
   });
 
-  saveTokenButton.addEventListener("click", saveToken);
+  saveTokenButton.addEventListener("click", () => {
+    setToken(tokenInput.value);
+    tokenInput.value = "";
+  });
 
   async function fetchRepository(language) {
-
-
     try {
       if (!language) {
         showStatus("Please select a language", "gray");
@@ -68,7 +88,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function displayRepository(repo) {
     const card = document.createElement("div");
-    card.className = "repo-card";
     const title = document.createElement("h3");
     const link = document.createElement("a");
     link.href = "https://github.com/" + repo.full_name.split("/").map(encodeURIComponent).join("/");

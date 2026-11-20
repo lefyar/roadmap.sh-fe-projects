@@ -1,17 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contact | Basic HTML Website</title>
-    <!-- SEO Meta Tags -->
-    <meta
-      name="description"
-      content="Basic HTML-only Website by Edma Reyfaldy"
-    />
+    <meta name="description" content="Basic HTML-only Website by Edma Reyfaldy" />
     <meta name="keywords" content="Basic HTML Website, HTML, CSS" />
     <meta name="author" content="Edma Reyfaldy" />
-    <!-- CSS Stylesheet -->
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
@@ -22,29 +17,40 @@
       </div>
       <nav>
         <ul>
-          <li><a href="./index.html">Home</a></li>
-          <li><a href="./projects.html">Projects</a></li>
-          <li><a href="./articles.html">Articles</a></li>
-          <li><a href="./contact.html">Contact</a></li>
+          <li><a href="./index.html" data-i18n="navHome">Home</a></li>
+          <li><a href="./projects.html" data-i18n="navProjects">Projects</a></li>
+          <li><a href="./articles.html" data-i18n="navArticles">Articles</a></li>
+          <li><a href="./contact.html" data-i18n="navContact">Contact</a></li>
         </ul>
       </nav>
+      <div class="header-actions">
+        <button id="themeToggle" type="button" aria-label="Toggle theme">🌙</button>
+        <button id="langToggle" type="button" aria-label="Switch language">EN → ID</button>
+      </div>
     </header>
     <main>
       <section class="contact">
-        <h1>Contact Me</h1>
-        <form action="mailto:no_reply@example.com" method="post">
-          <label for="name">Name</label>
-          <input type="text" id="name" name="name" required />
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required />
-          <label for="message">Message</label>
-          <textarea id="message" name="message" required></textarea>
-          <button type="submit">Submit</button>
+        <h1 data-i18n="contactH1">Contact Me</h1>
+        <form class="contact-form" action="#" novalidate>
+          <div class="form-field">
+            <label for="name" data-i18n="nameLabel">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required />
+          </div>
+          <div class="form-field">
+            <label for="email" data-i18n="emailLabel">Email</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required />
+          </div>
+          <div class="form-field">
+            <label for="message" data-i18n="messageLabel">Message</label>
+            <textarea id="message" name="message" placeholder="What would you like to say?" rows="6" required></textarea>
+          </div>
+          <button type="submit" data-i18n="submitLabel">Submit</button>
         </form>
       </section>
     </main>
     <footer>
       <p>&copy; 2025 Edma Reyfaldy, All Rights Reserved</p>
     </footer>
+    <script src="./theme.js"></script>
   </body>
 </html>

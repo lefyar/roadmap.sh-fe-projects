@@ -1,54 +1,196 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Changelog Component</title>
+    <title data-i18n="pageTitle">Changelog Component | Roadmap.sh</title>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    <button id="themeToggle" type="button" class="icon-btn" aria-label="Toggle theme">🌙</button>
+    <button id="langToggle" type="button" class="icon-btn" aria-label="Switch language">EN → ID</button>
     <div class="container">
-      <h1>Changelog</h1>
-      <p>Here's everything we have shipped in the past few days</p>
+      <h1 data-i18n="h1">Changelog</h1>
+      <p data-i18n="subtitle">Here's everything we have shipped in the past few days</p>
       <div class="changelog">
         <div class="changelog-item">
-          <div class="changelog-item-header">September 3, 2024</div>
+          <div class="changelog-item-header">
+            <span data-i18n="dateLabelSep3">September 3, 2024</span>
+            <span class="status status-new" data-i18n="statusNew">New</span>
+          </div>
           <div class="changelog-item-body">
-            Announcing Project on Frontend Roadmap
+            <p data-i18n="entrySep3">Announcing Project on Frontend Roadmap</p>
           </div>
         </div>
         <div class="changelog-item">
-          <div class="changelog-item-header">August 28, 2024</div>
+          <div class="changelog-item-header">
+            <span data-i18n="dateLabelAug28">August 28, 2024</span>
+            <span class="status status-improved" data-i18n="statusImproved">Improved</span>
+          </div>
           <div class="changelog-item-body">
-            Built your learning habits with learning streaks
+            <p data-i18n="entryAug28">Built your learning habits with learning streaks</p>
           </div>
         </div>
         <div class="changelog-item">
-          <div class="changelog-item-header">August 25, 2024</div>
-          <div class="changelog-item-body">Git and GitHub Roadmap</div>
-        </div>
-        <div class="changelog-item">
-          <div class="changelog-item-header">August 22, 2024</div>
+          <div class="changelog-item-header">
+            <span data-i18n="dateLabelAug25">August 25, 2024</span>
+            <span class="status status-fixed" data-i18n="statusFixed">Fixed</span>
+          </div>
           <div class="changelog-item-body">
-            Submit your project solution and get feedback
+            <p data-i18n="entryAug25">Git and GitHub Roadmap</p>
           </div>
         </div>
         <div class="changelog-item">
-          <div class="changelog-item-header">August 15, 2024</div>
-          <div class="changelog-item-body">Backend Project Ideas</div>
-        </div>
-        <div class="changelog-item">
-          <div class="changelog-item-header">August 10, 2024</div>
-          <div class="changelog-item-body">Redis Roadmap</div>
-        </div>
-        <div class="changelog-item">
-          <div class="changelog-item-header">August 1, 2024</div>
+          <div class="changelog-item-header">
+            <span data-i18n="dateLabelAug22">August 22, 2024</span>
+            <span class="status status-new" data-i18n="statusNew">New</span>
+          </div>
           <div class="changelog-item-body">
-            Changelog page to help you stay in the loop
+            <p data-i18n="entryAug22">Submit your project solution and get feedback</p>
           </div>
         </div>
-        <a class="changelog-link" href="https://roadmap.sh/changelog">Visit Complete Changelog</a>
+        <div class="changelog-item">
+          <div class="changelog-item-header">
+            <span data-i18n="dateLabelAug15">August 15, 2024</span>
+            <span class="status status-new" data-i18n="statusNew">New</span>
+          </div>
+          <div class="changelog-item-body">
+            <p data-i18n="entryAug15">Backend Project Ideas</p>
+          </div>
+        </div>
+        <div class="changelog-item">
+          <div class="changelog-item-header">
+            <span data-i18n="dateLabelAug10">August 10, 2024</span>
+            <span class="status status-new" data-i18n="statusNew">New</span>
+          </div>
+          <div class="changelog-item-body">
+            <p data-i18n="entryAug10">Redis Roadmap</p>
+          </div>
+        </div>
+        <div class="changelog-item">
+          <div class="changelog-item-header">
+            <span data-i18n="dateLabelAug1">August 1, 2024</span>
+            <span class="status status-fixed" data-i18n="statusFixed">Fixed</span>
+          </div>
+          <div class="changelog-item-body">
+            <p data-i18n="entryAug1">Changelog page to help you stay in the loop</p>
+          </div>
+        </div>
+        <a class="changelog-link" href="https://roadmap.sh/changelog" target="_blank" rel="noopener noreferrer" data-i18n="visitLink">Visit Complete Changelog</a>
       </div>
     </div>
+    <script>
+      (function () {
+        "use strict";
+
+        var I18N = {
+          en: {
+            pageTitle: "Changelog Component | Roadmap.sh",
+            h1: "Changelog",
+            subtitle: "Here's everything we have shipped in the past few days",
+            dateLabelSep3: "September 3, 2024",
+            statusNew: "New",
+            statusImproved: "Improved",
+            statusFixed: "Fixed",
+            entrySep3: "Announcing Project on Frontend Roadmap",
+            dateLabelAug28: "August 28, 2024",
+            entryAug28: "Built your learning habits with learning streaks",
+            dateLabelAug25: "August 25, 2024",
+            entryAug25: "Git and GitHub Roadmap",
+            dateLabelAug22: "August 22, 2024",
+            entryAug22: "Submit your project solution and get feedback",
+            dateLabelAug15: "August 15, 2024",
+            entryAug15: "Backend Project Ideas",
+            dateLabelAug10: "August 10, 2024",
+            entryAug10: "Redis Roadmap",
+            dateLabelAug1: "August 1, 2024",
+            entryAug1: "Changelog page to help you stay in the loop",
+            visitLink: "Visit Complete Changelog"
+          },
+          id: {
+            pageTitle: "Komponen Changelog | Roadmap.sh",
+            h1: "Changelog",
+            subtitle: "Berikut semua hal yang telah kami perbarui dalam beberapa hari terakhir",
+            dateLabelSep3: "3 September 2024",
+            statusNew: "Baru",
+            statusImproved: "Ditingkatkan",
+            statusFixed: "Diperbaiki",
+            entrySep3: "Mengumumkan Proyek di roadmap.sh Frontend",
+            dateLabelAug28: "28 Agustus 2024",
+            entryAug28: "Mbangun kebiasaan belajar dengan streak belajar",
+            dateLabelAug25: "25 Agustus 2024",
+            entryAug25: "Roadmap Git dan GitHub",
+            dateLabelAug22: "22 Agustus 2024",
+            entryAug22: "Ajukan solusi proyek Anda dan dapatkan masukan",
+            dateLabelAug15: "15 Agustus 2024",
+            entryAug15: "Ide Proyek Backend",
+            dateLabelAug10: "10 Agustus 2024",
+            entryAug10: "Roadmap Redis",
+            dateLabelAug1: "1 Agustus 2024",
+            entryAug1: "Halaman changelog untuk menyimpan pembaruan",
+            visitLink: "Lihat Changelog Lengkap"
+          }
+        };
+
+        function renderI18n(lang) {
+          var dict = I18N[lang];
+          document.documentElement.lang = lang === "en" ? "en" : "id";
+          document.title = dict.pageTitle;
+          var els = document.querySelectorAll("[data-i18n]");
+          for (var i = 0; i < els.length; i++) {
+            var key = els[i].getAttribute("data-i18n");
+            if (Object.prototype.hasOwnProperty.call(dict, key)) {
+              els[i].textContent = dict[key];
+            }
+          }
+        }
+
+        function currentLang() {
+          return localStorage.getItem("changelog-lang") || "en";
+        }
+
+        function currentTheme() {
+          var saved = localStorage.getItem("changelog-theme");
+          if (saved) return saved;
+          return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+
+        function applyTheme() {
+          var theme = currentTheme();
+          document.documentElement.dataset.theme = theme;
+          document.getElementById("themeToggle").textContent = theme === "dark" ? "☀️" : "🌙";
+        }
+
+        function applyLang() {
+          var lang = currentLang();
+          renderI18n(lang);
+          document.getElementById("langToggle").textContent = lang === "en" ? "EN → ID" : "ID → EN";
+        }
+
+        function applyOnLoad() {
+          var items = document.querySelectorAll(".changelog-item");
+          items.forEach(function (item, index) {
+            item.style.animationDelay = (items.length - 1 - index) * 80 + "ms";
+            item.setAttribute("data-entered", "true");
+          });
+        }
+
+        document.getElementById("themeToggle").addEventListener("click", function () {
+          var next = currentTheme() === "dark" ? "light" : "dark";
+          localStorage.setItem("changelog-theme", next);
+          applyTheme();
+        });
+
+        document.getElementById("langToggle").addEventListener("click", function () {
+          var next = currentLang() === "en" ? "id" : "en";
+          localStorage.setItem("changelog-lang", next);
+          applyLang();
+        });
+
+        applyTheme();
+        applyLang();
+        applyOnLoad();
+      })();
+    </script>
   </body>
 </html>

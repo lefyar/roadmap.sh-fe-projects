@@ -1,74 +1,301 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Accessible Form Ui</title>
+    <title data-i18n="pageTitle">Accessible Form UI</title>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    <button id="themeToggle" type="button" class="icon-btn" aria-label="Toggle theme">🌙</button>
+    <button id="langToggle" type="button" class="icon-btn" aria-label="Switch language">EN → ID</button>
     <div class="container">
-      <form action="#">
-        <div class="form-input">
-          <label for="name"
-            >Full Name
-            <input
-              type="text"
-              id="name"
-              placeholder="What should we call you?"
-              required
-            />
+      <form id="profileForm" novalidate>
+        <fieldset class="form-field">
+          <label for="name">
+            <span data-i18n="labelName">Full Name</span>
+            <input type="text" id="name" name="name" placeholder="What should we call you?" required />
           </label>
-          <label for="email"
-            >Email
-            <input
-              type="email"
-              id="email"
-              placeholder="Your email address"
-              aria-invalid="true"
-              required
-            />
-            <div class="error-message email-error">Invalid email</div>
+          <span id="nameError" class="error-message" role="alert"></span>
+        </fieldset>
+
+        <fieldset class="form-field">
+          <label for="email">
+            <span data-i18n="labelEmail">Email</span>
+            <input type="email" id="email" name="email" placeholder="Your email address" required />
           </label>
-          <label for="password"
-            >Enter password
-            <input
-              type="password"
-              id="password"
-              placeholder="Enter a password"
-              required
-              aria-invalid="true"
-            />
+          <span id="emailError" class="error-message" role="alert"></span>
+        </fieldset>
+
+        <fieldset class="form-field">
+          <label for="password">
+            <span data-i18n="labelPassword">Enter password</span>
+            <input type="password" id="password" name="password" placeholder="Enter a password" required />
           </label>
-          <label for="confirm-password"
-            >Confirm password
-            <input
-              type="password"
-              id="confirm-password"
-              placeholder="Confirm password"
-              required
-            />
+          <div class="password-strength" aria-live="polite">
+            <div id="strengthMeter" class="strength-meter"></div>
+            <span id="strengthText" data-i18n="strengthTooShort">Enter at least 8 characters.</span>
+          </div>
+          <span id="passwordError" class="error-message" role="alert"></span>
+        </fieldset>
+
+        <fieldset class="form-field">
+          <label for="confirm-password">
+            <span data-i18n="labelConfirmPassword">Confirm password</span>
+            <input type="password" id="confirm-password" name="confirmPassword" placeholder="Confirm password" required />
           </label>
-          <input type="submit" value="Update Profile" />
-        </div>
-        <div class="profile-completeness">
-            <div class="progress-bar">
-              <div class="progress">
-                <span>65%</span>
-              </div>
-            </div>
-            <div>Profile Completeness</div>
-          <div class="checklist">
-            <ul>
-              <li><del>Create an account</del></li>
-              <li><del>Update Roadmap Progress</del></li>
-              <li><del>Setup Public Profile</del></li>
-              <li>Complete your first project</li>
-              <li>Invite your friends</li>
-            </ul>
+          <span id="confirmError" class="error-message" role="alert"></span>
+        </fieldset>
+
+        <fieldset class="form-field">
+          <legend data-i18n="labelRole">Role</legend>
+          <div class="radio-group" role="radiogroup" aria-label="Role">
+            <label class="radio-option">
+              <input type="radio" name="role" value="developer" checked />
+              <span data-i18n="roleDeveloper">Developer</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="role" value="designer" />
+              <span data-i18n="roleDesigner">Designer</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="role" value="other" />
+              <span data-i18n="roleOther">Other</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <input type="submit" id="submitBtn" data-i18n="labelSubmit" value="Update Profile" />
+      </form>
+
+      <div class="profile-completeness">
+        <div class="progress-bar">
+          <div class="progress" id="progressBar">
+            <span id="progressText" data-i18n="completenessLabel">Profile Completeness</span>
           </div>
         </div>
-      </form>
+        <div class="checklist">
+          <ul>
+            <li data-completed="true"><del data-i18n="checkCreate">Create an account</del></li>
+            <li data-completed="true"><del data-i18n="checkRoadmap">Update Roadmap Progress</del></li>
+            <li data-completed="true"><del data-i18n="checkProfile">Setup Public Profile</del></li>
+            <li data-i18n="checkFirstProject">Complete your first project</li>
+            <li data-i18n="checkInvite">Invite your friends</li>
+          </ul>
+        </div>
+      </div>
     </div>
+    <script>
+      (function () {
+        "use strict";
+
+        var I18N = {
+          en: {
+            pageTitle: "Accessible Form UI",
+            labelName: "Full Name",
+            labelEmail: "Email",
+            labelPassword: "Enter password",
+            labelConfirmPassword: "Confirm password",
+            labelRole: "Role",
+            roleDeveloper: "Developer",
+            roleDesigner: "Designer",
+            roleOther: "Other",
+            labelSubmit: "Update Profile",
+            strengthTooShort: "Enter at least 8 characters.",
+            strengthWeak: "Weak",
+            strengthFair: "Fair",
+            strengthStrong: "Strong",
+            completenessLabel: "Profile Completeness",
+            checkCreate: "Create an account",
+            checkRoadmap: "Update Roadmap Progress",
+            checkProfile: "Setup Public Profile",
+            checkFirstProject: "Complete your first project",
+            checkInvite: "Invite your friends"
+          },
+          id: {
+            pageTitle: "UI Form Inklusif",
+            labelName: "Nama Lengkap",
+            labelEmail: "Email",
+            labelPassword: "Masukkan kata sandi",
+            labelConfirmPassword: "Konfirmasi kata sandi",
+            labelRole: "Peran",
+            roleDeveloper: "Pengembang",
+            roleDesigner: "Desainer",
+            roleOther: "Lainnya",
+            labelSubmit: "Perbarui Profil",
+            strengthTooShort: "Masukkan minimal 8 karakter.",
+            strengthWeak: "Lemah",
+            strengthFair: "Cukup",
+            strengthStrong: "Kuat",
+            completenessLabel: "Kelengkapan Profil",
+            checkCreate: "Buat akun",
+            checkRoadmap: "Perbarui Progres Roadmap",
+            checkProfile: "Siapkan Profil Publik",
+            checkFirstProject: "Selesaikan proyek pertama",
+            checkInvite: "Undang teman-teman Anda"
+          }
+        };
+
+        function currentLang() {
+          return localStorage.getItem("form-lang") || "en";
+        }
+
+        function currentTheme() {
+          var saved = localStorage.getItem("form-theme");
+          if (saved) return saved;
+          return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+
+        function applyTheme() {
+          var theme = currentTheme();
+          document.documentElement.dataset.theme = theme;
+          document.getElementById("themeToggle").textContent = theme === "dark" ? "☀️" : "🌙";
+        }
+
+        function renderI18n(lang) {
+          var dict = I18N[lang];
+          document.documentElement.lang = lang === "en" ? "en" : "id";
+          document.title = dict.pageTitle;
+          var els = document.querySelectorAll("[data-i18n]");
+          for (var i = 0; i < els.length; i++) {
+            var key = els[i].getAttribute("data-i18n");
+            if (Object.prototype.hasOwnProperty.call(dict, key)) {
+              els[i].innerHTML = dict[key];
+            }
+          }
+        }
+
+        function applyLang() {
+          var lang = currentLang();
+          renderI18n(lang);
+          document.getElementById("langToggle").textContent = lang === "en" ? "EN → ID" : "ID → EN";
+        }
+
+        function isEmailValid(value) {
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+        }
+
+        function validate() {
+          var name = document.getElementById("name");
+          var email = document.getElementById("email");
+          var password = document.getElementById("password");
+          var confirm = document.getElementById("confirm-password");
+          var nameError = document.getElementById("nameError");
+          var emailError = document.getElementById("emailError");
+          var passwordError = document.getElementById("passwordError");
+          var confirmError = document.getElementById("confirmError");
+          var submitBtn = document.getElementById("submitBtn");
+          var valid = true;
+
+          name.addEventListener("input", function () {
+            if (name.validity.valid) {
+              nameError.textContent = "";
+              nameError.hidden = true;
+            } else {
+              nameError.textContent = I18N[currentLang()].labelName + " " + (I18N[currentLang()].errorName || "is required");
+              nameError.hidden = false;
+            }
+          });
+
+          email.addEventListener("input", function () {
+            if (email.value && !isEmailValid(email.value)) {
+              emailError.textContent = I18N[currentLang()].errorEmail || "Enter a valid email address.";
+              emailError.hidden = false;
+            } else {
+              emailError.textContent = "";
+              emailError.hidden = true;
+            }
+          });
+
+          password.addEventListener("input", function () {
+            updateStrength(password.value);
+            if (password.value.length < 8) {
+              passwordError.textContent = I18N[currentLang()].strengthTooShort;
+              passwordError.hidden = false;
+            } else {
+              passwordError.textContent = "";
+              passwordError.hidden = true;
+            }
+            updateConfirmState();
+          });
+
+          confirm.addEventListener("input", updateConfirmState);
+
+          function updateConfirmState() {
+            if (confirm.value && confirm.value !== password.value) {
+              confirmError.textContent = I18N[currentLang()].errorConfirm || "Passwords do not match.";
+              confirmError.hidden = false;
+            } else {
+              confirmError.textContent = "";
+              confirmError.hidden = true;
+            }
+          }
+
+          function scorePassword(value) {
+            var score = 0;
+            if (value.length >= 8) score += 1;
+            if (/[A-Z]/.test(value)) score += 1;
+            if (/[a-z]/.test(value)) score += 1;
+            if (/[0-9]/.test(value)) score += 1;
+            if (/[^A-Za-z0-9]/.test(value)) score += 1;
+            return Math.min(score, 5);
+          }
+
+          function updateStrength(value) {
+            var meter = document.getElementById("strengthMeter");
+            var text = document.getElementById("strengthText");
+            var dict = I18N[currentLang()];
+            var score = value ? scorePassword(value) : 0;
+            var label = ["", dict.strengthTooShort, dict.strengthWeak, dict.strengthFair, dict.strengthStrong, dict.strengthVeryStrong].filter(Boolean)[score] || "";
+            meter.style.width = Math.max(0, (score / 5) * 100) + "%";
+            meter.dataset.score = score;
+            text.textContent = label;
+          }
+
+          document.getElementById("profileForm").addEventListener("submit", function (e) {
+            valid = true;
+            if (!name.value.trim()) { nameError.textContent = I18N[currentLang()].errorName || "This field is required."; nameError.hidden = false; valid = false; }
+            else nameError.hidden = true;
+            if (!isEmailValid(email.value)) { emailError.textContent = I18N[currentLang()].errorEmail || "Enter a valid email address."; emailError.hidden = false; valid = false; }
+            else emailError.hidden = true;
+            if (password.value.length < 8) { passwordError.textContent = I18N[currentLang()].strengthTooShort; passwordError.hidden = false; valid = false; }
+            else passwordError.hidden = true;
+            updateStrength(password.value);
+            if (confirm.value !== password.value) { confirmError.textContent = I18N[currentLang()].errorConfirm || "Passwords do not match."; confirmError.hidden = false; valid = false; }
+            else confirmError.hidden = true;
+            if (!valid) e.preventDefault();
+          });
+
+          name.addEventListener("invalid", function () { if (!name.value.trim()) nameError.textContent = I18N[currentLang()].errorName || "This field is required."; nameError.hidden = false; }, true);
+          email.addEventListener("invalid", function () { if (!isEmailValid(email.value)) emailError.textContent = I18N[currentLang()].errorEmail || "Enter a valid email address."; emailError.hidden = false; }, true);
+          password.addEventListener("invalid", function () { if (password.value.length < 8) passwordError.textContent = I18N[currentLang()].strengthTooShort; passwordError.hidden = false; }, true);
+          confirm.addEventListener("invalid", function () { if (confirm.value && confirm.value !== password.value) confirmError.textContent = I18N[currentLang()].errorConfirm || "Passwords do not match."; confirmError.hidden = false; }, true);
+
+          document.querySelectorAll("[name='role']").forEach(function (r) {
+            r.addEventListener("change", function (e) {
+              document.querySelectorAll(".radio-option").forEach(function (o) { o.classList.remove("selected"); });
+              e.target.closest(".radio-option").classList.add("selected");
+            });
+          });
+        }
+
+        validate();
+
+        document.getElementById("themeToggle").addEventListener("click", function () {
+          var next = currentTheme() === "dark" ? "light" : "dark";
+          localStorage.setItem("form-theme", next);
+          applyTheme();
+        });
+
+        document.getElementById("langToggle").addEventListener("click", function () {
+          var next = currentLang() === "en" ? "id" : "en";
+          localStorage.setItem("form-lang", next);
+          applyLang();
+        });
+
+        applyTheme();
+        applyLang();
+      })();
+    </script>
   </body>
 </html>

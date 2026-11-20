@@ -1,76 +1,179 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Single Page CV | Edma Reyfaldy</title>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-i18n="title">Single Page CV | Edma Reyfaldy</title>
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Single Page CV">
-    <meta name="keywords" content="Single Page CV, Resume, HTML, CSS">
-    <meta name="author" content="Edma Reyfaldy">
+    <meta name="description" content="Single Page CV" />
+    <meta
+      name="keywords"
+      content="Single Page CV, Resume, HTML, CSS, React, Next.js"
+    />
+    <meta name="author" content="Edma Reyfaldy" />
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Edma Reyfaldy | Front-End Developer"> 
-    <meta property="og:description" content="Single Page CV by Edma Reyfaldy">
-    <meta property="og:image" content="https://lefyar.vercel.app/hero-image.webp">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://lefyar.vercel.app">
+    <meta property="og:title" content="Edma Reyfaldy | Front-End Developer" />
+    <meta property="og:description" content="Single Page CV by Edma Reyfaldy" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://lefyar.vercel.app" />
+    <meta property="og:image" content="https://lefyar.vercel.app/hero-image.webp" />
     <!-- Favicon -->
-    <link rel="icon" href="./favicon-96x96.png" type="image/x-icon">
+    <link rel="icon" href="./favicon-96x96.png" type="image/x-icon" />
     <!-- CSS Stylesheet -->
-    <link rel="stylesheet" href="./style.css">
-</head>
-<body>
-    <header>
-        <hr>
-        <h1>Edma Reyfaldy</h1>
-        <h2>Front-End Developer</h2>
-        <address>
-            <p>Phone: +62 812 3456 7890</p>
-            <p>Email: no_replyn@example.com</p>
-            <p>Location: Special Region of Yogyakarta, Indonesia</p>
-        </address>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <button id="theme-toggle" type="button" class="header-btn" aria-label="Toggle theme">🌙</button>
+      <button id="lang-toggle" type="button" class="header-btn" aria-label="Switch language">EN → ID</button>
+      <hr />
+      <h1 class="name" data-i18n="name">Edma Reyfaldy</h1>
+      <h2 class="role" data-i18n="role">Front-End Developer</h2>
+      <address class="contact">
+        <p data-i18n="phone">Phone: +62 812 3456 7890</p>
+        <p data-i18n="email">Email: no_replyn@example.com</p>
+        <p data-i18n="location">Location: Special Region of Yogyakarta, Indonesia</p>
+      </address>
     </header>
-    <main>
-        <section class="skills">
-            <h2>Skills</h2>
-            <p>HTML, CSS, JavaScript, React, Node.js, Next.js, Tailwind, Git, Docker, MongoDB, Figma</p>
-        </section>
-        <section class="education">
-            <h2>Education</h2>
-            <ul>
-                <li>
-                    <h3>Amikom University Yogyakarta</h3>
-                    <p>2024 - Ongoing</p>
-                </li>
-                <li>
-                    <h3>Vocational School 7 Samarinda</h3>
-                    <p>2021 - 2024</p>
-                </li>
-            </ul>
-        </section>
-        <section class="experience">
-            <h2>Experience</h2>
-            <ul>
-                <li>
-                    <h3>PT Kedata Indonesia Digital - Intern Front-End Developer</h3>
-                    <p>July 2023 - December 2023</p>
-                    <p>Skills: Git, React, Next.js, Tailwind, Docker, Node.js</p>
-                </li>
-            </ul>
-        </section>
-        <section class="internet">
-            <h2>Across the Internet</h2>
-            <ul>
-                <li>
-                    <a href="https://lefyar.vercel.app">lefyar.vercel.app</a>
-                </li>
-                <li>
-                    <a href="https://github.com/reyfaldy">GitHub</a>
-                </li>
-                <li>
-                    <a href="https://www.linkedin.com/in/lefyar">LinkedIn</a>
-                </li>
-        </section>
+    <main class="main">
+      <section class="skills">
+        <h2 data-i18n="skills">Skills</h2>
+        <ul class="skills-list">
+          <li data-i18n="skillsText">HTML, CSS, JavaScript, React, Node.js, Next.js, Tailwind, Git, Docker, MongoDB, Figma</li>
+        </ul>
+      </section>
+      <section class="education">
+        <h2 data-i18n="education">Education</h2>
+        <ul>
+          <li>
+            <h3 data-i18n="edu1Name">Amikom University Yogyakarta</h3>
+            <p data-i18n="edu1Period">2024 - Ongoing</p>
+          </li>
+          <li>
+            <h3 data-i18n="edu2Name">Vocational School 7 Samarinda</h3>
+            <p data-i18n="edu2Period">2021 - 2024</p>
+          </li>
+        </ul>
+      </section>
+      <section class="experience">
+        <h2 data-i18n="experience">Experience</h2>
+        <ul>
+          <li>
+            <h3 data-i18n="exp1Name">PT Kedata Indonesia Digital - Intern Front-End Developer</h3>
+            <p data-i18n="exp1Period">July 2023 - December 2023</p>
+            <p data-i18n="exp1Skills">Skills: Git, React, Next.js, Tailwind, Docker, Node.js</p>
+          </li>
+        </ul>
+      </section>
+      <section class="internet">
+        <h2 data-i18n="internet">Across the Internet</h2>
+        <ul class="links">
+          <li>
+            <a href="https://lefyar.vercel.app" target="_blank" rel="noopener noreferrer">lefyar.vercel.app</a>
+          </li>
+          <li>
+            <a href="https://github.com/reyfaldy" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/in/lefyar" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          </li>
+        </ul>
+      </section>
     </main>
-</body>
+    <script>
+      (function () {
+        var I18N = {
+          en: {
+            title: "Single Page CV | Edma Reyfaldy",
+            name: "Edma Reyfaldy",
+            role: "Front-End Developer",
+            phone: "Phone: +62 812 3456 7890",
+            email: "Email: no_replyn@example.com",
+            location: "Location: Special Region of Yogyakarta, Indonesia",
+            skills: "Skills",
+            skillsText: "HTML, CSS, JavaScript, React, Node.js, Next.js, Tailwind, Git, Docker, MongoDB, Figma",
+            education: "Education",
+            edu1Name: "Amikom University Yogyakarta",
+            edu1Period: "2024 - Ongoing",
+            edu2Name: "Vocational School 7 Samarinda",
+            edu2Period: "2021 - 2024",
+            experience: "Experience",
+            exp1Name: "PT Kedata Indonesia Digital - Intern Front-End Developer",
+            exp1Period: "July 2023 - December 2023",
+            exp1Skills: "Skills: Git, React, Next.js, Tailwind, Docker, Node.js",
+            internet: "Across the Internet"
+          },
+          id: {
+            title: "CV Single Halaman | Edma Reyfaldy",
+            name: "Edma Reyfaldy",
+            role: "Pengembang Depan",
+            phone: "Telepon: +62 812 3456 7890",
+            email: "Email: no_replyn@example.com",
+            location: "Lokasi: Daerah Istimewa Yogyakarta, Indonesia",
+            skills: "Keterampilan",
+            skillsText: "HTML, CSS, JavaScript, React, Node.js, Next.js, Tailwind, Git, Docker, MongoDB, Figma",
+            education: "Pendidikan",
+            edu1Name: "Universitas Amikom Yogyakarta",
+            edu1Period: "2024 - Berjalan",
+            edu2Name: "SMK 7 Samarinda",
+            edu2Period: "2021 - 2024",
+            experience: "Pengalaman",
+            exp1Name: "PT Kedata Indonesia Digital - Stagia Pengembang Depan",
+            exp1Period: "Juli 2023 - Desember 2023",
+            exp1Skills: "Keterampilan: Git, React, Next.js, Tailwind, Docker, Node.js",
+            internet: "Di Seluruh Internet"
+          }
+        };
+
+        function renderI18n(lang) {
+          var dict = I18N[lang];
+          document.documentElement.lang = lang;
+          var els = document.querySelectorAll("[data-i18n]");
+          for (var i = 0; i < els.length; i++) {
+            var key = els[i].getAttribute("data-i18n");
+            if (Object.prototype.hasOwnProperty.call(dict, key)) {
+              els[i].textContent = dict[key];
+            }
+          }
+          document.title = dict.title;
+        }
+
+        function currentLang() {
+          return localStorage.getItem("cv-lang") || "en";
+        }
+
+        function currentTheme() {
+          var saved = localStorage.getItem("cv-theme");
+          if (saved) return saved;
+          return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+
+        function applyTheme() {
+          var theme = currentTheme();
+          document.documentElement.dataset.theme = theme;
+          document.getElementById("theme-toggle").textContent = theme === "dark" ? "☀️" : "🌙";
+        }
+
+        function applyLang() {
+          renderI18n(currentLang());
+          document.getElementById("lang-toggle").textContent = currentLang() === "en" ? "EN → ID" : "ID → EN";
+        }
+
+        document.getElementById("theme-toggle").addEventListener("click", function () {
+          var next = currentTheme() === "dark" ? "light" : "dark";
+          localStorage.setItem("cv-theme", next);
+          applyTheme();
+        });
+
+        document.getElementById("lang-toggle").addEventListener("click", function () {
+          var next = currentLang() === "en" ? "id" : "en";
+          localStorage.setItem("cv-lang", next);
+          applyLang();
+        });
+
+        applyTheme();
+        applyLang();
+      })();
+    </script>
+  </body>
 </html>

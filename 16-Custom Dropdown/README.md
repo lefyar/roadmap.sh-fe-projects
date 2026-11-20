@@ -1,4 +1,5 @@
 # Custom Dropdown
-A custom dropdown menu that lets users select an item from a list. | [Live Preview](https://lefyar.github.io/roadmap.sh-fe-projects/16-Custom%20Dropdown/)
 
-![Custom Dropdown](./custom-dropdown.png)
+Select an item with the pointer or keyboard, and press Escape to close the list.
+
+[Open the demo](https://lefyar.github.io/roadmap.sh-fe-projects/16-Custom%20Dropdown/)

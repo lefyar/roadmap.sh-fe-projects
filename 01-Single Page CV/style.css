@@ -19,37 +19,11 @@ body {
   --text: #333333;
   --muted: #666666;
   --hr: #000000;
-  --h2: rgb(0, 177, 12);
+  --h2: #187334;
   --h3: rgb(0, 94, 195);
   --link: #1a5db0;
   --btn-bg: #ffffff;
   --btn-text: #000000;
-}
-
-:root[data-theme="dark"] {
-  --bg: #18181c;
-  --text: #e6e6e8;
-  --muted: #a0a0a6;
-  --hr: #3a3a40;
-  --h2: rgb(46, 204, 112);
-  --h3: rgb(100, 200, 255);
-  --link: #66a7ff;
-  --btn-bg: #2a2a2e;
-  --btn-text: #ffffff;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #18181c;
-    --text: #e6e6e8;
-    --muted: #a0a0a6;
-    --hr: #3a3a40;
-    --h2: rgb(46, 204, 112);
-    --h3: rgb(100, 200, 255);
-    --link: #66a7ff;
-    --btn-bg: #2a2a2e;
-    --btn-text: #ffffff;
-  }
 }
 
 hr {
@@ -94,22 +68,6 @@ ul {
   max-width: 900px;
   margin: 0 auto;
   padding: 20px 16px 0;
-}
-
-.header-btn {
-  background: var(--btn-bg);
-  color: var(--btn-text);
-  border: 1px solid var(--muted);
-  border-radius: 8px;
-  padding: 6px 10px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background 0.2s ease, border-color 0.2s ease;
-}
-
-.header-btn:hover {
-  background: var(--muted);
-  border-color: var(--text);
 }
 
 .main {
@@ -182,4 +140,9 @@ main {
   .contact {
     text-align: left;
   }
+}
+@media print {
+  body { background: white; color: black; }
+  .header, .main { width: 100%; max-width: none; box-shadow: none; padding: 0; }
+  section { break-inside: avoid; }
 }

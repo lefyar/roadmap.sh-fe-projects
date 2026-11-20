@@ -1,8 +1,8 @@
 /* Theme variables */
-:root[data-theme="light"] {
+:root {
   --bg: #ffffff;
   --text: #1f2933;
-  --muted: #6b7685;
+  --muted: #4c596a;
   --card: #ffffff;
   --border: #dddddd;
   --icon-bg: #ffffff;
@@ -10,34 +10,6 @@
   --textarea-bg: #f0f0f0;
   --textarea-focus: #0077b6;
   --toast-bg: #2c2c2c;
-}
-
-:root[data-theme="dark"] {
-  --bg: #0f0f0f;
-  --text: #f5f5f5;
-  --muted: #999999;
-  --card: #1a1a1a;
-  --border: #2a2a2a;
-  --icon-bg: #1a1a1a;
-  --icon-border: #2a2a2a;
-  --textarea-bg: #111111;
-  --textarea-focus: #66ccff;
-  --toast-bg: #2c2c2c;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0f0f0f;
-    --text: #f5f5f5;
-    --muted: #999999;
-    --card: #1a1a1a;
-    --border: #2a2a2a;
-    --icon-bg: #1a1a1a;
-    --icon-border: #2a2a2a;
-    --textarea-bg: #111111;
-    --textarea-focus: #66ccff;
-    --toast-bg: #2c2c2c;
-  }
 }
 
 * {
@@ -53,29 +25,11 @@ body {
   justify-content: center;
   align-items: center;
   gap: 12px;
-  height: 100vh;
+  min-height: 100vh;
   background-color: var(--bg);
   color: var(--text);
   transition: background 0.3s ease, color 0.3s ease;
-  animation: fadeIn 0.6s ease both;
 }
-
-.icon-btn {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  background: var(--icon-bg);
-  color: var(--text);
-  border: 1px solid var(--icon-border);
-  border-radius: 6px;
-  padding: 5px 10px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.icon-btn:first-of-type { right: 60px; }
-.icon-btn:hover { background: var(--icon-border); }
 
 h1 {
   font-size: 1.4rem;
@@ -99,7 +53,6 @@ h1 {
   border-radius: 10px;
   background-color: var(--card);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  animation: slideIn 0.4s ease both;
 }
 
 .textarea:focus-within {
@@ -115,7 +68,7 @@ textarea {
   padding: 0;
   border: none;
   font-family: inherit;
-  font-size: 15px;
+  font-size: 1rem;
   color: var(--text);
   background: transparent;
   outline: none;
@@ -142,22 +95,17 @@ textarea::-webkit-scrollbar-thumb {
   gap: 8px;
 }
 
-.detail-counter {
-  display: none;
-}
-
 .counter p {
   color: var(--muted);
   font-size: 0.8rem;
 }
 
-.at-limit .counter p {
+.at-limit #charCounter {
   color: var(--textarea-focus);
 }
 
 #charCounter {
   font-weight: 700;
-  color: var(--text);
 }
 
 .copy-btn {
@@ -191,27 +139,6 @@ textarea::-webkit-scrollbar-thumb {
   padding: 10px 16px;
   border-radius: 6px;
   font-weight: 600;
-  animation: slideUp 0.2s ease both;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideIn {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .textarea { animation: none; }
-  .toast { animation: none; }
 }
 
 @media (max-width: 480px) {

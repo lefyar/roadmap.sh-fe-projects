@@ -1,83 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title data-i18n="pageTitle">Tooltip UI</title>
+    <title>Tooltip UI</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script defer src="./script.js"></script>
   </head>
   <body>
-    <button id="themeToggle" type="button" class="icon-btn" aria-label="Toggle theme">🌙</button>
-    <button id="langToggle" type="button" class="icon-btn" aria-label="Switch language">EN → ID</button>
-    <div class="navbar">
-      <nav>
+    <main class="navbar">
+      <h1>Tooltip UI</h1>
+      <nav aria-label="Demo navigation">
         <ul>
-          <li tabindex="0" aria-label="Home">Home<span class="tooltip" data-i18n="homeTip">Go back to home</span></li>
-          <span class="divider" aria-hidden="true"></span>
-          <li tabindex="0" aria-label="Projects">Projects<span class="tooltip" data-i18n="projectsTip">Here is everything I have built</span></li>
-          <span class="divider" aria-hidden="true"></span>
-          <li tabindex="0" aria-label="Blog">Blog<span class="tooltip" data-i18n="blogTip">See my blog</span></li>
+          <li><a href="../" aria-describedby="home-tip">Home</a><span role="tooltip" id="home-tip" class="tooltip">Open the project collection</span></li>
+          <li><a href="../03-Personal%20Portfolio/projects.html" aria-describedby="projects-tip">Projects</a><span role="tooltip" id="projects-tip" class="tooltip">Visit the portfolio projects page</span></li>
+          <li><a href="../03-Personal%20Portfolio/articles.html" aria-describedby="articles-tip">Articles</a><span role="tooltip" id="articles-tip" class="tooltip">Read frontend guides</span></li>
         </ul>
       </nav>
-    </div>
-    <script>
-      (function () {
-        "use strict";
-
-        var I18N = {
-          en: {
-            pageTitle: "Tooltip UI",
-            homeTip: "Go back to home",
-            projectsTip: "Here is everything I have built",
-            blogTip: "See my blog"
-          },
-          id: {
-            pageTitle: "UI Tooltip",
-            homeTip: "Kembali ke beranda",
-            projectsTip: "Ini semua yang telah saya bangun",
-            blogTip: "Lihat blog saya"
-          }
-        };
-
-        function currentLang() { return localStorage.getItem("tooltip-lang") || "en"; }
-        function currentTheme() {
-          var saved = localStorage.getItem("tooltip-theme");
-          if (saved) return saved;
-          return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        }
-        function applyTheme() {
-          var theme = currentTheme();
-          document.documentElement.dataset.theme = theme;
-          document.getElementById("themeToggle").textContent = theme === "dark" ? "☀️" : "🌙";
-        }
-        function applyLang() {
-          var lang = currentLang();
-          document.documentElement.lang = lang === "en" ? "en" : "id";
-          var els = document.querySelectorAll("[data-i18n]");
-          for (var i = 0; i < els.length; i++) els[i].textContent = I18N[lang][els[i].getAttribute("data-i18n")];
-          document.title = I18N[lang].pageTitle;
-          document.getElementById("langToggle").textContent = lang === "en" ? "EN → ID" : "ID → EN";
-        }
-
-        document.getElementById("themeToggle").addEventListener("click", function () {
-          var next = currentTheme() === "dark" ? "light" : "dark";
-          localStorage.setItem("tooltip-theme", next);
-          applyTheme();
-        });
-        document.getElementById("langToggle").addEventListener("click", function () {
-          var next = currentLang() === "en" ? "id" : "en";
-          localStorage.setItem("tooltip-lang", next);
-          applyLang();
-        });
-
-        applyTheme();
-        applyLang();
-
-        // Tooltips on focus (keyboard users get the same info)
-        document.querySelectorAll(".navbar li").forEach(function (li) {
-          li.addEventListener("focus", function () { this.classList.add("show"); }, true);
-          li.addEventListener("blur", function () { this.classList.remove("show"); }, true);
-        });
-      })();
-    </script>
+    </main>
   </body>
 </html>

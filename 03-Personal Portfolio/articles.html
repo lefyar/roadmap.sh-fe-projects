@@ -1,55 +1,41 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title data-i18n="pageTitle">Articles | Personal Portfolio</title>
+    <title>Articles | Personal Portfolio</title>
     <meta name="description" content="Personal Portfolio by Edma Reyfaldy" />
     <meta name="keywords" content="Personal Portfolio, HTML, CSS" />
     <meta name="author" content="Edma Reyfaldy" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <header>
       <div class="logo">
-        <img src="./logo.jpg" alt="Logo" />
-        <h1>Edma Reyfaldy</h1>
+        <img src="./logo.jpg" alt="" />
+        <p class="site-name">Edma Reyfaldy</p>
       </div>
       <div class="navigation">
         <nav>
           <ul>
-            <li><a href="./index.html" data-i18n="navHome">Home</a></li>
-            <li><a href="./projects.html" data-i18n="navProjects">Projects</a></li>
-            <li><a href="./articles.html" data-i18n="navArticles" class="active">Articles</a></li>
-            <li><a href="./contact.html" data-i18n="navContact">Contact</a></li>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./projects.html">Projects</a></li>
+            <li><a href="./articles.html" class="active" aria-current="page">Articles</a></li>
+            <li><a href="./contact.html">Contact</a></li>
           </ul>
         </nav>
-        <div class="header-actions">
-          <button class="dark-mode" onclick="toggleDarkMode()">
-            <svg id="sun_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-            <svg id="moon_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-          </button>
-          <button class="lang-toggle" type="button" onclick="toggleLang()">EN → ID</button>
-        </div>
       </div>
     </header>
     <main>
       <section class="articles-detail">
-        <h1 data-i18n="articlesH1">Articles</h1>
-        <ul>
-          <li><h2 data-i18n="a1Title">Article 1</h2><p data-i18n="a1Desc">Article 1 Description</p></li>
-          <li><h2 data-i18n="a2Title">Article 2</h2><p data-i18n="a2Desc">Article 2 Description</p></li>
-          <li><h2 data-i18n="a3Title">Article 3</h2><p data-i18n="a3Desc">Article 3 Description</p></li>
+        <h1>Articles</h1>
+        <ul class="card-list">
+          <li><h2><a href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a></h2><p>Guides to semantic page structure.</p></li>
+          <li><h2><a href="https://developer.mozilla.org/en-US/docs/Web/CSS">CSS</a></h2><p>Reference and examples for styling and layout.</p></li>
+          <li><h2><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility">Accessibility</a></h2><p>Learn how to make websites easier to use.</p></li>
         </ul>
       </section>
     </main>
     <footer class="footer">&copy; 2025 Edma Reyfaldy, All Rights Reserved</footer>
-    <script src="./script.js"></script>
   </body>
 </html>

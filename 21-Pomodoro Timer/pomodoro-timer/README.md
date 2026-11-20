@@ -1,12 +1,7 @@
 # Pomodoro Timer
-The Pomodoro Technique is a time management method that uses a timer to break work into intervals (typically 25 minutes) separated by short breaks. | [Live Preview](https://reyfaldypomodoro.netlify.app/)
 
-![Pomodoro Timer](./src/assets/pomodoro-timer.png)
-# React + TypeScript + Vite README
+Alternate focus sessions with short and long breaks. Choose the durations and the number of focus sessions before a long break in Settings.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[Open the demo](https://lefyar.github.io/roadmap.sh-fe-projects/21-Pomodoro%20Timer/)
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Run `npm ci` and `npm run dev` for a local Vite session. Settings are saved in your browser.

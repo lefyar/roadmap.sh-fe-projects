@@ -1,94 +1,66 @@
-const dropdownButton = document.getElementById("dropdownButton");
-const dropdownList = document.getElementById("dropdownList");
-const dropdownText = document.getElementById("dropdownText");
-const dropdownArrow = document.getElementById("dropdownArrow");
-const dropdownItems = Array.from(document.querySelectorAll(".dropdown-list li"));
+const trigger = document.querySelector("#dropdownButton");
+const list = document.querySelector("#dropdownList");
+const options = [...list.children];
+const label = document.querySelector("#dropdownText");
+let selected = -1;
 
-let open = false;
-let selectedIndex = -1;
+function setOpen(open, choice = Math.max(0, selected)) {
+  list.hidden = !open;
+  trigger.setAttribute("aria-expanded", String(open));
+  if (open) options[choice].focus();
+}
 
-function setItemStates() {
-  dropdownItems.forEach((item, index) => {
-    item.setAttribute("role", "option");
-    item.setAttribute("tabindex", open ? "0" : "-1");
-    item.setAttribute("aria-selected", String(index === selectedIndex));
-    item.classList.toggle("selected", index === selectedIndex);
+function select(index) {
+  selected = index;
+  label.textContent = options[index].textContent;
+  options.forEach((option, i) => {
+    option.setAttribute("aria-selected", String(i === selected));
+    option.classList.toggle("selected", i === selected);
   });
-}
-
-function focusItem(index) {
-  if (dropdownItems[index]) dropdownItems[index].focus();
-}
-
-function setOpen(isOpen) {
-  open = isOpen;
-  dropdownList.style.display = isOpen ? "block" : "none";
-  dropdownArrow.textContent = isOpen ? "▲" : "▼";
-  dropdownButton.setAttribute("aria-expanded", String(isOpen));
-  dropdownList.setAttribute("role", "listbox");
-  setItemStates();
-}
-
-function select(index, item) {
-  selectedIndex = index;
-  dropdownText.textContent = item.textContent;
-  setItemStates();
   setOpen(false);
-  dropdownButton.focus();
+  trigger.focus();
 }
 
-dropdownButton.setAttribute("aria-haspopup", "listbox");
-
-dropdownButton.addEventListener("click", () => setOpen(!open));
-
-dropdownButton.addEventListener("keydown", (event) => {
-  if (
-    event.key === "Enter" ||
-    event.key === " " ||
-    event.key === "Spacebar" ||
-    event.key === "ArrowDown"
-  ) {
+trigger.addEventListener("click", () => setOpen(list.hidden));
+trigger.addEventListener("keydown", event => {
+  if (event.key === "ArrowDown" || event.key === "ArrowUp") {
     event.preventDefault();
-    setOpen(true);
-    focusItem(Math.max(selectedIndex, 0));
-  } else if (event.key === "ArrowUp") {
-    event.preventDefault();
-    setOpen(true);
-    focusItem(dropdownItems.length - 1);
+    setOpen(true, selected < 0 && event.key === "ArrowUp" ? options.length - 1 : Math.max(0, selected));
   }
 });
 
-dropdownItems.forEach((item, index) => {
-  item.addEventListener("click", () => select(index, item));
-
-  item.addEventListener("keydown", (event) => {
-    if (
-      event.key === "Enter" ||
-      event.key === " " ||
-      event.key === "Spacebar" ||
-      event.key === "Tab"
-    ) {
-      event.preventDefault();
-      select(index, item);
-    } else if (event.key === "ArrowDown") {
-      event.preventDefault();
-      focusItem((index + 1) % dropdownItems.length);
-    } else if (event.key === "ArrowUp") {
-      event.preventDefault();
-      focusItem((index - 1 + dropdownItems.length) % dropdownItems.length);
-    } else if (event.key === "Escape") {
+options.forEach((option, index) => {
+  option.setAttribute("role", "option");
+  option.setAttribute("aria-selected", "false");
+  option.tabIndex = -1;
+  option.addEventListener("click", () => select(index));
+  option.addEventListener("keydown", event => {
+    if (event.key === "Tab") {
+      setOpen(false);
+      trigger.focus();
+      return;
+    }
+    if (event.key === "Escape") {
       event.preventDefault();
       setOpen(false);
-      dropdownButton.focus();
+      trigger.focus();
+    } else if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      select(index);
+    } else {
+      const next = {
+        ArrowDown: (index + 1) % options.length,
+        ArrowUp: (index + options.length - 1) % options.length,
+        Home: 0,
+        End: options.length - 1,
+      }[event.key];
+      if (next === undefined) return;
+      event.preventDefault();
+      options[next].focus();
     }
   });
 });
 
-document.addEventListener("click", (event) => {
-  if (
-    !dropdownButton.contains(event.target) &&
-    !dropdownList.contains(event.target)
-  ) {
-    setOpen(false);
-  }
+document.addEventListener("click", event => {
+  if (!event.target.closest(".dropdown")) setOpen(false);
 });

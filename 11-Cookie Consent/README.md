@@ -1,4 +1,5 @@
 # Cookie Consent
-a simple cookie consent popup that appears when the user visits the page using local storage. | [Live Preview](https://lefyar.github.io/roadmap.sh-fe-projects/11-Cookie%20Consent/)
 
-![Cookie Consent](./cookie-consent.png)
+Try accepting, rejecting, or customizing optional cookie preferences. The demo saves your choice in your browser.
+
+[Open the demo](https://lefyar.github.io/roadmap.sh-fe-projects/11-Cookie%20Consent/)

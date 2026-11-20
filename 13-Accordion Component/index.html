@@ -1,173 +1,52 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title data-i18n="pageTitle">Accordion Component</title>
+    <title>Accordion Component</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script defer src="./script.js"></script>
   </head>
   <body>
-    <button id="themeToggle" type="button" class="icon-btn" aria-label="Toggle theme">🌙</button>
-    <button id="langToggle" type="button" class="icon-btn" aria-label="Switch language">EN → ID</button>
-    <div class="accordion">
+    <main class="accordion">
       <div class="accordion-title">
-        <h1 data-i18n="title">Accordion</h1>
-        <p data-i18n="subtitle">
+        <h1>Accordion</h1>
+        <p>
           A UI component that allows users to toggle between hiding and showing content sections.
         </p>
       </div>
-      <div class="accordion-item">
-        <div class="accordion-header" role="button" tabindex="0" aria-expanded="false" aria-controls="content-1" data-index="0">
-          <span data-i18n="q1">What is accordion?</span>
-          <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="9" x2="19" y2="9"></line><line x1="12" y1="2" x2="12" y2="22"></line></svg>
+      <details class="accordion-item" name="faq">
+        <summary class="accordion-header">
+          <span>What is an accordion?</span>
+        </summary>
+        <div class="accordion-content">
+          <p>An accordion is a UI component that allows users to toggle between hiding and showing content sections.</p>
         </div>
-        <div id="content-1" class="accordion-content" role="region" aria-labelledby="content-1-header">
-          <p data-i18n="a1">An accordion is a UI component that allows users to toggle between hiding and showing content sections.</p>
+      </details>
+      <details class="accordion-item" name="faq">
+        <summary class="accordion-header">
+          <span>How does it work?</span>
+        </summary>
+        <div class="accordion-content">
+          <p>When a user clicks on a header, the corresponding content expands while collapsing any previously opened section.</p>
         </div>
-      </div>
-      <div class="accordion-item">
-        <div class="accordion-header" role="button" tabindex="-1" aria-expanded="false" aria-controls="content-2" data-index="1">
-          <span data-i18n="q2">How does it work?</span>
-          <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="9" x2="19" y2="9"></line><line x1="12" y1="2" x2="12" y2="22"></line></svg>
+      </details>
+      <details class="accordion-item" name="faq">
+        <summary class="accordion-header">
+          <span>Why use an accordion?</span>
+        </summary>
+        <div class="accordion-content">
+          <p>Accordions help organize content in a compact and user-friendly way, especially for long lists of information.</p>
         </div>
-        <div id="content-2" class="accordion-content" role="region">
-          <p data-i18n="a2">When a user clicks on a header, the corresponding content expands while collapsing any previously opened section.</p>
+      </details>
+      <details class="accordion-item" name="faq">
+        <summary class="accordion-header">
+          <span>Accessibility</span>
+        </summary>
+        <div class="accordion-content">
+          <p>Press Enter or Space to open an answer. Use the Up and Down Arrow keys to move between questions.</p>
         </div>
-      </div>
-      <div class="accordion-item">
-        <div class="accordion-header" role="button" tabindex="-1" aria-expanded="false" aria-controls="content-3" data-index="2">
-          <span data-i18n="q3">Why use an accordion?</span>
-          <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="9" x2="19" y2="9"></line><line x1="12" y1="2" x2="12" y2="22"></line></svg>
-        </div>
-        <div id="content-3" class="accordion-content" role="region">
-          <p data-i18n="a3">Accordions help organize content in a compact and user-friendly way, especially for long lists of information.</p>
-        </div>
-      </div>
-      <div class="accordion-item">
-        <div class="accordion-header" role="button" tabindex="-1" aria-expanded="false" aria-controls="content-4" data-index="3">
-          <span data-i18n="q4">Accessibility</span>
-          <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="9" x2="19" y2="9"></line><line x1="12" y1="2" x2="12" y2="22"></line></svg>
-        </div>
-        <div id="content-4" class="accordion-content" role="region">
-          <p data-i18n="a4">Accordions use semantic HTML roles, support keyboard navigation, and animate with reduced-motion support.</p>
-        </div>
-      </div>
-    </div>
-    <script>
-      (function () {
-        "use strict";
-
-        var I18N = {
-          en: {
-            pageTitle: "Accordion Component",
-            title: "Accordion",
-            subtitle: "A UI component that allows users to toggle between hiding and showing content sections.",
-            q1: "What is accordion?", q2: "How does it work?", q3: "Why use an accordion?", q4: "Accessibility",
-            a1: "An accordion is a UI component that allows users to toggle between hiding and showing content sections.",
-            a2: "When a user clicks on a header, the corresponding content expands while collapsing any previously opened section.",
-            a3: "Accordions help organize content in a compact and user-friendly way, especially for long lists of information.",
-            a4: "Accordions use semantic HTML roles, support keyboard navigation, and animate with reduced-motion support."
-          },
-          id: {
-            pageTitle: "Komponen Accordion",
-            title: "Accordion",
-            subtitle: "Komponen UI yang memungkinkan pengguna menampilkan atau menyembunyikan bagian konten.",
-            q1: "Apa itu accordion?", q2: "Bagaimana cara kerjanya?", q3: "Mengapa menggunakan accordion?", q4: "Aksesibilitas",
-            a1: "Accordion adalah komponen UI yang memungkinkan pengguna menampilkan atau menyembunyikan bagian konten.",
-            a2: "Saat pengguna mengklik header, konten terkait terekspansi sambil menutup bagian yang sebelumnya terbuka.",
-            a3: "Accordion membantu menata konten secara ringkas dan ramah pengguna, terutama untuk daftar informasi panjang.",
-            a4: "Accordion menggunakan peran HTML semantik, dukungan navigasi keyboard, dan animasi dengan dukungan reduced-motion."
-          }
-        };
-
-        function currentLang() { return localStorage.getItem("accordion-lang") || "en"; }
-        function currentTheme() {
-          var saved = localStorage.getItem("accordion-theme");
-          if (saved) return saved;
-          return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        }
-        function applyTheme() {
-          var theme = currentTheme();
-          document.documentElement.dataset.theme = theme;
-          document.getElementById("themeToggle").textContent = theme === "dark" ? "☀️" : "🌙";
-        }
-        function applyLang() {
-          var lang = currentLang();
-          var dict = I18N[lang];
-          document.documentElement.lang = lang === "en" ? "en" : "id";
-          var els = document.querySelectorAll("[data-i18n]");
-          for (var i = 0; i < els.length; i++) els[i].textContent = dict[els[i].getAttribute("data-i18n")];
-          document.title = dict.pageTitle;
-          document.getElementById("langToggle").textContent = lang === "en" ? "EN → ID" : "ID → EN";
-        }
-
-        var headers = document.querySelectorAll(".accordion-header");
-        var openIndex = -1;
-
-        function setOpen(index, animate) {
-          headers.forEach(function (h, i) {
-            var isOpen = i === index;
-            h.setAttribute("aria-expanded", String(isOpen));
-            h.classList.toggle("open", isOpen);
-            var arrow = h.querySelector(".arrow");
-            if (arrow) arrow.style.transform = isOpen ? "rotate(180deg)" : "rotate(0)";
-          });
-          var content = document.querySelector("[id='content-" + (index + 1) + "']");
-          if (content) {
-            if (animate) content.style.transition = "max-height 0.3s ease, padding 0.3s ease";
-            content.style.maxHeight = isOpenTarget(index) ? content.scrollHeight + "px" : "0";
-          }
-        }
-
-        function isOpenTarget(index) { return index === openIndex; }
-
-        headers.forEach(function (header, index) {
-          header.addEventListener("click", function () {
-            var willOpen = !isOpenTarget(index);
-            var content = document.querySelector("[id='content-" + (index + 1) + "']");
-            if (willOpen && content) content.style.maxHeight = "0";
-            openIndex = willOpen ? index : -1;
-            setOpen(openIndex);
-          });
-          header.addEventListener("keydown", function (e) {
-            if (e.key === "Enter" || e.key === " " || e.key === "ArrowDown") {
-              e.preventDefault();
-              focusHeader((index + 1) % headers.length);
-            } else if (e.key === "ArrowUp") {
-              e.preventDefault();
-              focusHeader((index - 1 + headers.length) % headers.length);
-            } else if (e.key === "Escape" && openIndex === index) {
-              openIndex = -1;
-              setOpen(-1);
-            }
-          });
-        });
-
-        function focusHeader(index) {
-          if (headers[index]) {
-            headers[index].tabIndex = 0;
-            headers[index].focus();
-          }
-        }
-
-        document.querySelectorAll(".accordion-header").forEach(function (h, i) {
-          h.tabIndex = i === 0 ? 0 : -1;
-        });
-
-        document.getElementById("themeToggle").addEventListener("click", function () {
-          var next = currentTheme() === "dark" ? "light" : "dark";
-          localStorage.setItem("accordion-theme", next);
-          applyTheme();
-        });
-        document.getElementById("langToggle").addEventListener("click", function () {
-          var next = currentLang() === "en" ? "id" : "en";
-          localStorage.setItem("accordion-lang", next);
-          applyLang();
-        });
-
-        applyTheme();
-        applyLang();
-        setOpen(openIndex);
-      })();
-    </script>
+      </details>
+    </main>
   </body>
 </html>

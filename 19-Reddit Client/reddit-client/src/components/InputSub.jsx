@@ -1,36 +1,36 @@
-import { useState, useEffect, type FormEvent } from "react";
+import { useState, useEffect } from "react";
 import RedditLane from "./RedditLane";
+import { DEMO_LANES, feedUrl } from "../feed";
 
 const STORAGE_KEY = "subreddits";
 const VALID_NAME = /^\w{1,21}$/;
 
-function loadSubreddits(): string[] {
+function loadSubreddits() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    return Array.isArray(saved)
-      ? saved.filter(
-          (name): name is string => typeof name === "string" && VALID_NAME.test(name)
-        )
-      : [];
+    if (!Array.isArray(saved)) return [];
+    return [...new Set(saved.filter(name => typeof name === "string" && VALID_NAME.test(name))
+      .map(name => name.toLowerCase()))];
   } catch {
     return [];
   }
 }
 
 export default function InputSub() {
-  const [subreddits, setSubreddits] = useState<string[]>(loadSubreddits);
+  const [subreddits, setSubreddits] = useState(loadSubreddits);
   const [input, setInput] = useState("");
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState("");
+  const [storageNotice, setStorageNotice] = useState("");
 
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(subreddits));
     } catch {
-      setError("Browser storage is unavailable. Lanes will last for this session.");
+      setStorageNotice("Browser storage is unavailable. Lanes will last for this session.");
     }
   }, [subreddits]);
 
-  const addSubreddit = (event: FormEvent) => {
+  const addSubreddit = (event) => {
     event.preventDefault();
     const name = input.trim().replace(/^r\//i, "").toLowerCase();
     if (!VALID_NAME.test(name)) {
@@ -38,39 +38,46 @@ export default function InputSub() {
       return;
     }
     if (subreddits.some((sub) => sub.toLowerCase() === name)) {
-      setError("Subreddit already exists");
+      setError("That subreddit already has a lane.");
       return;
     }
     setSubreddits((prev) => [...prev, name]);
     setInput("");
-    setError(null);
+    setError("");
   };
 
-  const removeSubreddit = (subreddit: string) => {
+  const removeSubreddit = (subreddit) => {
     setSubreddits((prev) => prev.filter((sub) => sub !== subreddit));
   };
 
   return (
-    <div className="app dark-theme">
+    <main className="app">
       <h1>Multi-Lane Reddit Client</h1>
+      <p>{feedUrl ? "Add subreddits to build your reader." : "Demo mode uses sample posts. Open a subreddit on Reddit to see its live feed."}</p>
       <form className="input-container" onSubmit={addSubreddit}>
+        <label htmlFor="subreddit">Subreddit</label>
         <input
-          aria-label="Subreddit name"
+          id="subreddit"
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Enter subreddit"
+          placeholder="e.g. r/webdev"
+          required
         />
         <button className="add-btn" type="submit">
           Add lane
         </button>
       </form>
       {error && <p role="alert" className="error">{error}</p>}
+      {storageNotice && <p role="status">{storageNotice}</p>}
+      {!feedUrl && subreddits.length === 0 && <button className="add-btn" onClick={() => setSubreddits(Object.keys(DEMO_LANES))}>
+        Add demo lanes
+      </button>}
       <div className="lanes">
         {subreddits.map((sub) => (
           <RedditLane key={sub} subreddit={sub} onDelete={removeSubreddit} />
         ))}
       </div>
-    </div>
+    </main>
   );
 }

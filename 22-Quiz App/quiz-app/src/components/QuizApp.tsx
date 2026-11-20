@@ -1,85 +1,57 @@
-import { useEffect, useState } from "react";
-import useQuiz from "../hook/useQuiz";
-import QuizCard from "./QuizCard";
-import StartScreen from "./StartScreen";
+import { useEffect, useRef, useState } from "react";
 import { Quizzes } from "../data/quizzes";
 
-export default function Quiz() {
-  const {
-    currentIndex,
-    score,
-    selectedAnswer,
-    showResults,
-    hasStarted,
-    startQuiz,
-    handleAnswerClick,
-    restartQuiz,
-  } = useQuiz();
+type Phase = "start" | "quiz" | "results";
 
-  const [isClicked, setIsClicked] = useState(false);
-  const currentQuiz = Quizzes[currentIndex];
+export default function QuizApp() {
+  const [phase, setPhase] = useState<Phase>("start");
+  const [index, setIndex] = useState(0);
+  const [answers, setAnswers] = useState<string[]>([]);
+  const heading = useRef<HTMLHeadingElement>(null);
+  const quiz = Quizzes[index];
+  const answer = answers[index];
+  const correct = quiz.answer === answer;
 
-  const handleKey = (event: KeyboardEvent) => {
-    if (!hasStarted || showResults || selectedAnswer || !currentQuiz) return;
-    const keyIndex = event.key.toUpperCase().charCodeAt(0) - "A".charCodeAt(0);
-    if (keyIndex >= 0 && keyIndex < currentQuiz.options.length) {
-      event.preventDefault();
-      handleAnswerClick(currentQuiz.options[keyIndex]);
-    }
-  };
+  useEffect(() => { if (phase !== "start") heading.current?.focus(); }, [phase, index]);
 
-  useEffect(() => {
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [hasStarted, showResults, selectedAnswer, currentQuiz]);
-
-  const handleClick = () => {
-    setIsClicked(true);
-    restartQuiz();
-  };
-
-  if (!hasStarted) {
-    return <StartScreen startQuiz={startQuiz} />;
-  }
-
-  if (showResults) {
-    return (
-      <div className="flex flex-col items-center p-6 border-2 border-[#f1f1f1] rounded-lg text-center w-full max-w-xl mx-4 md:mx-0 bg-[#1b1b1b] text-[#f1f1f1] shadow-lg gap-4">
-        <h1 className="text-2xl font-bold">Results</h1>
-        <p className="text-lg">
-          You scored {score} out of {Quizzes.length} questions.
-        </p>
-        <ul className="flex flex-col gap-2 w-full text-left text-sm">
-          {Quizzes.map((quiz) => (
-            <li key={quiz.id} className="border-b border-[#333] pb-2">
-              <span>
-                {quiz.id}. {quiz.question}
-              </span>{" "}
-              <span className="text-[#ffce78]">— {quiz.answer}</span>
-            </li>
-          ))}
-        </ul>
-        <button
-          onClick={handleClick}
-          className={`border-2 border-[#2c2c2c] py-2 px-4 rounded cursor-pointer transition-colors 
-            ${
-              isClicked
-                ? "bg-[#f1f1f1] text-[#1b1b1b]"
-                : "hover:bg-[#f1f1f1] hover:text-[#1b1b1b]"
-            }
-          `}
-        >
-          Restart Quiz
-        </button>
-      </div>
-    );
+  function select(option: string) {
+    setAnswers(previous => previous.length === index ? [...previous, option] : previous);
   }
 
   return (
-    <QuizCard
-      quiz={Quizzes[currentIndex]}
-      selectedAnswer={selectedAnswer}
-      handleAnswerClick={handleAnswerClick}
-    />
+    <section className="quiz-card" aria-labelledby="quiz-title">
+      {phase === "start" && <>
+        <h1 id="quiz-title">Indonesia Quiz</h1>
+        <p>Test your knowledge with {Quizzes.length} questions about Indonesian history and geography.</p>
+        <button className="primary" onClick={() => setPhase("quiz")}>Start quiz</button>
+      </>}
+      {phase === "quiz" && <>
+        <p className="quiz-progress">Question {index + 1} of {Quizzes.length}</p>
+        <h1 id="quiz-title" tabIndex={-1} ref={heading}>{quiz.question}</h1>
+        <div className="quiz-options">
+          {quiz.options.map(option => <button key={option} onClick={() => select(option)}
+            className={answer && option === quiz.answer ? "correct" : answer === option ? "incorrect" : undefined}
+            aria-disabled={answer !== undefined} aria-pressed={answer === option}>
+            {option}
+          </button>)}
+        </div>
+        <p role="status">{answer && (correct ? "Correct." : `Correct answer: ${quiz.answer}.`)}</p>
+        <button className="primary" disabled={!answer} onClick={() => {
+          if (index === Quizzes.length - 1) setPhase("results");
+          else setIndex(index + 1);
+        }}>{index === Quizzes.length - 1 ? "See results" : "Next question"}</button>
+      </>}
+      {phase === "results" && <>
+        <h1 id="quiz-title" tabIndex={-1} ref={heading}>Results</h1>
+        <p>You got {Quizzes.filter((item, i) => item.answer === answers[i]).length} of {Quizzes.length} correct.</p>
+        <ol className="quiz-review">
+          {Quizzes.map((item, i) => <li key={item.id}>
+            <strong>{item.question}</strong>
+            <p>{answers[i] === item.answer ? `Correct: ${item.answer}` : `You chose ${answers[i]}. Correct answer: ${item.answer}.`}</p>
+          </li>)}
+        </ol>
+        <button className="primary" onClick={() => { setAnswers([]); setIndex(0); setPhase("quiz"); }}>Try again</button>
+      </>}
+    </section>
   );
 }

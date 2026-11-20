@@ -1,4 +1,5 @@
 # Datepicker UI
-Datepicker UI without any interactions | [Live Preview](https://lefyar.github.io/roadmap.sh-fe-projects/06-Datepicker%20UI/)
 
-![Datepicker UI](./datepicker-ui.png)
+Pick a date in a calendar dialog. Use the arrow keys to move between dates and Page Up or Page Down to switch months.
+
+[Open the demo](https://lefyar.github.io/roadmap.sh-fe-projects/06-Datepicker%20UI/)

@@ -1,5 +1,3 @@
-import PropTypes from "prop-types";
-
 function NavigationButtons({ onPrev, onNext, isPrevDisabled, isNextDisabled }) {
   return (
     <div className="navigation-buttons" role="group" aria-label="Flashcard navigation">
@@ -12,12 +10,5 @@ function NavigationButtons({ onPrev, onNext, isPrevDisabled, isNextDisabled }) {
     </div>
   );
 }
-
-NavigationButtons.propTypes = {
-  onPrev: PropTypes.func.isRequired,
-  onNext: PropTypes.func.isRequired,
-  isPrevDisabled: PropTypes.bool.isRequired,
-  isNextDisabled: PropTypes.bool.isRequired,
-};
 
 export default NavigationButtons;

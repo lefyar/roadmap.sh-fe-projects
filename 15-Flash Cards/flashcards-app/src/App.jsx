@@ -7,13 +7,16 @@ import "./index.css";
 
 function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showAnswer, setShowAnswer] = useState(false);
 
   const handleNext = () => {
-    setCurrentIndex((index) => Math.min(index + 1, data.length - 1));
+    setCurrentIndex((index) => Math.min(index + 1, Math.max(0, data.length - 1)));
+    setShowAnswer(false);
   };
 
   const handlePrev = () => {
     setCurrentIndex((index) => Math.max(index - 1, 0));
+    setShowAnswer(false);
   };
 
   useEffect(() => {
@@ -23,17 +26,19 @@ function App() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [data.length]);
+  }, []);
 
   return (
-    <div className="container">
-      <h1>Flashcards App</h1>
+    <main className="container">
+      <h1>Flash Cards</h1>
       {data.length > 0 ? (
         <>
           <ProgressBar current={currentIndex + 1} total={data.length} />
           <Flashcard
             question={data[currentIndex].question}
             answer={data[currentIndex].answer}
+            showAnswer={showAnswer}
+            onToggle={() => setShowAnswer(previous => !previous)}
           />
           <NavigationButtons
             onPrev={handlePrev}
@@ -45,7 +50,7 @@ function App() {
       ) : (
         <p>No flashcards to show yet.</p>
       )}
-    </div>
+    </main>
   );
 }
 

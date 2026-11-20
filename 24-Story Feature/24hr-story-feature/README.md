@@ -1,5 +1,7 @@
-# 24-hour Photo Diary
+# 24-Hour Photo Diary
 
-Add a photo, open its thumbnail, and browse with arrow keys, swipe gestures, or the viewer controls. Images are resized and stored in this browser. Entries expire after 24 hours.
+Add photos, open them in the viewer, or delete them. Photos are resized and saved in your browser and disappear from the diary after 24 hours.
 
-Run `npm ci` and `npm run dev` from this directory. Run `npm run build` for a production bundle.
+[Open the demo](https://lefyar.github.io/roadmap.sh-fe-projects/24-Story%20Feature/)
+
+Run `npm ci` and `npm run dev` for a local Vite session.

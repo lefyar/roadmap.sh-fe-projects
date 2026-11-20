@@ -1,4 +1,5 @@
 # Simple Tabs
-Simple tabs for basic DOM Manipulation and event handling | [Live Preview](https://lefyar.github.io/roadmap.sh-fe-projects/10-Simple%20Tabs/)
 
-![Simple Tabs](./simple-tabs.png)
+Switch between four panels using the tab buttons or the keyboard.
+
+[Open the demo](https://lefyar.github.io/roadmap.sh-fe-projects/10-Simple%20Tabs/)

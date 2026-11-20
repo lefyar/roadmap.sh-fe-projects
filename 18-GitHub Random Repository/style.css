@@ -1,107 +1,16 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  background-color: #121212;
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  gap: 20px;
-}
-
-.container {
-  width: 300px;
-  padding: 20px;
-  background-color: #1e1e1e;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-}
-
-.button-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-}
-
-input,
-select,
-button {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-}
-
-select {
-  background-color: #2a2a2a;
-  color: #ffffff;
-}
-
-button {
-  background-color: #ffffff;
-  color: #000000;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-button:hover {
-  background-color: #b0b0b0;
-}
-
-.result-container {
-  width: 100%;
-  margin-top: 15px;
-}
-
-.repo-card {
-  background-color: #2a2a2a;
-  padding: 15px;
-  border-radius: 8px;
-  text-align: left;
-}
-
-.repo-card h3 a {
-  color: #314bde;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.repo-card h3 a:hover {
-  color: #1e88e5;
-}
-
-.repo-card p {
-  color: #bdbdbd;
-  font-size: 14px;
-  margin-top: 5px;
-}
-
-.loading {
-  color: #1e88e5;
-}
-
-.error {
-  color: #e53935;
-}
-
-@media screen and (max-width: 375px) {
-  .container {
-    width: 90%;
-  }
-}
+:root { color-scheme: light; color: #233047; background: #f7f9fc; font: 1rem/1.5 system-ui, sans-serif; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: clamp(2rem, 9vw, 5rem) 1rem; }
+.container { width: min(100%, 36rem); margin: auto; padding: clamp(1rem, 4vw, 1.8rem); background: #fff; border: 1px solid #c6cfde; border-radius: .9rem; }
+h1 { margin: 0; font-size: clamp(1.5rem, 6vw, 2rem); line-height: 1.15; }
+label { display: block; margin-bottom: .35rem; font-weight: 650; }
+form { margin-block: 1.2rem; }
+select, button { min-height: 2.75rem; border-radius: .45rem; border: 1px solid #758499; background: #fff; color: inherit; padding: .45rem .65rem; font: inherit; }
+button { background: #3653a0; color: #fff; border-color: #3653a0; cursor: pointer; }
+button:disabled { opacity: .65; cursor: wait; }
+:focus-visible { outline: 2px solid #3653a0; outline-offset: 3px; }
+.repo-card { border: 1px solid #c6cfde; padding: 1rem; border-radius: .65rem; background: #f6f8fe; overflow-wrap: anywhere; }
+.repo-card h2 { margin: 0; font-size: 1.1rem; }
+.repo-card a { color: #29458a; }
+.repo-card p { margin-bottom: 0; }
+#status-message { margin-block: .5rem; color: #525f73; }

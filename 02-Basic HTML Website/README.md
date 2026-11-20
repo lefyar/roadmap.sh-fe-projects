@@ -1,4 +1,5 @@
 # Basic HTML Website
-Basic HTML Website layouting without any CSS | [Live Preview](https://lefyar.github.io/roadmap.sh-fe-projects/02-Basic%20HTML%20Website/)
 
-![Basic HTML Website](./basic-html-website.png)
+A four-page site with an introduction, project links, reading resources, and a contact draft form.
+
+[Open the demo](https://lefyar.github.io/roadmap.sh-fe-projects/02-Basic%20HTML%20Website/)

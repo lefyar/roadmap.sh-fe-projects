@@ -1,4 +1,5 @@
-# Personal Portofolio
-Porto from previous project with CSS | [Live Preview](https://lefyar.github.io/roadmap.sh-fe-projects/03-Personal%20Portfolio/)
+# Personal Portfolio
 
-![Personal Portofolio](./personal-portofolio.png)
+A responsive portfolio with projects, experience, education, and a contact draft form.
+
+[Open the demo](https://lefyar.github.io/roadmap.sh-fe-projects/03-Personal%20Portfolio/)

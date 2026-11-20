@@ -1,4 +1,5 @@
 # Age Calculator
-Calculate age with [Luxon](https://www.npmjs.com/package/luxon) and [JavaScript Datepicker](https://www.npmjs.com/package/js-datepicker) library | [Live Preview](https://lefyar.github.io/roadmap.sh-fe-projects/14-Age%20Calculator/)
 
-![Age Calculator](./age-calculator.png)
+Calculate age in calendar years, months, and days, then see the next birthday. February 29 birthdays use February 28 in non-leap years.
+
+[Open the demo](https://lefyar.github.io/roadmap.sh-fe-projects/14-Age%20Calculator/)

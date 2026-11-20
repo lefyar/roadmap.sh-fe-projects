@@ -7,7 +7,6 @@ interface TimerDisplayProps {
   currentSession: SessionType;
   completedSessions: number;
   focusMinutes: number;
-  isRunning: boolean;
   onSettingsClick: () => void;
 }
 
@@ -28,49 +27,35 @@ export const TimerDisplay: React.FC<TimerDisplayProps> = ({
   currentSession,
   completedSessions,
   focusMinutes,
-  isRunning,
   onSettingsClick,
 }) => {
   return (
-    <div className="relative w-full max-w-md mx-auto bg-[#1b1b1b] rounded-2xl shadow-lg p-8">
-      {isRunning && (
-        <p className='absolute top-4 left-4 text-sm text-gray-500'>Time is running!</p>
-      )}
-      <button
-        onClick={onSettingsClick}
-        className="absolute top-4 right-4 p-2 text-gray-500 hover:text-gray-700 transition-colors"
-        aria-label="Settings"
-      >
-        <Settings2 size={24} />
-      </button>
-
-      <div className="flex items-center justify-center mb-6">
-        <Timer className="w-8 h-8 text-rose-500 mr-2" />
-        <h2 className="text-2xl font-semibold text-[#f1f1f1]">
+    <section className="w-full max-w-md mx-auto border border-slate-300 bg-white rounded-2xl p-5">
+      <div className="flex items-center justify-between gap-2 mb-5">
+        <h2 className="flex items-center gap-2 text-lg font-semibold" aria-live="polite">
+          <Timer aria-hidden="true" className="h-5 w-5 text-rose-700" />
           {sessionLabels[currentSession]}
         </h2>
+      <button
+        type="button"
+        onClick={onSettingsClick}
+        className="flex items-center gap-1.5 rounded-md border border-slate-300 px-2.5 py-2 hover:bg-slate-50"
+        aria-haspopup="dialog"
+      >
+        <Settings2 size={17} aria-hidden="true" /> Settings
+      </button>
       </div>
 
       <div className="text-center">
-        <div className="text-6xl font-bold text-[#f1f1f1] mb-4" role="timer">
+        <div className="text-6xl font-bold tabular-nums mb-4" role="timer" aria-label="Time remaining">
           {formatTime(timeRemaining)}
         </div>
 
-        <div className="text-sm text-gray-500 mb-2">
+        <div className="text-sm text-slate-600 mb-2">
           Completed Sessions: {completedSessions} · Focus: {focusMinutes} min
         </div>
 
-        <div className="flex justify-center space-x-2">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <div
-              key={i}
-              className={`w-2 h-2 rounded-full ${
-                i < (completedSessions % 4) ? 'bg-rose-500' : 'bg-gray-200'
-              }`}
-            />
-          ))}
-        </div>
       </div>
-    </div>
+    </section>
   );
 };

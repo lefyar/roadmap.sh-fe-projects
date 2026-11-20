@@ -1,4 +1,5 @@
 # Image Grid Layout
-A responsive image with grid layouting | [Live Preview](https://lefyar.github.io/roadmap.sh-fe-projects/08-Image%20Grid%20Layout/)
 
-![Image Grid Layout](./image-grid-layout.png)
+A responsive photo grid with a keyboard-accessible full-size viewer.
+
+[Open the demo](https://lefyar.github.io/roadmap.sh-fe-projects/08-Image%20Grid%20Layout/)

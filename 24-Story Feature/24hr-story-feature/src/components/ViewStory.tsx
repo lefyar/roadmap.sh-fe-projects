@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import type { Story } from "./Stories";
 
 export default function ViewStory({ stories, index, select }: {
-  stories: Story[]; index: number; select: (id: number | null) => void;
+  stories: Story[]; index: number; select: (id: string | null) => void;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   useEffect(() => {
@@ -12,10 +12,10 @@ export default function ViewStory({ stories, index, select }: {
   }, []);
   function move(step: number) {
     const next = stories[index + step];
-    if (next) select(next.created);
+    if (next) select(next.id);
   }
   const touchX = useRef(0);
-  return <dialog ref={dialog} aria-label="Photo viewer" onCancel={() => select(null)}
+  return <dialog ref={dialog} aria-label="Photo viewer" onCancel={event => { event.preventDefault(); select(null); }}
     onKeyDown={e => {
       if (e.key === "ArrowLeft") move(-1);
       if (e.key === "ArrowRight") move(1);

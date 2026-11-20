@@ -1,34 +1,26 @@
-const container = document.querySelector('.textarea');
-const textarea = document.getElementById('myTextarea');
-const charcounter = document.getElementById('charCounter');
-const zeroTo250 = document.getElementById('0-250');
-const oneTo250 = document.getElementById('1-250');
-const maxTo250 = document.getElementById('250-250');
+const textarea = document.querySelector("#myTextarea");
+const count = document.querySelector("#charCounter");
+const copy = document.querySelector("#copyBtn");
+const status = document.querySelector("#toast");
 
-textarea.addEventListener('input', () => {
+function update() {
+  const length = textarea.value.length;
+  count.textContent = `${length} / ${textarea.maxLength}`;
+  textarea.closest(".textarea").classList.toggle("at-limit", length >= textarea.maxLength);
+  copy.disabled = length === 0;
+}
 
-    const remaining = textarea.value.length;
-    charcounter.textContent = remaining + '/250';
-
-    if (remaining === 0) {
-        container.style.border = '2px solid black';
-        zeroTo250.style.display = 'block';
-        oneTo250.style.display = 'none';
-        maxTo250.style.display = 'none';
-        charcounter.style.color = 'black';
-    } else if (remaining < 250) {
-        container.style.border = '2px solid black';
-        zeroTo250.style.display = 'none';
-        oneTo250.style.display = 'block';
-        maxTo250.style.display = 'none';
-        charcounter.style.color = 'black';
-    } else {
-        container.style.border = '2px solid red';
-        zeroTo250.style.display = 'none';
-        oneTo250.style.display = 'none';
-        maxTo250.style.display = 'block';
-        maxTo250.style.color = 'red';
-        charcounter.style.color = 'red';
-    }
+textarea.addEventListener("input", () => {
+  status.textContent = "";
+  update();
 });
-
+copy.addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(textarea.value);
+    status.textContent = "Copied.";
+  } catch {
+    textarea.select();
+    status.textContent = "Text selected. Use your keyboard or device menu to copy.";
+  }
+});
+update();

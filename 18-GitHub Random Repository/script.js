@@ -1,122 +1,67 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const apiUrl = "https://api.github.com/search/repositories";
-  const languageSelect = document.getElementById("language-select");
-  const resultContainer = document.getElementById("result-container");
-  const statusMessage = document.getElementById("status-message");
-  const fetchButton = document.getElementById("fetch-button");
-  const refreshButton = document.getElementById("refresh-button");
+const form = document.querySelector("form");
+const language = document.querySelector("#language-select");
+const result = document.querySelector("#result-container");
+const status = document.querySelector("#status-message");
+const submit = document.querySelector("#fetch-button");
+let request;
+let previous;
 
-  const tokenInput = document.getElementById("token-input");
-  const saveTokenButton = document.getElementById("save-token");
-  const tokenStatus = document.getElementById("stored-token");
+try { sessionStorage.removeItem("github_token"); } catch { /* Storage may be unavailable. */ }
 
-  const TOKEN_KEY = "github_token";
-  let token = "";
+function display(repo) {
+  const heading = document.createElement("h2");
+  const link = document.createElement("a");
+  link.href = "https://github.com/" + repo.full_name.split("/").map(encodeURIComponent).join("/");
+  link.textContent = repo.full_name;
+  heading.append(link);
+  const description = document.createElement("p");
+  description.textContent = repo.description || "No description provided.";
+  const stats = document.createElement("p");
+  stats.textContent = `${repo.stargazers_count} stars · ${repo.forks_count} forks · ${repo.open_issues_count} open issues`;
+  result.replaceChildren(heading, description, stats);
+  result.hidden = false;
+}
 
-  function loadToken() {
-    try {
-      return sessionStorage.getItem(TOKEN_KEY) || "";
-    } catch {
-      return "";
+form.addEventListener("submit", async event => {
+  event.preventDefault();
+  request?.abort();
+  const controller = new AbortController();
+  request = controller;
+  submit.disabled = true;
+  status.textContent = "Looking for repositories…";
+  const params = new URLSearchParams({ q: `language:${language.value} is:public`,
+    sort: "stars", order: "desc", per_page: "50" });
+  try {
+    const response = await fetch(`https://api.github.com/search/repositories?${params}`, {
+      signal: AbortSignal.any([controller.signal, AbortSignal.timeout(10000)]),
+    });
+    if (response.status === 403 || response.status === 429) throw new Error("GitHub is limiting requests. Try again in a minute.");
+    if (!response.ok) throw new Error("GitHub could not complete the search. Try again.");
+    const { items } = await response.json();
+    if (controller.signal.aborted) return;
+    if (items.length === 0) {
+      result.hidden = true;
+      status.textContent = "No repositories found.";
+      return;
     }
+    const pool = items.length > 1 ? items.filter(repo => repo.id !== previous) : items;
+    const repo = pool[Math.floor(Math.random() * pool.length)];
+    previous = repo.id;
+    display(repo);
+    status.textContent = `Found ${repo.full_name}.`;
+    submit.textContent = "Find another";
+  } catch (error) {
+    if (!controller.signal.aborted) status.textContent = error.name === "Error"
+      ? error.message : "Could not reach GitHub. Try again.";
+  } finally {
+    if (request === controller) submit.disabled = false;
   }
+});
 
-  function setToken(value) {
-    token = value.trim();
-    try {
-      if (token) {
-        sessionStorage.setItem(TOKEN_KEY, token);
-      } else {
-        sessionStorage.removeItem(TOKEN_KEY);
-      }
-    } catch {
-      // ignore storage failures
-    }
-    tokenStatus.textContent = token
-      ? "Token active for this session."
-      : "Using public access.";
-  }
-
-  setToken(loadToken());
-
-  document.getElementById("clear-token").addEventListener("click", () => {
-    tokenInput.value = "";
-    setToken("");
-  });
-
-  saveTokenButton.addEventListener("click", () => {
-    setToken(tokenInput.value);
-    tokenInput.value = "";
-  });
-
-  async function fetchRepository(language) {
-    try {
-      if (!language) {
-        showStatus("Please select a language", "gray");
-        return;
-      }
-
-      showStatus("Loading, please wait..", "gray");
-
-      const randomPage = Math.floor(Math.random() * 10) + 1;
-      const response = await fetch(
-        `${apiUrl}?q=language:${encodeURIComponent(language)}&sort=stars&order=desc&page=${randomPage}`,
-        {
-          headers: token ? { Authorization: `token ${token}` } : {},
-        }
-      );
-
-      if (response.status === 403) {
-        showStatus("Rate limit exceeded. Try again later or use token.", "red");
-        return;
-      }
-
-      if (!response.ok) throw new Error("Request failed");
-      const data = await response.json();
-      if (!data.items || data.items.length === 0) {
-        showStatus("No repositories found.", "gray");
-        return;
-      }
-
-      const randomRepo =
-        data.items[Math.floor(Math.random() * data.items.length)];
-      displayRepository(randomRepo);
-    } catch (error) {
-      showStatus("Error fetching repositories", "red");
-    }
-  }
-
-  function displayRepository(repo) {
-    const card = document.createElement("div");
-    const title = document.createElement("h3");
-    const link = document.createElement("a");
-    link.href = "https://github.com/" + repo.full_name.split("/").map(encodeURIComponent).join("/");
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    link.textContent = repo.name;
-    title.append(link);
-    const description = document.createElement("p");
-    description.textContent = repo.description || "No description available.";
-    const stats = document.createElement("p");
-    stats.textContent = `${repo.stargazers_count} stars | ${repo.forks_count} forks | ${repo.open_issues_count} open issues`;
-    card.append(title, description, stats);
-    resultContainer.replaceChildren(card);
-    statusMessage.textContent = "";
-    refreshButton.style.display = "block";
-  }
-
-  function showStatus(message, color) {
-    statusMessage.textContent = message;
-    statusMessage.style.color = color;
-    resultContainer.innerHTML = "";
-    refreshButton.style.display = "none";
-  }
-
-  fetchButton.addEventListener("click", () => {
-    fetchRepository(languageSelect.value);
-  });
-
-  refreshButton.addEventListener("click", () => {
-    fetchRepository(languageSelect.value);
-  });
+language.addEventListener("change", () => {
+  request?.abort();
+  submit.disabled = false;
+  submit.textContent = "Find repository";
+  status.textContent = "";
+  result.hidden = true;
 });

@@ -1,9 +1,7 @@
 # GitHub Random Repository
-A GitHub repository finder that allows users to select a programming language from a dropdown menu. | [Live Preview](https://lefyar.github.io/roadmap.sh-fe-projects/18-GitHub%20Random%20Repository/) \
-Public searches work without a token. An optional token stays in memory for the current page.
 
-![Initial Load](./initialload.png)
+Find a random public repository from GitHub?s search results for a selected language. Use ?Find another? to continue exploring.
 
-![Fetch With Token](./fetchrepo.png)
+[Open the demo](https://lefyar.github.io/roadmap.sh-fe-projects/18-GitHub%20Random%20Repository/)
 
-![Fetch Rate Limited](./fetchrepo-nontoken.png)
+GitHub rate-limits anonymous calls. If a request hits the limit, wait before trying again.

@@ -7,25 +7,21 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <h2>GitHub Random Repository</h2>
-    <div class="container">
-      <input type="password" aria-label="Optional GitHub token" autocomplete="off" id="token-input" placeholder="Enter GitHub Token" />
-      <div class="button-container">
-        <button id="save-token">Save Token</button>
-        <button id="clear-token">Clear Token</button>
-      </div>
-      <p id="stored-token">Stored Token: None</p>
-      <select id="language-select">
-        <option value="">Select a Language</option>
+    <main class="container">
+      <h1>GitHub Random Repository</h1>
+      <p>Find a public repository by programming language.</p>
+      <form>
+        <label for="language-select">Language</label>
+        <select id="language-select">
         <option value="JavaScript">JavaScript</option>
         <option value="Python">Python</option>
         <option value="Java">Java</option>
-      </select>
-      <button id="fetch-button">Find Repository</button>
-      <p id="status-message" class="loading"></p>
-      <div id="result-container" class="repo-card"></div>
-      <button id="refresh-button" style="display: none">Refresh</button>
-    </div>
+        </select>
+        <button id="fetch-button" type="submit">Find repository</button>
+      </form>
+      <p id="status-message" role="status"></p>
+      <article id="result-container" class="repo-card" hidden></article>
+    </main>
 
     <script src="./script.js" defer></script>
   </body>

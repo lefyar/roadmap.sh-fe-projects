@@ -1,4 +1,5 @@
-# Single Page CV 
-A single page CV | [Live Preview](https://lefyar.github.io/roadmap.sh-fe-projects/01-Single%20Page%20CV/)
+# Single-Page CV
 
-![Single Page CV](./single-page-cv.png)
+A single-page r?sum? with semantic markup and a print stylesheet.
+
+[Open the demo](https://lefyar.github.io/roadmap.sh-fe-projects/01-Single%20Page%20CV/)

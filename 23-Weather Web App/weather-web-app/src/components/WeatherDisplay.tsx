@@ -1,28 +1,30 @@
-import { WeatherDisplayProps } from "@/types/weather";
-import WeatherCard from "./WeatherCard";
+import type { Weather } from "@/lib/fetchWeather";
 
-export default function WeatherDisplay({ weather }: WeatherDisplayProps) {
-  if (!weather) return null;
+const dateLabel = new Intl.DateTimeFormat("en", {
+  weekday: "short", month: "short", day: "numeric", timeZone: "UTC",
+});
 
+function degrees(value: number | null) {
+  return value === null ? "–" : `${Math.round(value)}°C`;
+}
+
+export default function WeatherDisplay({ weather }: { weather: Weather }) {
+  const { title, temperature, conditions, humidity, days } = weather;
   return (
-    <div className="flex flex-col items-center w-3/4 space-y-4">
-      <h2 className="text-xl font-semibold">{weather.resolvedAddress}</h2>
-      <p>{weather.currentConditions.temp}°C · {weather.currentConditions.conditions}</p>
-      {weather.currentConditions.humidity !== undefined && (
-        <p>Humidity: {weather.currentConditions.humidity}%</p>
-      )}
-      <div className="flex overflow-x-scroll gap-4 w-full pb-4 bg-[#1b1b1b] p-4 rounded-md">
-        {weather.days.map((day, index) => (
-          <WeatherCard
-            key={index}
-            datetime={day.datetime}
-            conditions={day.conditions}
-            temp={day.temp}
-            high={day.maxTemp}
-            low={day.minTemp}
-          />
-        ))}
+    <section className="forecast" aria-label="Forecast" aria-live="polite">
+      <div className="current">
+        <h2>{title}</h2>
+        <p className="temperature">{degrees(temperature)}</p>
+        <p>{conditions}{humidity !== null && ` · Humidity ${humidity}%`}</p>
       </div>
-    </div>
+      <h3>Seven-day forecast</h3>
+      <ol className="forecast-days">
+        {days.map(day => <li key={day.date}>
+          <time dateTime={day.date}>{dateLabel.format(new Date(day.date))}</time>
+          <p>{day.conditions}</p>
+          <p>High {degrees(day.high)} · Low {degrees(day.low)}</p>
+        </li>)}
+      </ol>
+    </section>
   );
 }

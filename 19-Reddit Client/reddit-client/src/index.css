@@ -1,171 +1,27 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  background-color: #121212;
-  color: white;
-  font-family: Arial, sans-serif;
-}
-
-.app {
-  max-width: 1200px;
-  margin: auto;
-  padding: 20px;
-}
-
-h1 {
-  font-size: 1.5em;
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.input-container {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-input {
-  padding: 10px;
-  font-size: 1.05em;
-  border-radius: 5px;
-  border: none;
-  min-width: 0;
-}
-
-.add-btn {
-  padding: 10px 15px;
-  background-color: white;
-  color: black;
-  font-size: 1.2em;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.add-btn:hover {
-  background-color: #9a9a9a;
-  color: white;
-}
-
-.lanes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-
-.lane {
-  background: #1e1e1e;
-  padding: 15px;
-  border-radius: 8px;
-  width: min(100%, 350px);
-}
-
-.lane-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.lane-header h2 {
-  font-size: 18px;
-}
-
-.lane-actions button {
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-size: 14px;
-  padding-block: 8px;
-  margin-left: 10px;
-}
-
-.refresh-btn:hover {
-  text-decoration: underline;
-  transition: 0.3s;
-}
-
-.delete-btn:hover {
-  color: red;
-  transition: 0.3s;
-}
-
-.load-more-btn {
-  background: none;
-  border: 1px solid white;
-  color: white;
-  font-size: 14px;
-  border-radius: 5px;
-  padding: 8px 12px;
-  cursor: pointer;
-}
-
-.load-more-btn:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.load-more-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.posts {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.post {
-  background: #2a2a2a;
-  padding: 10px;
-  border-radius: 8px;
-  min-height: 110px;
-  gap: 12px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-sizing: border-box;
-}
-
-.post-title {
-  font-size: 17px;
-  font-weight: normal;
-  line-height: 1.2;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.post-info {
-  font-size: 12px;
-  opacity: 0.8;
-  display: flex;
-  justify-content: space-between;
-}
-
-.post-meta {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  gap: 5px;
-  opacity: 0.8;
-}
-
-.post-link {
-  color: white;
-  text-decoration: none;
-}
-
-.post-link:hover {
-  text-decoration: underline;
-}
-
-.lane-header, .post-info { flex-wrap: wrap; gap: 6px; }
-.post { overflow-wrap: anywhere; }
+:root { color-scheme: light; background: #f7f9fc; color: #24324a; font: 1rem/1.5 system-ui, sans-serif; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+.app { width: min(100% - 2rem, 72rem); margin: auto; padding-block: clamp(2rem, 7vw, 5rem); }
+h1 { margin: 0; font-size: clamp(1.85rem, 6vw, 3rem); line-height: 1.1; }
+.app > p { max-width: 39rem; color: #4b5a73; }
+.input-container { display: grid; grid-template-columns: minmax(0, 20rem) auto; justify-content: start; gap: .4rem; margin-block: 1.4rem 1rem; }
+.input-container label { grid-column: 1 / -1; font-weight: 650; }
+input, button { min-height: 2.65rem; padding: .45rem .7rem; border-radius: .45rem; font: inherit; }
+input { min-width: 0; border: 1px solid #7c8aa0; }
+button { border: 1px solid #9aaac2; background: #fff; color: #254889; cursor: pointer; }
+button:hover:not(:disabled) { background: #eaf1ff; }
+button:disabled { opacity: .65; cursor: default; }
+.add-btn { background: #294d8b; color: #fff; border-color: #294d8b; }
+.add-btn:hover:not(:disabled) { background: #223e6e; }
+.lanes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: .85rem; margin-top: 1.25rem; }
+.lane { min-width: 0; padding: .9rem; border: 1px solid #c2cedf; border-radius: .75rem; background: #fff; }
+.lane-header, .lane-actions, .post-meta { display: flex; align-items: center; flex-wrap: wrap; gap: .6rem; }
+.lane-header { justify-content: space-between; }
+.lane h2 { margin: 0; font-size: 1.2rem; overflow-wrap: anywhere; }
+.lane-actions a, .post-link { color: #254889; text-underline-offset: .18em; }
+.delete-btn, .error { color: #942e33; }
+.posts { display: grid; gap: .65rem; padding: 0; list-style: none; }
+.post { padding: .7rem; border-radius: .5rem; background: #eff3fa; overflow-wrap: anywhere; }
+.post h3 { margin: 0 0 .45rem; font-size: 1rem; }
+.post-meta { font-size: .875rem; color: #4b5a73; }
+:focus-visible { outline: 3px solid #365bb1; outline-offset: 3px; }

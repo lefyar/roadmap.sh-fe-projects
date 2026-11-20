@@ -1,37 +1,52 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const cookieConsent = document.getElementById('cookieConsent');
-    const resetCookiesBtn = document.getElementById('resetCookiesBtn');
-    const acceptCookiesBtn = document.getElementById('acceptCookiesBtn');
-    const declineCookiesBtn = document.getElementById('declineCookiesBtn');
+const banner = document.querySelector("#cookieConsent");
+const settings = document.querySelector("#resetCookiesBtn");
+const optional = [...banner.querySelectorAll("input:not(:disabled)")];
+const status = document.querySelector("#consentStatus");
 
-    const consent = localStorage.getItem('cookieConsent');
+function readConsent() {
+  try {
+    const consent = JSON.parse(localStorage.getItem("cookie-consent"));
+    if (consent?.accepted) return consent;
+    const legacy = localStorage.getItem("cookieConsent");
+    if (legacy === "accepted") return { analytics: true, marketing: true };
+    if (legacy === "declined") return { analytics: false, marketing: false };
+  } catch { /* Defaults are used when storage is unavailable. */ }
+  return null;
+}
 
-    if (consent === 'accepted') {
-        cookieConsent.style.display = 'none';
-        console.log('Cookies found: Accepted');
-    } else if (consent === 'declined') {
-        cookieConsent.style.display = 'none';
-        console.log('Cookies found: Declined');
-    } else {
-        cookieConsent.style.display = 'block';
-    }
-    
-    acceptCookiesBtn.addEventListener('click', function() {
-        localStorage.setItem('cookieConsent', 'accepted');
-        cookieConsent.style.display = 'none';
-        console.log('Cookies accepted');
-    });
+function showPreferences() {
+  for (const option of optional) option.checked = Boolean(consent?.[option.name]);
+  banner.hidden = false;
+  settings.setAttribute("aria-expanded", "true");
+}
 
-    declineCookiesBtn.addEventListener('click', function() {
-        localStorage.setItem('cookieConsent', 'declined');
-        cookieConsent.style.display = 'none';
-        console.log('Cookies declined');
-    });
+function savePreferences(value) {
+  consent = { essential: true, accepted: true, ...value };
+  try {
+    localStorage.setItem("cookie-consent", JSON.stringify(consent));
+    localStorage.removeItem("cookieConsent");
+    status.textContent = "Preferences saved.";
+  } catch {
+    status.textContent = "Preferences applied for this visit.";
+  }
+  banner.hidden = true;
+  settings.setAttribute("aria-expanded", "false");
+  settings.focus();
+}
 
-    resetCookiesBtn.addEventListener('click', function() {
-        localStorage.removeItem('cookieConsent');
-        cookieConsent.style.display = 'block';
-        console.log('Cookies reseted');
-    });
-    
+let consent = readConsent();
+settings.addEventListener("click", () => {
+  showPreferences();
+  optional[0].focus();
 });
+document.querySelector("#acceptCookiesBtn").addEventListener("click", () => {
+  savePreferences({ analytics: true, marketing: true });
+});
+document.querySelector("#rejectCookiesBtn").addEventListener("click", () => {
+  savePreferences({ analytics: false, marketing: false });
+});
+document.querySelector("#saveCookiesBtn").addEventListener("click", () => {
+  savePreferences(Object.fromEntries(optional.map(option => [option.name, option.checked])));
+});
+
+if (!consent) showPreferences();

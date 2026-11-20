@@ -1,13 +1,13 @@
-# Reddit Client
-A browser-based Reddit client that displays multiple subreddits in separate, customizable lanes. | [Live Preview](https://reyfaldyredditclient.netlify.app/)
+# Multi-Lane Reddit Client
 
-![Reddit Client](./src/assets/reddit-client.png)
+Build a browser-local collection of subreddit lanes. The Pages demo uses labeled sample posts, and every lane links to its subreddit.
 
-# React + Vite README
+[Open the demo](https://lefyar.github.io/roadmap.sh-fe-projects/19-Reddit%20Client/)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Run `npm ci` and `npm run dev` for a local Vite session.
 
-Currently, two official plugins are available:
+## Live feeds
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Reddit requires an approved OAuth integration. Point `VITE_REDDIT_FEED_URL` locally or the `REDDIT_FEED_URL` repository variable in Pages at a browser-accessible HTTPS feed endpoint. Keep Reddit credentials on that backend. [Reddit Data API requirements](https://support.reddithelp.com/hc/en-us/articles/16160319875092-Reddit-Data-API-Wiki)
+
+The endpoint accepts `subreddit`, `limit`, and an optional `after` cursor as query parameters. It returns a listing with `data.children` containing `data` objects with `id`, `permalink`, `title`, `author`, `ups`, and `num_comments`. Return `data.after` as the next cursor, or `null` when the listing ends.

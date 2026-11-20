@@ -1,57 +1,44 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title data-i18n="pageTitle">Home | Personal Portfolio</title>
+    <title>Home | Personal Portfolio</title>
     <!-- SEO Meta Tags -->
     <meta name="description" content="Personal Portfolio by Edma Reyfaldy" />
     <meta name="keywords" content="Personal Portfolio, HTML, CSS" />
     <meta name="author" content="Edma Reyfaldy" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <header>
       <div class="logo">
-        <img src="./logo.jpg" alt="Logo" />
-        <h1>Edma Reyfaldy</h1>
+        <img src="./logo.jpg" alt="" />
+        <p class="site-name">Edma Reyfaldy</p>
       </div>
       <div class="navigation">
         <nav>
           <ul>
-            <li><a href="./index.html" data-i18n="navHome">Home</a></li>
-            <li><a href="./projects.html" data-i18n="navProjects">Projects</a></li>
-            <li><a href="./articles.html" data-i18n="navArticles">Articles</a></li>
-            <li><a href="./contact.html" data-i18n="navContact">Contact</a></li>
+            <li><a href="./index.html" class="active" aria-current="page">Home</a></li>
+            <li><a href="./projects.html">Projects</a></li>
+            <li><a href="./articles.html">Articles</a></li>
+            <li><a href="./contact.html">Contact</a></li>
           </ul>
         </nav>
-        <div class="header-actions">
-          <button class="dark-mode" onclick="toggleDarkMode()">
-            <svg id="sun_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-            <svg id="moon_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-          </button>
-          <button class="lang-toggle" type="button" onclick="toggleLang()">EN → ID</button>
-        </div>
       </div>
     </header>
     <main>
-      <section class="hero" data-i18n-parent>
-        <h1 data-i18n="heroTitle">Front-End Developer</h1>
-        <p data-i18n="heroText">Next JS adalah framework terbaik di dunia</p>
+      <section class="hero">
+        <h1>Front-End Developer</h1>
+        <p>I build websites and share what I learn through small front-end projects.</p>
       </section>
       <div class="content">
         <section class="projects">
-          <h2 data-i18n="projectsH1">Projects</h2>
+          <h2>Projects</h2>
           <ul>
-            <li><h3 data-i18n="p1Title">Project 1</h3><p data-i18n="p1Desc">Project 1 Description</p></li>
-            <li><h3 data-i18n="p2Title">Project 2</h3><p data-i18n="p2Desc">Project 2 Description</p></li>
-            <li><h3 data-i18n="p3Title">Project 3</h3><p data-i18n="p3Desc">Project 3 Description</p></li>
+            <li><h3><a href="../17-Task%20Tracker/">Task Tracker</a></h3><p>A browser-local task list.</p></li>
+            <li><h3><a href="../22-Quiz%20App/">Indonesia Quiz</a></h3><p>A multiple-choice quiz about history and geography.</p></li>
+            <li><h3><a href="../23-Weather%20Web%20App/">Weather Web App</a></h3><p>Current conditions and a seven-day forecast.</p></li>
           </ul>
         </section>
         <section class="experience">
@@ -59,7 +46,7 @@
           <article>
             <h3>roadmap.sh</h3>
             <p>Solving roadmap.sh Front-End Projects</p>
-            <a href="https://github.com/reyfaldy/roadmap.sh-fe-projects" target="_blank" rel="noopener noreferrer">Visit Projects</a>
+            <a href="https://github.com/lefyar/roadmap.sh-fe-projects" target="_blank" rel="noopener noreferrer">Visit Projects</a>
           </article>
           <article>
             <h3>PT Kedata Indonesia Digital</h3>
@@ -79,16 +66,7 @@
           </article>
         </section>
       </div>
-      <section class="reviews">
-        <h2>Reviews</h2>
-        <div class="review">
-          <blockquote><p>"Next JS adalah framework terbaik di dunia"</p><cite>Edma Reyfaldy</cite></blockquote>
-          <blockquote><p>"Next JS adalah framework terbaik di dunia"</p><cite>Edma Reyfaldy</cite></blockquote>
-          <blockquote><p>"Next JS adalah framework terbaik di dunia"</p><cite>Edma Reyfaldy</cite></blockquote>
-        </div>
-      </section>
     </main>
     <footer class="footer">&copy; 2025 Edma Reyfaldy, All Rights Reserved</footer>
-    <script src="./script.js"></script>
   </body>
 </html>

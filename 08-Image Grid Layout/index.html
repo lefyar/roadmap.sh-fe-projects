@@ -1,148 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title data-i18n="pageTitle">Image Grid Layout</title>
+    <title>Image Grid Layout</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script defer src="./script.js"></script>
   </head>
   <body>
-    <button id="themeToggle" type="button" class="icon-btn" aria-label="Toggle theme">🌙</button>
-    <button id="langToggle" type="button" class="icon-btn" aria-label="Switch language">EN → ID</button>
     <main class="main">
       <header class="header">
-        <h1 data-i18n="title">Image Grid Layout</h1>
-        <p data-i18n="subtitle">Hover to zoom, click to view at full size.</p>
+        <h1>Image Grid Layout</h1>
+        <p>Select a photo to view it at full size.</p>
       </header>
       <div class="grid" id="grid"></div>
     </main>
-    <div id="lightbox" class="lightbox" hidden role="dialog" aria-modal="true" aria-label="Full-size image">
-      <div class="lightbox-backdrop" role="presentation"></div>
-      <div class="lightbox-content" role="presentation">
-        <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
-        <img class="lightbox-img" id="lightboxImg" alt="Full-size" />
+    <dialog id="lightbox" class="lightbox" aria-labelledby="lightboxCaption">
+      <figure class="lightbox-content">
+        <button type="button" class="lightbox-close" id="lightboxClose">Close</button>
+        <img class="lightbox-img" id="lightboxImg" alt="" />
         <figcaption class="lightbox-caption" id="lightboxCaption"></figcaption>
-      </div>
-    </div>
-    <script>
-      (function () {
-        "use strict";
-
-        var I18N = {
-          en: {
-            pageTitle: "Image Grid Layout",
-            title: "Image Grid Layout",
-            subtitle: "Hover to zoom, click to view at full size."
-          },
-          id: {
-            pageTitle: "Image Grid Layout",
-            title: "Image Grid Layout",
-            subtitle: "Arahkan kursor untuk memperbesar, klik untuk melihat ukuran penuh."
-          }
-        };
-
-        function currentLang() {
-          return localStorage.getItem("grid-lang") || "en";
-        }
-
-        function currentTheme() {
-          var saved = localStorage.getItem("grid-theme");
-          if (saved) return saved;
-          return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        }
-
-        function applyTheme() {
-          var theme = currentTheme();
-          document.documentElement.dataset.theme = theme;
-          document.getElementById("themeToggle").textContent = theme === "dark" ? "☀️" : "🌙";
-        }
-
-        function renderI18n(lang) {
-          var dict = I18N[lang];
-          document.documentElement.lang = lang === "en" ? "en" : "id";
-          document.title = dict.pageTitle;
-          var els = document.querySelectorAll("[data-i18n]");
-          for (var i = 0; i < els.length; i++) {
-            els[i].textContent = dict[els[i].getAttribute("data-i18n")];
-          }
-        }
-
-        function applyLang() {
-          var lang = currentLang();
-          renderI18n(lang);
-          document.getElementById("langToggle").textContent = lang === "en" ? "EN → ID" : "ID → EN";
-        }
-
-        var photos = [];
-        for (var i = 1; i <= 6; i++) {
-          photos.push({ src: "./grid-photo-" + i + ".png", alt: "Photo " + i });
-        }
-
-        function renderGrid() {
-          var grid = document.getElementById("grid");
-          photos.forEach(function (photo, index) {
-            var item = document.createElement("div");
-            item.className = "grid-item";
-            item.dataset.index = index;
-
-            var img = document.createElement("img");
-            img.src = photo.src;
-            img.alt = photo.alt;
-            img.loading = "lazy";
-            item.appendChild(img);
-
-            item.addEventListener("click", function () {
-              openLightbox(index);
-            });
-            grid.appendChild(item);
-          });
-        }
-
-        var lightbox = document.getElementById("lightbox");
-        var lightboxImg = document.getElementById("lightboxImg");
-        var lightboxCaption = document.getElementById("lightboxCaption");
-        var lightboxClose = document.getElementById("lightboxClose");
-        var currentIndex = -1;
-
-        function openLightbox(index) {
-          currentIndex = index;
-          lightboxImg.src = photos[index].src;
-          lightboxImg.alt = photos[index].alt;
-          lightboxCaption.textContent = "Photo " + (index + 1);
-          lightbox.hidden = false;
-          document.body.style.overflow = "hidden";
-          lightboxImg.focus();
-        }
-
-        function closeLightbox() {
-          lightbox.hidden = true;
-          document.body.style.overflow = "";
-        }
-
-        lightboxClose.addEventListener("click", closeLightbox);
-        lightbox.addEventListener("click", function (e) {
-          if (e.target === lightbox || e.target === lightbox.querySelector(".lightbox-content")) closeLightbox();
-        });
-        document.addEventListener("keydown", function (e) {
-          if (lightbox.hidden) return;
-          if (e.key === "Escape") closeLightbox();
-        });
-
-        document.getElementById("themeToggle").addEventListener("click", function () {
-          var next = currentTheme() === "dark" ? "light" : "dark";
-          localStorage.setItem("grid-theme", next);
-          applyTheme();
-        });
-
-        document.getElementById("langToggle").addEventListener("click", function () {
-          var next = currentLang() === "en" ? "id" : "en";
-          localStorage.setItem("grid-lang", next);
-          applyLang();
-        });
-
-        applyTheme();
-        applyLang();
-        renderGrid();
-      })();
-    </script>
+      </figure>
+    </dialog>
   </body>
 </html>

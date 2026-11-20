@@ -14,12 +14,12 @@ export const Quizzes = [
   {
     id: 3,
     question: "Where is Indonesia located?",
-    options: ["Northen Europe", "South Asia", "Middle East", "Southeast Asia"],
+    options: ["Northern Europe", "South Asia", "Middle East", "Southeast Asia"],
     answer: "Southeast Asia",
   },
   {
     id: 4,
-    question: "What is the capital of Indonesia?",
+    question: "Which city is home to Indonesia’s National Monument (Monas)?",
     options: ["Bali", "Jakarta", "Yogyakarta", "Bandung"],
     answer: "Jakarta",
   },

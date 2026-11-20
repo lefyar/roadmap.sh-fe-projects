@@ -1,146 +1,111 @@
-import { useState, useEffect, useCallback } from 'react';
-import { TimerConfig, TimerState, SessionType } from '../types';
+import { useEffect, useRef, useState } from 'react';
+import type { SessionType, TimerConfig, TimerState } from '../types';
+import { timerFields } from '../timerFields';
 
-const INITIAL_CONFIG: TimerConfig = {
-  workMinutes: 25,
-  shortBreakMinutes: 5,
-  longBreakMinutes: 15,
-  sessionsBeforeLongBreak: 4,
+const defaults: TimerConfig = {
+  workMinutes: 25, shortBreakMinutes: 5, longBreakMinutes: 15, sessionsBeforeLongBreak: 4,
 };
-
-const CONFIG_STORAGE_KEY = 'pomodoro.config.v1';
+const key = 'pomodoro.config.v1';
+const minutes = { work: 'workMinutes', shortBreak: 'shortBreakMinutes', longBreak: 'longBreakMinutes' } as const;
 
 function loadConfig(): TimerConfig {
+  const config = { ...defaults };
   try {
-    const saved = JSON.parse(localStorage.getItem(CONFIG_STORAGE_KEY) ?? '');
-    if (saved && typeof saved === 'object') {
-      const cfg = saved as Partial<TimerConfig>;
-      if (
-        Number.isFinite(cfg.workMinutes) && (cfg.workMinutes as number) >= 1 &&
-        Number.isFinite(cfg.shortBreakMinutes) && (cfg.shortBreakMinutes as number) >= 1 &&
-        Number.isFinite(cfg.longBreakMinutes) && (cfg.longBreakMinutes as number) >= 1 &&
-        Number.isFinite(cfg.sessionsBeforeLongBreak) && (cfg.sessionsBeforeLongBreak as number) >= 1
-      ) {
-        return {
-          workMinutes: cfg.workMinutes as number,
-          shortBreakMinutes: cfg.shortBreakMinutes as number,
-          longBreakMinutes: cfg.longBreakMinutes as number,
-          sessionsBeforeLongBreak: cfg.sessionsBeforeLongBreak as number,
-        };
-      }
+    const stored = JSON.parse(localStorage.getItem(key) ?? '{}');
+    for (const field of Object.keys(config) as (keyof TimerConfig)[]) {
+      const value = stored?.[field];
+      if (Number.isInteger(value) && value >= 1 && value <= timerFields[field].max) config[field] = value;
     }
-  } catch {
-    // corrupt or missing persisted settings are ignored
-  }
-  return INITIAL_CONFIG;
+  } catch { /* Defaults are used when storage is unavailable. */ }
+  return config;
 }
 
-export const useTimer = () => {
-  const [config, setConfig] = useState<TimerConfig>(loadConfig);
-  const [timerState, setTimerState] = useState<TimerState>(() => {
-    const initial = loadConfig();
-    return {
-      isRunning: false,
-      timeRemaining: initial.workMinutes * 60,
-      currentSession: 'work',
-      completedSessions: 0,
-    };
-  });
-  const [focusMinutes, setFocusMinutes] = useState(0);
+function initialState(config: TimerConfig, focusMinutes = 0) {
+  return {
+    deadline: null as number | null,
+    timeRemaining: config.workMinutes * 60,
+    currentSession: 'work' as SessionType,
+    completedSessions: 0,
+    focusMinutes,
+  };
+}
 
-  const saveConfig = useCallback((cfg: TimerConfig) => {
-    setConfig(cfg);
-    try {
-      localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(cfg));
-    } catch {
-      // storage unavailable
-    }
-  }, []);
+export function useTimer() {
+  const [config, setConfig] = useState(loadConfig);
+  const [state, setState] = useState(() => initialState(config));
+  const audio = useRef<AudioContext>(null);
+  const lastSession = useRef<SessionType>('work');
 
-  const playNotification = useCallback(() => {
-    const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
-    audio.play().catch(() => undefined);
-  }, []);
-
-  const getNextSession = useCallback((currentSession: SessionType, completedSessions: number): SessionType => {
-    if (currentSession === 'work') {
-      return (completedSessions + 1) % config.sessionsBeforeLongBreak === 0 ? 'longBreak' : 'shortBreak';
-    }
-    return 'work';
-  }, [config.sessionsBeforeLongBreak]);
-
-  const getSessionDuration = useCallback((sessionType: SessionType, durations: TimerConfig = config): number => {
-    switch (sessionType) {
-      case 'work':
-        return durations.workMinutes * 60;
-      case 'shortBreak':
-        return durations.shortBreakMinutes * 60;
-      case 'longBreak':
-        return durations.longBreakMinutes * 60;
-    }
-  }, [config]);
+  useEffect(() => () => { void audio.current?.close(); audio.current = null; }, []);
+  useEffect(() => {
+    if (lastSession.current === state.currentSession) return;
+    lastSession.current = state.currentSession;
+    const context = audio.current;
+    if (!context || context.state !== 'running') return;
+    const tone = context.createOscillator();
+    const volume = context.createGain();
+    const now = context.currentTime;
+    tone.frequency.value = 740;
+    volume.gain.setValueAtTime(0.12, now);
+    volume.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+    tone.connect(volume).connect(context.destination);
+    tone.start();
+    tone.stop(now + 0.28);
+  }, [state.currentSession]);
 
   useEffect(() => {
-    let interval: number;
+    if (state.deadline === null) return;
+    const tick = () => {
+      const now = Date.now();
+      setState(previous => {
+        if (previous.deadline === null) return previous;
+        const remaining = Math.ceil((previous.deadline - now) / 1000);
+        if (remaining > 0) return remaining === previous.timeRemaining
+          ? previous : { ...previous, timeRemaining: remaining };
+        const worked = previous.currentSession === 'work';
+        const completedSessions = previous.completedSessions + Number(worked);
+        const currentSession = !worked ? 'work'
+          : completedSessions % config.sessionsBeforeLongBreak === 0 ? 'longBreak' : 'shortBreak';
+        const duration = config[minutes[currentSession]] * 60;
+        return { deadline: now + duration * 1000, timeRemaining: duration, currentSession, completedSessions,
+          focusMinutes: previous.focusMinutes + (worked ? config.workMinutes : 0) };
+      });
+    };
+    const interval = window.setInterval(tick, 200);
+    document.addEventListener('visibilitychange', tick);
+    return () => {
+      window.clearInterval(interval);
+      document.removeEventListener('visibilitychange', tick);
+    };
+  }, [state.deadline, config]);
 
-    if (timerState.isRunning && timerState.timeRemaining > 0) {
-      interval = window.setInterval(() => {
-        setTimerState((prev) => ({
-          ...prev,
-          timeRemaining: prev.timeRemaining - 1,
-        }));
-      }, 1000);
-    } else if (timerState.timeRemaining === 0) {
-      playNotification();
-      const completedWork = timerState.currentSession === 'work';
-      const nextSession = getNextSession(timerState.currentSession, timerState.completedSessions);
-      const duration = getSessionDuration(nextSession, config);
-      setTimerState((prev) => ({
-        isRunning: true,
-        timeRemaining: duration,
-        currentSession: nextSession,
-        completedSessions: prev.currentSession === 'work' ? prev.completedSessions + 1 : prev.completedSessions,
-      }));
-      if (completedWork) {
-        setFocusMinutes((prev) => prev + config.workMinutes);
-      }
+  function startTimer() {
+    if (typeof AudioContext !== 'undefined') {
+      audio.current ??= new AudioContext();
+      void audio.current.resume().catch(() => undefined);
     }
+    const now = Date.now();
+    setState(previous => ({ ...previous, deadline: now + previous.timeRemaining * 1000 }));
+  }
 
-    return () => clearInterval(interval);
-  }, [timerState, getNextSession, getSessionDuration, playNotification, config]);
-
-  const startTimer = () => {
-    setTimerState((prev) => ({ ...prev, isRunning: true }));
-  };
-
-  const pauseTimer = () => {
-    setTimerState((prev) => ({ ...prev, isRunning: false }));
-  };
-
-  const resetTimer = useCallback(() => {
-    setTimerState({
-      isRunning: false,
-      timeRemaining: getSessionDuration('work'),
-      currentSession: 'work',
-      completedSessions: 0,
-    });
-  }, [getSessionDuration]);
-
-  const updateConfig = useCallback((newConfig: TimerConfig) => {
-    saveConfig(newConfig);
-    setTimerState((prev) => ({
-      ...prev,
-      timeRemaining: getSessionDuration(prev.currentSession, newConfig),
+  function pauseTimer() {
+    const now = Date.now();
+    setState(previous => previous.deadline === null ? previous : ({
+      ...previous, deadline: null, timeRemaining: Math.max(1, Math.ceil((previous.deadline - now) / 1000)),
     }));
-  }, [saveConfig, getSessionDuration]);
+  }
 
-  return {
-    timerState,
-    config,
-    focusMinutes,
-    startTimer,
-    pauseTimer,
-    resetTimer,
-    updateConfig,
-  };
-};
+  function resetTimer() {
+    lastSession.current = 'work';
+    setState(previous => initialState(config, previous.focusMinutes));
+  }
+
+  function updateConfig(next: TimerConfig) {
+    setConfig(next);
+    try { localStorage.setItem(key, JSON.stringify(next)); } catch { /* Keep settings for this visit. */ }
+    setState(previous => ({ ...previous, deadline: null, timeRemaining: next[minutes[previous.currentSession]] * 60 }));
+  }
+
+  const timerState: TimerState = { ...state, isRunning: state.deadline !== null };
+  return { timerState, config, focusMinutes: state.focusMinutes, startTimer, pauseTimer, resetTimer, updateConfig };
+}

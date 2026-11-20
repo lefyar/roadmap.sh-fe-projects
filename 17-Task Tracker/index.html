@@ -7,17 +7,19 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <div class="container">
-      <h2>Task Tracker</h2>
-      <input
-        type="text"
-        id="taskInput"
-        placeholder="Enter a new task"
-        onkeypress="handleKeyPress(event)"
-      />
-      <button id="addTaskBtn" class="addTaskBtn" onclick="addTaskFromButton()">Add Task</button>
+    <main class="container">
+      <h1>Task Tracker</h1>
+      <form id="taskForm">
+        <label for="taskInput">New task</label>
+        <div class="task-entry">
+          <input type="text" id="taskInput" required maxlength="200" />
+          <button type="submit" class="addTaskBtn">Add task</button>
+        </div>
+      </form>
+      <p id="emptyTasks">No tasks yet.</p>
+      <p id="taskNotice" role="status"></p>
       <ul id="taskList"></ul>
-    </div>
+    </main>
     <script src="./script.js"></script>
   </body>
 </html>

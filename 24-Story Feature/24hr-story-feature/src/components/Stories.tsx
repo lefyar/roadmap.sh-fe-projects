@@ -1,30 +1,27 @@
 import { useEffect, useRef, useState } from "react";
 import ViewStory from "./ViewStory";
 
-export type Story = { created: number; image: string };
+export type Story = { id: string; created: number; image: string };
 const key = "roadmap.photo-stories.v1";
 const day = 24 * 60 * 60 * 1000;
 
 function writeStories(list: Story[]) {
-  try {
-    localStorage.setItem(key, JSON.stringify(list));
-  } catch {
-    // ignore storage failures
-  }
+  localStorage.setItem(key, JSON.stringify(list));
 }
 
 function readStories(): Story[] {
-  const saved = JSON.parse(localStorage.getItem(key) || "[]");
+  const stored = localStorage.getItem(key);
+  let saved;
+  try { saved = JSON.parse(stored || "[]"); } catch { return []; }
   if (!Array.isArray(saved)) return [];
   const active: Story[] = saved.filter(item => item && Number.isFinite(item.created) &&
     item.created + day > Date.now() && typeof item.image === "string" &&
-    item.image.startsWith("data:image/jpeg;base64,"));
-  if (active.length !== saved.length) writeStories(active);
+    item.image.startsWith("data:image/jpeg;base64,"))
+    .map(item => ({ ...item, id: typeof item.id === "string" ? item.id : String(item.created) }));
+  if (active.length !== saved.length) {
+    try { writeStories(active); } catch { /* Expired photos are still hidden. */ }
+  }
   return active;
-}
-
-function removeStory(list: Story[], story: Story): Story[] {
-  return list.filter(item => item.created !== story.created);
 }
 
 async function resizePhoto(file: File) {
@@ -50,7 +47,7 @@ async function resizePhoto(file: File) {
 
 export default function Stories() {
   const [stories, setStories] = useState<Story[]>([]);
-  const [selected, select] = useState<number | null>(null);
+  const [selected, select] = useState<string | null>(null);
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
   const picker = useRef<HTMLInputElement>(null);
@@ -83,7 +80,7 @@ export default function Stories() {
     setBusy(true);
     try {
       const image = await resizePhoto(file);
-      const updated = [{ image, created: Date.now() }, ...readStories()];
+      const updated = [{ id: crypto.randomUUID(), image, created: Date.now() }, ...readStories()];
       writeStories(updated);
       setStories(updated);
       setMessage("Photo added.");
@@ -91,6 +88,18 @@ export default function Stories() {
       setMessage("Could not save this photo. Try a smaller JPEG or PNG, or check browser storage.");
     } finally {
       setBusy(false);
+    }
+  }
+
+  function removeStory(story: Story) {
+    try {
+      const remaining = readStories().filter(item => item.id !== story.id);
+      writeStories(remaining);
+      setStories(remaining);
+      if (selected === story.id) select(null);
+      setMessage("Photo deleted.");
+    } catch {
+      setMessage("Could not delete this photo. Check browser storage and try again.");
     }
   }
 
@@ -104,26 +113,20 @@ export default function Stories() {
       {busy ? "Saving photo…" : "+ Add a photo"}
     </button>
     <p role="status">{message}</p>
-    {stories.length === 0 ? <p className="empty">Your day starts with a photo.</p> :
+    {stories.length === 0 ? <p className="empty">No photos yet.</p> :
       <div className="photos">{stories.map(story => (
-        <div key={story.created} className="photo-item">
+        <div key={story.id} className="photo-item">
           <button className="photo"
-            onClick={() => select(story.created)} aria-label={`View photo from ${new Date(story.created).toLocaleTimeString()}`}>
+            onClick={() => select(story.id)} aria-label={`View photo from ${new Date(story.created).toLocaleTimeString()}`}>
             <img src={story.image} alt="" /><time>{new Date(story.created).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}</time>
           </button>
           <button className="delete-photo"
-            onClick={(event) => {
-              event.stopPropagation();
-              const next = removeStory(stories, story);
-              writeStories(next);
-              setStories(next);
-              if (selected === story.created) select(null);
-            }}
+            onClick={() => removeStory(story)}
             aria-label={`Delete photo from ${new Date(story.created).toLocaleTimeString()}`}>×</button>
         </div>
       ))}</div>}
-    {stories.some(story => story.created === selected) &&
-      <ViewStory stories={stories} index={stories.findIndex(story => story.created === selected)}
+    {stories.some(story => story.id === selected) &&
+      <ViewStory stories={stories} index={stories.findIndex(story => story.id === selected)}
         select={select} />}
   </section>;
 }

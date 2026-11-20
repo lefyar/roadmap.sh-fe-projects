@@ -1,9 +1,7 @@
 # Weather Web App
 
-Search a city or allow browser location access to see current conditions and a daily forecast.
+Search for a city or request the forecast for your location. The app uses Open-Meteo for current conditions and a seven-day forecast. [Open-Meteo](https://open-meteo.com/)
 
-1. Run `npm ci` in this directory.
-2. Set `WEATHER_API_KEY` to your Visual Crossing key in `.env.local`.
-3. Run `npm run dev` and open the localhost URL.
+[Open the demo](https://lefyar.github.io/roadmap.sh-fe-projects/23-Weather%20Web%20App/)
 
-Run `npm run build` and `npm start` for production. The API route requires a Next.js server.
+Run `npm ci` and `npm run dev`. Run `npm run build` to export the static site to `out/`. The browser requests your location only when you select ?Use my location.?

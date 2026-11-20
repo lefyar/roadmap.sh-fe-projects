@@ -1,0 +1,8 @@
+{
+  "name": "roadmap-frontend-projects",
+  "private": true,
+  "scripts": {
+    "setup": "node scripts/pages.mjs install",
+    "build": "node scripts/pages.mjs build"
+  }
+}

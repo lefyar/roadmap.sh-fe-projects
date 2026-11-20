@@ -7,19 +7,20 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <div class="dropdown">
-        <div class="dropdown-button" id="dropdownButton">
-            <span id="dropdownText">Select an Item</span>
-            <span id="dropdownArrow">▼</span>
-        </div>
-        <ul class="dropdown-list" id="dropdownList">
+    <main class="dropdown">
+        <h1>Custom Dropdown</h1>
+        <button type="button" class="dropdown-button" id="dropdownButton" aria-haspopup="listbox" aria-controls="dropdownList" aria-expanded="false">
+            <span id="dropdownText">Select an item</span>
+            <span aria-hidden="true">▾</span>
+        </button>
+        <ul class="dropdown-list" id="dropdownList" role="listbox" aria-label="Items" hidden>
             <li data-value="First Item">First Item</li>
             <li data-value="Second Item">Second Item</li>
             <li data-value="Third Item">Third Item</li>
             <li data-value="Fourth Item">Fourth Item</li>
             <li data-value="Fifth Item">Fifth Item</li>
         </ul>
-    </div>
+    </main>
     <script src="./script.js"></script>
 </body>
 </html>

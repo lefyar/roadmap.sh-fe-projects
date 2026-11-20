@@ -9,6 +9,7 @@ function App() {
   const {
     timerState,
     config,
+    focusMinutes,
     startTimer,
     pauseTimer,
     resetTimer,
@@ -16,13 +17,14 @@ function App() {
   } = useTimer();
 
   return (
-    <div className="min-h-screen bg-[#101010] flex flex-col items-center justify-center p-4">
+    <main className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4 text-slate-900">
       <div className="w-full max-w-md">
+        <h1 className="mb-4 text-center text-3xl font-bold tracking-tight">Pomodoro Timer</h1>
         <TimerDisplay
           timeRemaining={timerState.timeRemaining}
           currentSession={timerState.currentSession}
           completedSessions={timerState.completedSessions}
-          isRunning={timerState.isRunning}
+          focusMinutes={focusMinutes}
           onSettingsClick={() => setShowSettings(true)}
         />
         
@@ -41,7 +43,7 @@ function App() {
           onClose={() => setShowSettings(false)}
         />
       )}
-    </div>
+    </main>
   );
 }
 

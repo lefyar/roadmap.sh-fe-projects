@@ -1,38 +1,38 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title data-i18n="pageTitle">Testimonial Cards</title>
+    <title>Testimonial Cards</title>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <button id="themeToggle" type="button" class="icon-btn" aria-label="Toggle theme">🌙</button>
-    <button id="langToggle" type="button" class="icon-btn" aria-label="Switch language">EN → ID</button>
-    <section class="testimonial" data-testimonial>
+    <main class="testimonial">
+      <h1>Testimonial Cards</h1>
+      <p>Sample quotes for the layout demo.</p>
       <!-- Testimonial Card 1 -->
       <div class="testimonial-card-1" data-card="0">
         <div class="testimonial-content-1">
-          <p data-i18n="content1">I have been solving all the project ideas on roadmpa.sh and I am suprised how far I have come from where I started. <br /><br />Highly recommended!</p>
+          <p>I have been solving all the project ideas on roadmap.sh and I am surprised how far I have come from where I started. <br /><br />Highly recommended!</p>
         </div>
         <div class="testimonial-author">
           <img src="./logo.jpg" alt="Edma Reyfaldy" />
           <div>
-            <h3 data-i18n="author1">Edma Reyfaldy</h3>
-            <p data-i18n="role1">Junior Frontend Developer</p>
+            <h3>Edma Reyfaldy</h3>
+            <p>Junior Frontend Developer</p>
           </div>
         </div>
       </div>
       <!-- Testimonial Card 2 -->
       <div class="testimonial-card-2" data-card="1">
         <div class="testimonial-content-2">
-          <p data-i18n="content2">Since starting my career in 2021, I have only followed one resource, roadmap.sh, it truly helped me go from 0 to having a job and changing the financial trajectory of my family</p>
+          <p>Since starting my career in 2021, I have only followed one resource, roadmap.sh, it truly helped me go from 0 to having a job and changing the financial trajectory of my family</p>
         </div>
         <div class="testimonial-author">
           <img src="./logo.jpg" alt="Edma Reyfaldy" />
           <div>
-            <h3 data-i18n="author2">Edma Reyfaldy</h3>
-            <p data-i18n="role2">Junior Frontend Developer</p>
+            <h3>Edma Reyfaldy</h3>
+            <p>Junior Frontend Developer</p>
           </div>
         </div>
       </div>
@@ -40,15 +40,15 @@
       <div class="testimonial-card-3" data-card="2">
         <img src="./logo.jpg" alt="Edma Reyfaldy" />
         <div class="testimonial-content-3">
-          <div class="rating" data-i18n="rating">★★★★★</div>
-          <h3 data-i18n="author3">Edma Reyfaldy</h3>
-          <p class="job-title" data-i18n="role3">Engineering Manager</p>
-          <p data-i18n="content3">I find myself recommending roadmap.sh to all the internees or junior developers. It's a great way to skill up and grow in your career.</p>
+          <div class="rating">★★★★★</div>
+          <h3>Edma Reyfaldy</h3>
+          <p class="job-title">Sample author</p>
+          <p>I find myself recommending roadmap.sh to all the interns or junior developers. It's a great way to skill up and grow in your career.</p>
         </div>
       </div>
       <!-- Testimonial Card 4 -->
       <div class="testimonial-card-4" data-card="3">
-        <p class="testimonial-4-quote" data-i18n="content4">roadmap.sh is an incredible resource. I was fortunate to discover it during my university days in 2018. Back then, it was just a single repository with three images. It's amazing to see how much impact it has had on millions lives since then.</p>
+        <p class="testimonial-4-quote">roadmap.sh is an incredible resource. I was fortunate to discover it during my university days in 2018. Back then, it was just a single repository with three images. It's amazing to see how much impact it has had on millions of lives since then.</p>
         <div class="testimonial-4-author">
           <span class="previous" aria-hidden="true"></span>
           <img src="./logo.jpg" alt="Edma Reyfaldy" />
@@ -57,124 +57,9 @@
           <span class="next" aria-hidden="true"></span>
         </div>
         <div>
-          <span class="name" data-i18n="author4">Edma Reyfaldy</span>
+          <span class="name">Edma Reyfaldy</span>
         </div>
       </div>
-    </section>
-    <script>
-      (function () {
-        "use strict";
-
-        var I18N = {
-          en: {
-            pageTitle: "Testimonial Cards",
-            content1: "I have been solving all the project ideas on roadmpa.sh and I am suprised how far I have come from where I started. <br /><br />Highly recommended!",
-            author1: "Edma Reyfaldy",
-            role1: "Junior Frontend Developer",
-            content2: "Since starting my career in 2021, I have only followed one resource, roadmap.sh, it truly helped me go from 0 to having a job and changing the financial trajectory of my family",
-            author2: "Edma Reyfaldy",
-            role2: "Junior Frontend Developer",
-            rating: "★★★★★",
-            author3: "Edma Reyfaldy",
-            role3: "Engineering Manager",
-            content3: "I find myself recommending roadmap.sh to all the internees or junior developers. It's a great way to skill up and grow in your career.",
-            content4: "roadmap.sh is an incredible resource. I was fortunate to discover it during my university days in 2018. Back then, it was just a single repository with three images. It's amazing to see how much impact it has had on millions lives since then.",
-            author4: "Edma Reyfaldy"
-          },
-          id: {
-            pageTitle: "Kartu Testimoni",
-            content1: "Saya telah menyelesaikan semua ide proyek di roadmpa.sh dan terkejut betapa jauh saya sejak mula memulakan.",
-            author1: "Edma Reyfaldy",
-            role1: "Pengembang Frontend Junior",
-            content2: "Sejak memulakan kerjaya pada 2021, saya hanya mengikuti satu sumber, roadmap.sh, ia benar-benar membantu saya melangkah dari 0 ke kerjaya dan mengubah trajektori finansial keluarga saya.",
-            author2: "Edma Reyfaldy",
-            role2: "Pengembang Frontend Junior",
-            rating: "★★★★★",
-            author3: "Edma Reyfaldy",
-            role3: "Mengurusan Teknologi",
-            content3: "Saya sering menasihati roadmap.sh kepada pelajar dan pemula. Ia adalah cara sempurna untuk meningkatkan kemahiran.",
-            content4: "roadmap.sh adalah sumber yang luar biasa. Saya beruntung menemukannya pada zaman universiti. Ia berasal dari satu repositori dengan tiga gambar. Himpulnya pengaruhnya bagi jutaan orang.",
-            author4: "Edma Reyfaldy"
-          }
-        };
-
-        function renderI18n(lang) {
-          var dict = I18N[lang];
-          document.documentElement.lang = lang === "en" ? "en" : "id";
-          document.title = dict.pageTitle;
-          var els = document.querySelectorAll("[data-i18n]");
-          for (var i = 0; i < els.length; i++) {
-            var key = els[i].getAttribute("data-i18n");
-            if (Object.prototype.hasOwnProperty.call(dict, key)) {
-              els[i].innerHTML = dict[key];
-            }
-          }
-        }
-
-        function currentLang() {
-          return localStorage.getItem("testimonials-lang") || "en";
-        }
-
-        function currentTheme() {
-          var saved = localStorage.getItem("testimonials-theme");
-          if (saved) return saved;
-          return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        }
-
-        function applyTheme() {
-          var theme = currentTheme();
-          document.documentElement.dataset.theme = theme;
-          document.getElementById("themeToggle").textContent = theme === "dark" ? "☀️" : "🌙";
-        }
-
-        function applyLang() {
-          var lang = currentLang();
-          renderI18n(lang);
-          document.getElementById("langToggle").textContent = lang === "en" ? "EN → ID" : "ID → EN";
-        }
-
-        function startCarousel() {
-          var container = document.querySelector("[data-testimonial]");
-          if (!container) return;
-          var cards = container.querySelectorAll("[data-card]");
-          var timer = null;
-
-          function show(index) {
-            cards.forEach(function (card, i) {
-              var on = i === index;
-              card.classList.toggle("is-active", on);
-              card.style.animationDelay = (cards.length - 1 - i) * 0 + (on ? 0 : 0) + "ms";
-            });
-            clearTimeout(timer);
-            timer = setTimeout(function () {
-              show((index + 1) % cards.length);
-            }, 6500);
-          }
-
-          show(0);
-          container.addEventListener("mouseenter", function () { clearTimeout(timer); });
-          container.addEventListener("mouseleave", function () {
-            var next = cards.findIndex(function (c) { return c.classList.contains("is-active"); });
-            show(next);
-          });
-        }
-
-        document.getElementById("themeToggle").addEventListener("click", function () {
-          var next = currentTheme() === "dark" ? "light" : "dark";
-          localStorage.setItem("testimonials-theme", next);
-          applyTheme();
-        });
-
-        document.getElementById("langToggle").addEventListener("click", function () {
-          var next = currentLang() === "en" ? "id" : "en";
-          localStorage.setItem("testimonials-lang", next);
-          applyLang();
-        });
-
-        applyTheme();
-        applyLang();
-        startCarousel();
-      })();
-    </script>
+    </main>
   </body>
 </html>

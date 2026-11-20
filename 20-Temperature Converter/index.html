@@ -1,185 +1,45 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title data-i18n="pageTitle">Temperature Converter</title>
+    <title>Temperature Converter</title>
     <link rel="stylesheet" href="./style.css" />
+    <script defer src="./script.js"></script>
   </head>
   <body>
-    <button id="themeToggle" type="button" class="icon-btn" aria-label="Toggle theme">🌙</button>
-    <button id="langToggle" type="button" class="icon-btn" aria-label="Switch language">EN → ID</button>
     <main class="container">
       <div class="header">
-        <h1 data-i18n="title">Temperature Converter</h1>
-        <p data-i18n="subtitle">Enter the temperature and pick the units.</p>
+        <h1>Temperature Converter</h1>
+        <p>Enter the temperature and pick the units.</p>
       </div>
       <form id="temp-form" class="form">
         <div class="form-row">
           <div class="form-field">
-            <label for="temp-value" data-i18n="labelValue">Value</label>
+            <label for="temp-value">Value</label>
             <input type="number" id="temp-value" placeholder="0.00" step="any" />
           </div>
           <div class="form-field">
-            <label for="from-unit" data-i18n="labelFrom">From</label>
+            <label for="from-unit">From</label>
             <select id="from-unit">
-              <option value="" data-i18n="unitPlaceholder">From Unit</option>
-              <option value="celsius" data-i18n="unitCelsius">Celsius</option>
-              <option value="fahrenheit" data-i18n="unitFahrenheit">Fahrenheit</option>
-              <option value="kelvin" data-i18n="unitKelvin">Kelvin</option>
+              <option value="celsius">Celsius</option>
+              <option value="fahrenheit">Fahrenheit</option>
+              <option value="kelvin">Kelvin</option>
             </select>
           </div>
           <div class="form-field">
-            <label for="to-unit" data-i18n="labelTo">To</label>
+            <label for="to-unit">To</label>
             <select id="to-unit">
-              <option value="" data-i18n="unitPlaceholder">To Unit</option>
-              <option value="celsius" data-i18n="unitCelsius">Celsius</option>
-              <option value="fahrenheit" data-i18n="unitFahrenheit">Fahrenheit</option>
-              <option value="kelvin" data-i18n="unitKelvin">Kelvin</option>
+              <option value="celsius">Celsius</option>
+              <option value="fahrenheit" selected>Fahrenheit</option>
+              <option value="kelvin">Kelvin</option>
             </select>
           </div>
         </div>
         <div class="result" id="result" role="status" aria-live="polite">
-          <p data-i18n="resultPlaceholder">Select units and a temperature to see the result.</p>
+          <p>Enter a temperature to see the result.</p>
         </div>
-        <button type="button" id="convertBtn" data-i18n="convert" class="convert-btn">Convert</button>
       </form>
     </main>
-    <script>
-      (function () {
-        "use strict";
-
-        var I18N = {
-          en: {
-            pageTitle: "Temperature Converter",
-            title: "Temperature Converter",
-            subtitle: "Enter the temperature and pick the units.",
-            labelValue: "Value",
-            labelFrom: "From",
-            labelTo: "To",
-            unitPlaceholder: "From Unit",
-            unitCelsius: "Celsius",
-            unitFahrenheit: "Fahrenheit",
-            unitKelvin: "Kelvin",
-            convert: "Convert",
-            resultPlaceholder: "Select units and a temperature to see the result.",
-            equal: "equals",
-            selectDifferentUnits: "Please select different units."
-          },
-          id: {
-            pageTitle: "Kalkulator Suhu",
-            title: "Kalkulator Suhu",
-            subtitle: "Masukkan suhu dan pilih satuannya.",
-            labelValue: "Nilai",
-            labelFrom: "Dari",
-            labelTo: "Ke",
-            unitPlaceholder: "Satuan Awal",
-            unitCelsius: "Celsius",
-            unitFahrenheit: "Fahrenheit",
-            unitKelvin: "Kelvin",
-            convert: "Konversi",
-            resultPlaceholder: "Pilih satuan dan suhu untuk melihat hasilnya.",
-            equal: "sama dengan",
-            selectDifferentUnits: "Silakan pilih satuan yang berbeda."
-          }
-        };
-
-        function currentLang() { return localStorage.getItem("temp-lang") || "en"; }
-        function currentTheme() {
-          var saved = localStorage.getItem("temp-theme");
-          if (saved) return saved;
-          return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        }
-        function applyTheme() {
-          var theme = currentTheme();
-          document.documentElement.dataset.theme = theme;
-          document.getElementById("themeToggle").textContent = theme === "dark" ? "☀️" : "🌙";
-        }
-        function applyLang() {
-          var lang = currentLang();
-          var dict = I18N[lang];
-          document.documentElement.lang = lang === "en" ? "en" : "id";
-          var els = document.querySelectorAll("[data-i18n]");
-          for (var i = 0; i < els.length; i++) els[i].textContent = dict[els[i].getAttribute("data-i18n")];
-          document.title = dict.pageTitle;
-          document.getElementById("langToggle").textContent = lang === "en" ? "EN → ID" : "ID → EN";
-          updatePlaceholder(dict);
-        }
-
-        var tempInput = document.getElementById("temp-value");
-        var fromUnit = document.getElementById("from-unit");
-        var toUnit = document.getElementById("to-unit");
-        var convertBtn = document.getElementById("convertBtn");
-        var result = document.getElementById("result");
-
-        function updatePlaceholder(dict) {
-          // keep option texts in sync (they are data-i18n driven)
-        }
-
-        function updateButtonState() {
-          convertBtn.disabled = !(tempInput.value && fromUnit.value && toUnit.value);
-        }
-
-        function convert(value, from, to) {
-          var celsiusValue;
-          if (from === "celsius") celsiusValue = value;
-          else if (from === "fahrenheit") celsiusValue = (value - 32) * 5 / 9;
-          else if (from === "kelvin") celsiusValue = value - 273.15;
-          else return null;
-
-          var result;
-          if (to === "celsius") result = celsiusValue;
-          else if (to === "fahrenheit") result = (celsiusValue * 9 / 5) + 32;
-          else if (to === "kelvin") result = celsiusValue + 273.15;
-          else return null;
-          return result;
-        }
-
-        function showResult() {
-          var value = tempInput.value;
-          if (!value) { result.innerHTML = "<p>" + I18N[currentLang()].resultPlaceholder + "</p>"; return; }
-          var from = fromUnit.value;
-          var to = toUnit.value;
-          if (!from || !to) { result.innerHTML = "<p>" + I18N[currentLang()].resultPlaceholder + "</p>"; return; }
-          if (from === to) {
-            result.innerHTML = "<p class=\"error\">" + I18N[currentLang()].selectDifferentUnits + "</p>";
-            return;
-          }
-          var converted = convert(parseFloat(value), from, to);
-          var dict = I18N[currentLang()];
-          result.innerHTML = "<p>" + value + \" \" + dict[\"unit\" + from.charAt(0).toUpperCase() + from.slice(1)] + \" \" + dict.equal + \" <strong>\" + converted.toFixed(2) + \" \" + dict[\"unit\" + to.charAt(0).toUpperCase() + to.slice(1)] + \"</strong></p>\";
-        }
-
-        [tempInput, fromUnit, toUnit].forEach(function (el) {
-          el.addEventListener("input", showResult);
-          el.addEventListener("change", showResult);
-          el.addEventListener("keydown", function (e) {
-            if (e.key === "Enter" && convertBtn.disabled === false) {
-              e.preventDefault();
-              showResult();
-            }
-          });
-        });
-
-        convertBtn.addEventListener("click", showResult);
-
-        document.getElementById("themeToggle").addEventListener("click", function () {
-          var next = currentTheme() === "dark" ? "light" : "dark";
-          localStorage.setItem("temp-theme", next);
-          applyTheme();
-        });
-        document.getElementById("langToggle").addEventListener("click", function () {
-          var next = currentLang() === "en" ? "id" : "en";
-          localStorage.setItem("temp-lang", next);
-          applyLang();
-          showResult();
-        });
-
-        applyTheme();
-        applyLang();
-        updateButtonState();
-        showResult();
-      })();
-    </script>
   </body>
 </html>

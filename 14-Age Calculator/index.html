@@ -1,184 +1,30 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title data-i18n="pageTitle">Age Calculator</title>
+    <title>Age Calculator</title>
     <link rel="stylesheet" href="./style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.4/luxon.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script defer src="./script.js"></script>
   </head>
   <body>
-    <button id="themeToggle" type="button" class="icon-btn" aria-label="Toggle theme">🌙</button>
-    <button id="langToggle" type="button" class="icon-btn" aria-label="Switch language">EN → ID</button>
     <div class="container">
-      <h1 data-i18n="title">Age Calculator</h1>
+      <h1>Age Calculator</h1>
       <form id="age-form" class="age-form" novalidate>
         <div class="form-field">
-          <label for="birthdate" data-i18n="labelBirthdate">Enter your birth date:</label>
-          <input type="text" id="birthdate" name="birthdate" placeholder="DD-MM-YYYY" />
+          <label for="birthdate">Enter your birth date:</label>
+          <input type="date" id="birthdate" min="0001-01-01" required />
         </div>
-        <button type="submit" data-i18n="submit">Calculate Age</button>
+        <button type="submit">Calculate Age</button>
       </form>
-      <div id="result" class="result" role="status" aria-live="polite">
-        <p id="ageLine" class="result-main" data-i18n="noResult">Enter your birth date to see your age.</p>
-        <p class="result-secondary" id="nextBirthday"></p>
+      <div id="result" class="result">
+        <div role="status">
+          <p id="ageLine" class="result-main">Enter your birth date to see your age.</p>
+          <p class="result-secondary" id="nextBirthday"></p>
+        </div>
+        <button type="button" id="copyBtn" class="copy-btn" hidden>Copy result</button>
+        <p id="copyStatus" role="status"></p>
       </div>
     </div>
-    <script>
-      (function () {
-        "use strict";
-
-        var I18N = {
-          en: {
-            pageTitle: "Age Calculator",
-            title: "Age Calculator",
-            labelBirthdate: "Enter your birth date:",
-            submit: "Calculate Age",
-            noResult: "Enter your birth date to see your age.",
-            errorInvalidDate: "Please enter a valid birth date.",
-            errorFutureDate: "Your birth date cannot be in the future.",
-            nextBirthdayToday: "Today is your birthday! 🎉",
-            until: "days until your next birthday"
-          },
-          id: {
-            pageTitle: "Kalkulator Usia",
-            title: "Kalkulator Usia",
-            labelBirthdate: "Masukkan tanggal lahir Anda:",
-            submit: "Hitung Usia",
-            noResult: "Masukkan tanggal lahir Anda untuk melihat usia Anda.",
-            errorInvalidDate: "Silakan masukkan tanggal lahir yang valid.",
-            errorFutureDate: "Tanggal lahir tidak boleh di masa depan.",
-            nextBirthdayToday: "Hari ini adalah ulang tahunmu! 🎉",
-            until: "hari menuju ulang tahun berikutnya"
-          }
-        };
-
-        function currentLang() { return localStorage.getItem("age-lang") || "en"; }
-        function currentTheme() {
-          var saved = localStorage.getItem("age-theme");
-          if (saved) return saved;
-          return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        }
-        function applyTheme() {
-          var theme = currentTheme();
-          document.documentElement.dataset.theme = theme;
-          document.getElementById("themeToggle").textContent = theme === "dark" ? "☀️" : "🌙";
-        }
-        function applyLang() {
-          var lang = currentLang();
-          var dict = I18N[lang];
-          document.documentElement.lang = lang === "en" ? "en" : "id";
-          var els = document.querySelectorAll("[data-i18n]");
-          for (var i = 0; i < els.length; i++) els[i].textContent = dict[els[i].getAttribute("data-i18n")];
-          document.title = dict.pageTitle;
-          document.getElementById("langToggle").textContent = lang === "en" ? "EN → ID" : "ID → EN";
-        }
-
-        function computeAge(birthdate) {
-          var now = luxon.DateTime.now();
-          var diff = now.diff(birthdate, ["years", "months", "days"]).toObject();
-          return {
-            years: Math.max(0, Math.floor(diff.years || 0)),
-            months: Math.max(0, Math.floor(diff.months || 0)),
-            days: Math.max(0, Math.floor(diff.days || 0))
-          };
-        }
-
-        function nextBirthday(birthdate) {
-          var today = luxon.DateTime.now().setZone("local");
-          var next = birthdate.hasSame(today, "year")
-            ? birthdate.plus({ years: 1 })
-            : birthdate.plus({ years: today.diff(birthdate, "years").toObject().years + 1 });
-          return next.diff(today, "days").toObject().days;
-        }
-
-        function showError(key) {
-          var ageLine = document.getElementById("ageLine");
-          ageLine.textContent = I18N[currentLang()][key];
-          ageLine.classList.add("error");
-          document.querySelector(".result").setAttribute("aria-live", "assertive");
-        }
-
-        document.getElementById("age-form").addEventListener("submit", function (e) {
-          e.preventDefault();
-          var input = document.getElementById("birthdate").value;
-          var ageLine = document.getElementById("ageLine");
-          var nextLine = document.getElementById("nextBirthday");
-          var dict = I18N[currentLang()];
-
-          if (!input) {
-            showError("errorInvalidDate");
-            return;
-          }
-
-          var birthdate = luxon.DateTime.fromFormat(input, "dd-MM-yyyy", { zone: "local" });
-          if (!birthdate.isValid) {
-            showError("errorInvalidDate");
-            return;
-          }
-          if (birthdate > luxon.DateTime.now()) {
-            showError("errorFutureDate");
-            return;
-          }
-
-          var age = computeAge(birthdate);
-          var isToday = birthdate.hasSame(luxon.DateTime.now(), "month") &&
-            birthdate.hasSame(luxon.DateTime.now(), "day");
-          var text = age.years === 0
-            ? isToday
-              ? (isToday && age.months === 0 ? `🎉 ${dict.nextBirthdayToday} — born ${birthdate.toLocaleString()}` : "You were just born! 🎉")
-              : `You are ${age.years} years old.`
-            : `You are ${age.years} years, ${age.months} months, and ${age.days} days old.`;
-
-          ageLine.textContent = text;
-          ageLine.classList.remove("error");
-          document.querySelector(".result").setAttribute("aria-live", "polite");
-
-          var daysLeft = Math.max(0, nextBirthday(birthdate));
-          nextLine.textContent = daysLeft === 0
-            ? dict.nextBirthdayToday
-            : `🎂 ${daysLeft} ${dict.until}`;
-
-          // Copy button
-          var copyBtn = document.createElement("button");
-          copyBtn.type = "button";
-          copyBtn.id = "copyBtn";
-          copyBtn.className = "copy-btn";
-          copyBtn.textContent = "Copy result";
-          copyBtn.addEventListener("click", function () {
-            var text = document.getElementById("ageLine").textContent + "\n" + document.getElementById("nextBirthday").textContent;
-            document.getElementById("result").innerText += ""; // keep
-            navigator.clipboard && navigator.clipboard.writeText(text.trim());
-          });
-          document.getElementById("result").appendChild(copyBtn);
-        });
-
-        document.getElementById("themeToggle").addEventListener("click", function () {
-          var next = currentTheme() === "dark" ? "light" : "dark";
-          localStorage.setItem("age-theme", next);
-          applyTheme();
-        });
-        document.getElementById("langToggle").addEventListener("click", function () {
-          var next = currentLang() === "en" ? "id" : "en";
-          localStorage.setItem("age-lang", next);
-          applyLang();
-          document.getElementById("nextBirthday").textContent = "";
-        });
-
-        applyTheme();
-        applyLang();
-        flatpickr("#birthdate", {
-          dateFormat: "d-m-Y",
-          maxDate: "today",
-          allowInput: true,
-          disableMobile: true
-        });
-      })();
-    </script>
   </body>
 </html>

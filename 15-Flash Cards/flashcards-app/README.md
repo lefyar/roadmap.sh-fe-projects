@@ -1,15 +1,7 @@
 # Flash Cards
 
-A flash card app with pre-defined JavaScript questions and answers. | [Live Preview](https://reyfaldyflashcards.netlify.app/)
+Review JavaScript with a deck of question-and-answer cards. Use the navigation buttons or the Left and Right Arrow keys to change cards.
 
-![Question Page](./src/assets/fc-question.png)
-![Answer Page](./src/assets/fc-answer.png)
+[Open the demo](https://lefyar.github.io/roadmap.sh-fe-projects/15-Flash%20Cards/)
 
-# React + Vite README
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Run `npm ci` and `npm run dev` for a local Vite session.

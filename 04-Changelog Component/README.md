@@ -1,4 +1,5 @@
 # Changelog Component
-A Changelog with checkpoint and line-track | [Live Preview](https://lefyar.github.io/roadmap.sh-fe-projects/04-Changelog%20Component/)
 
-![Changelog Component](./changelog-component.png)
+A sample release timeline with dated entries and status labels.
+
+[Open the demo](https://lefyar.github.io/roadmap.sh-fe-projects/04-Changelog%20Component/)

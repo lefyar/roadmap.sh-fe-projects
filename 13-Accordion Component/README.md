@@ -1,4 +1,5 @@
 # Accordion Component
-An accordion component that displays a list of questions or headings. | [Live Preview](https://lefyar.github.io/roadmap.sh-fe-projects/13-Accordion%20Component/)
 
-![Accordion Component](./accordion-component.png)
+Open one answer at a time. Use the Up and Down Arrow keys to move between questions.
+
+[Open the demo](https://lefyar.github.io/roadmap.sh-fe-projects/13-Accordion%20Component/)

@@ -1,5 +1,5 @@
 /* Theme variables */
-:root[data-theme="light"] {
+:root {
   --bg: #f9fafb;
   --card: #ffffff;
   --text: #111827;
@@ -7,7 +7,7 @@
   --border: #e5e7eb;
   --input-bg: #ffffff;
   --input-focus: #2563eb;
-  --accent: #059669;
+  --accent: #087853;
   --result-main: #111827;
   --result-secondary: #6b7280;
   --icon-bg: #ffffff;
@@ -16,46 +16,6 @@
   --error-bg: #fef2f2;
   --error-border: #fecaca;
   --toast-bg: #111827;
-}
-
-:root[data-theme="dark"] {
-  --bg: #0a0a0a;
-  --card: #121212;
-  --text: #f3f4f6;
-  --muted: #9ca3af;
-  --border: #262626;
-  --input-bg: #171717;
-  --input-focus: #38bdf8;
-  --accent: #34d399;
-  --result-main: #f3f4f6;
-  --result-secondary: #9ca3af;
-  --icon-bg: #171717;
-  --icon-border: #262626;
-  --error: #f87171;
-  --error-bg: #1c0e0e;
-  --error-border: #3d1f21;
-  --toast-bg: #1a1a1a;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0a0a0a;
-    --card: #121212;
-    --text: #f3f4f6;
-    --muted: #9ca3af;
-    --border: #262626;
-    --input-bg: #171717;
-    --input-focus: #38bdf8;
-    --accent: #34d399;
-    --result-main: #f3f4f6;
-    --result-secondary: #9ca3af;
-    --icon-bg: #171717;
-    --icon-border: #262626;
-    --error: #f87171;
-    --error-bg: #1c0e0e;
-    --error-border: #3d1f21;
-    --toast-bg: #1a1a1a;
-  }
 }
 
 * {
@@ -71,28 +31,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   min-height: 100vh;
   transition: background 0.3s ease, color 0.3s ease;
   animation: fadeIn 0.6s ease both;
 }
-
-.icon-btn {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  background: var(--icon-bg);
-  color: var(--text);
-  border: 1px solid var(--icon-border);
-  border-radius: 6px;
-  padding: 5px 10px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.icon-btn:first-of-type { right: 60px; }
-.icon-btn:hover { background: var(--icon-border); }
 
 .container {
   text-align: center;
@@ -103,10 +45,6 @@ body {
   width: 100%;
   max-width: 420px;
   animation: popIn 0.5s ease both;
-}
-
-[data-theme="dark"] .container {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
 }
 
 h1 {
@@ -143,10 +81,6 @@ input:focus {
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
-[data-theme="dark"] input:focus {
-  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18);
-}
-
 button {
   width: 100%;
   padding: 12px;
@@ -171,10 +105,6 @@ button:hover {
   text-align: left;
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.03);
-}
-
-[data-theme="dark"] .result {
-  background-color: rgba(255, 255, 255, 0.03);
 }
 
 .result p {

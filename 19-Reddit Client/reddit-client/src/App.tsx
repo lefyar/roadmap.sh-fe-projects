@@ -1,7 +1,5 @@
 import InputSub from "./components/InputSub";
 
-function App() {
+export default function App() {
   return <InputSub />;
 }
-
-export default App;

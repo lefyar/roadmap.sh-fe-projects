@@ -98,6 +98,25 @@ input {
   transition: 0.3s;
 }
 
+.load-more-btn {
+  background: none;
+  border: 1px solid white;
+  color: white;
+  font-size: 14px;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.load-more-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.load-more-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 .posts {
   display: flex;
   flex-direction: column;

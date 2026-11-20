@@ -1,44 +1,53 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, type FormEvent } from "react";
 import RedditLane from "./RedditLane";
 
-function InputSub() {
-  const [subreddits, setSubreddits] = useState(() => {
-    try {
-      const saved = JSON.parse(localStorage.getItem("subreddits"));
-      return Array.isArray(saved) ? saved.filter(name => typeof name === "string" && /^\w{1,21}$/.test(name)) : [];
-    } catch {
-      return [];
-    }
-  });
+const STORAGE_KEY = "subreddits";
+const VALID_NAME = /^\w{1,21}$/;
+
+function loadSubreddits(): string[] {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    return Array.isArray(saved)
+      ? saved.filter(
+          (name): name is string => typeof name === "string" && VALID_NAME.test(name)
+        )
+      : [];
+  } catch {
+    return [];
+  }
+}
+
+export default function InputSub() {
+  const [subreddits, setSubreddits] = useState<string[]>(loadSubreddits);
   const [input, setInput] = useState("");
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     try {
-      localStorage.setItem("subreddits", JSON.stringify(subreddits));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(subreddits));
     } catch {
       setError("Browser storage is unavailable. Lanes will last for this session.");
     }
   }, [subreddits]);
 
-  const addSubreddit = (event) => {
+  const addSubreddit = (event: FormEvent) => {
     event.preventDefault();
     const name = input.trim().replace(/^r\//i, "").toLowerCase();
-    if (!/^\w{1,21}$/.test(name)) {
+    if (!VALID_NAME.test(name)) {
       setError("Enter a subreddit name using letters, numbers, or underscores.");
       return;
     }
-    if (subreddits.some(sub => sub.toLowerCase() === name)) {
+    if (subreddits.some((sub) => sub.toLowerCase() === name)) {
       setError("Subreddit already exists");
       return;
     }
-    setSubreddits([...subreddits, name]);
+    setSubreddits((prev) => [...prev, name]);
     setInput("");
     setError(null);
   };
 
-  const removeSubreddit = (subreddit) => {
-    setSubreddits(subreddits.filter((sub) => sub !== subreddit));
+  const removeSubreddit = (subreddit: string) => {
+    setSubreddits((prev) => prev.filter((sub) => sub !== subreddit));
   };
 
   return (
@@ -65,5 +74,3 @@ function InputSub() {
     </div>
   );
 }
-
-export default InputSub;

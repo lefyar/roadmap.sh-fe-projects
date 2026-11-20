@@ -105,10 +105,23 @@ export default function Stories() {
     </button>
     <p role="status">{message}</p>
     {stories.length === 0 ? <p className="empty">Your day starts with a photo.</p> :
-      <div className="photos">{stories.map(story => <button key={story.created}
-        onClick={() => select(story.created)} aria-label={`View photo from ${new Date(story.created).toLocaleTimeString()}`}>
-        <img src={story.image} alt="" /><time>{new Date(story.created).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}</time>
-      </button>)}</div>}
+      <div className="photos">{stories.map(story => (
+        <div key={story.created} className="photo-item">
+          <button className="photo"
+            onClick={() => select(story.created)} aria-label={`View photo from ${new Date(story.created).toLocaleTimeString()}`}>
+            <img src={story.image} alt="" /><time>{new Date(story.created).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}</time>
+          </button>
+          <button className="delete-photo"
+            onClick={(event) => {
+              event.stopPropagation();
+              const next = removeStory(stories, story);
+              writeStories(next);
+              setStories(next);
+              if (selected === story.created) select(null);
+            }}
+            aria-label={`Delete photo from ${new Date(story.created).toLocaleTimeString()}`}>×</button>
+        </div>
+      ))}</div>}
     {stories.some(story => story.created === selected) &&
       <ViewStory stories={stories} index={stories.findIndex(story => story.created === selected)}
         select={select} />}

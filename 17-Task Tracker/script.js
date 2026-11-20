@@ -1,13 +1,23 @@
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-console.log("Task found:" + tasks.length);
+let tasks = loadTasks();
+let nextId = Math.max(0, ...tasks.map((task) => task.id || 0)) + 1;
+
+function loadTasks() {
+  try {
+    const saved = JSON.parse(localStorage.getItem("tasks"));
+    return Array.isArray(saved) ? saved : [];
+  } catch {
+    return [];
+  }
+}
 
 function saveTasks() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
 function addTask(description) {
-  if (description.trim() === "") return;
-  tasks.push({ description, completed: false });
+  const text = description.trim();
+  if (!text) return;
+  tasks.push({ id: nextId++, description: text, completed: false });
   saveTasks();
   renderTasks();
 }
@@ -18,39 +28,55 @@ function addTaskFromButton() {
   input.value = "";
 }
 
-function toggleTask(index) {
-  tasks[index].completed = !tasks[index].completed;
+function toggleTask(id) {
+  const task = tasks.find((t) => t.id === id);
+  if (!task) return;
+  task.completed = !task.completed;
   saveTasks();
   renderTasks();
 }
 
-function deleteTask(index) {
-  tasks.splice(index, 1);
+function deleteTask(id) {
+  const task = tasks.find((t) => t.id === id);
+  if (!task) return;
+  tasks = tasks.filter((t) => t.id !== id);
   saveTasks();
   renderTasks();
 }
 
 function renderTasks() {
   const taskList = document.getElementById("taskList");
-  taskList.innerHTML = "";
+  taskList.replaceChildren();
 
-  tasks.sort((a, b) => a.completed - b.completed);
+  const sorted = [...tasks].sort(
+    (a, b) => Number(a.completed) - Number(b.completed)
+  );
 
-  tasks.forEach((task, index) => {
+  sorted.forEach((task) => {
     const li = document.createElement("li");
-    li.innerHTML = `
-                    <div class="task">
-                    <input type="checkbox" ${
-                      task.completed ? "checked" : ""
-                    } onclick="toggleTask(${index})">
-                    <span></span>
-                    </div>
-                    <button class="delete" onclick="deleteTask(${index})">&#128465;</button>
-                `;
-    li.querySelector("span").textContent = task.description;
-    li.querySelector("input").setAttribute("aria-label", task.description);
-    li.querySelector("button").setAttribute("aria-label", "Delete " + task.description);
-    taskList.appendChild(li);
+
+    const taskDiv = document.createElement("div");
+    taskDiv.className = "task";
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = task.completed;
+    checkbox.setAttribute("aria-label", task.description);
+
+    const span = document.createElement("span");
+    span.textContent = task.description;
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = "delete";
+    deleteBtn.textContent = "\u2715";
+    deleteBtn.setAttribute("aria-label", `Delete ${task.description}`);
+
+    taskDiv.append(checkbox, span, deleteBtn);
+    li.append(taskDiv);
+    taskList.append(li);
+
+    checkbox.addEventListener("change", () => toggleTask(task.id));
+    deleteBtn.addEventListener("click", () => deleteTask(task.id));
   });
 }
 

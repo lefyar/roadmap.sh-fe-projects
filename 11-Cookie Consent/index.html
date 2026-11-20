@@ -1,27 +1,204 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cookie Consent</title>
+    <title data-i18n="pageTitle">Cookie Consent</title>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    <button id="themeToggle" type="button" class="icon-btn" aria-label="Toggle theme">🌙</button>
+    <button id="langToggle" type="button" class="icon-btn" aria-label="Switch language">EN → ID</button>
     <div class="content">
-      <h1>Cookie Consent</h1>
-      <p>This is a cookie consent website testing</p>
-      <button id="resetCookiesBtn">Reset Cookies</button>
+      <h1 data-i18n="title">Cookie Consent</h1>
+      <p data-i18n="subtitle">This is a cookie consent website testing</p>
+      <button id="resetCookiesBtn" data-i18n="resetCookies">Reset Cookies</button>
     </div>
-    <div id="cookieConsent" class="cookie-consent">
-      <div class="cookie-consent-content">
-        <p>We use cookies to improve your user experience</p>
-        <img src="./cookies-svgrepo-com.svg" alt="cookie-image" />
+    <div id="cookieConsent" class="cookie-consent" role="dialog" aria-label="Cookie consent banner" hidden>
+      <div class="cookie-consent-header">
+        <h2 data-i18n="bannerTitle">We use cookies</h2>
+        <p data-i18n="bannerText">We use cookies to improve your user experience. You can manage your preferences below.</p>
       </div>
-      <div class="cookie-consent-content">
-        <button id="acceptCookiesBtn">Accept Cookies</button>
-        <button id="declineCookiesBtn">Decline Cookies</button>
+      <div class="cookie-category">
+        <label class="cookie-toggle">
+          <span data-i18n="catEssential">Essential</span>
+          <span class="toggle-switch" aria-hidden="true"></span>
+          <input type="checkbox" id="toggle-essential" checked disabled />
+        </label>
+        <p data-i18n="catEssentialDesc">These cookies are required for the website to function.</p>
+      </div>
+      <div class="cookie-category">
+        <label class="cookie-toggle">
+          <span data-i18n="catAnalytics">Analytics</span>
+          <span class="toggle-switch" aria-hidden="true"></span>
+          <input type="checkbox" id="toggle-analytics" />
+        </label>
+        <p data-i18n="catAnalyticsDesc">These cookies help us understand how visitors use the site.</p>
+      </div>
+      <div class="cookie-category">
+        <label class="cookie-toggle">
+          <span data-i18n="catMarketing">Marketing</span>
+          <span class="toggle-switch" aria-hidden="true"></span>
+          <input type="checkbox" id="toggle-marketing" />
+        </label>
+        <p data-i18n="catMarketingDesc">These cookies are used to show you relevant ads.</p>
+      </div>
+      <div class="cookie-consent-actions">
+        <button id="acceptCookiesBtn" data-i18n="acceptAll">Accept All</button>
+        <button id="declineCookiesBtn" data-i18n="customize">Customize Settings</button>
       </div>
     </div>
-    <script src="./script.js"></script>
+    <script>
+      (function () {
+        "use strict";
+
+        var I18N = {
+          en: {
+            pageTitle: "Cookie Consent",
+            title: "Cookie Consent",
+            subtitle: "This is a cookie consent website testing",
+            resetCookies: "Reset Cookies",
+            bannerTitle: "We use cookies",
+            bannerText: "We use cookies to improve your user experience. You can manage your preferences below.",
+            catEssential: "Essential",
+            catEssentialDesc: "These cookies are required for the website to function.",
+            catAnalytics: "Analytics",
+            catAnalyticsDesc: "These cookies help us understand how visitors use the site.",
+            catMarketing: "Marketing",
+            catMarketingDesc: "These cookies are used to show you relevant ads.",
+            acceptAll: "Accept All",
+            customize: "Customize Settings"
+          },
+          id: {
+            pageTitle: "Persetujuan Cookie",
+            title: "Persetujuan Cookie",
+            subtitle: "Ini adalah website tes persetujuan cookie",
+            resetCookies: "Reset Cookie",
+            bannerTitle: "Kami menggunakan cookie",
+            bannerText: "Kami menggunakan cookie untuk meningkatkan pengalaman pengguna. Anda bisa mengelola preferensi Anda di bawah ini.",
+            catEssential: "Esen",
+            catEssentialDesc: "Cookie ini diperlukan agar website berfungsi.",
+            catAnalytics: "Analytics",
+            catAnalyticsDesc: "Cookie ini membantu kami memahami cara pengunjung memakai situs.",
+            catMarketing: "Pemasaran",
+            catMarketingDesc: "Cookie ini digunakan untuk menampilkan iklan yang relevan.",
+            acceptAll: "Terima Semua",
+            customize: "Atur Preferensi"
+          }
+        };
+
+        function currentLang() { return localStorage.getItem("cookies-lang") || "en"; }
+        function currentTheme() {
+          var saved = localStorage.getItem("cookies-theme");
+          if (saved) return saved;
+          return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+        function applyTheme() {
+          var theme = currentTheme();
+          document.documentElement.dataset.theme = theme;
+          document.getElementById("themeToggle").textContent = theme === "dark" ? "☀️" : "🌙";
+        }
+        function applyLang() {
+          var lang = currentLang();
+          var dict = I18N[lang];
+          document.documentElement.lang = lang === "en" ? "en" : "id";
+          var els = document.querySelectorAll("[data-i18n]");
+          for (var i = 0; i < els.length; i++) els[i].textContent = dict[els[i].getAttribute("data-i18n")];
+          document.title = dict.pageTitle;
+          document.getElementById("langToggle").textContent = lang === "en" ? "EN → ID" : "ID → EN";
+        }
+
+        function getConsent() {
+          try { return JSON.parse(localStorage.getItem("cookie-consent") || "{}"); }
+          catch { return {}; }
+        }
+        function setConsent(consent) {
+          try { localStorage.setItem("cookie-consent", JSON.stringify(consent)); } catch { /* ignore */ }
+        }
+        function showBanner() {
+          var banner = document.getElementById("cookieConsent");
+          banner.hidden = false;
+          setTimeout(function () { banner.classList.add("visible"); }, 50);
+        }
+        function hideBanner() {
+          var banner = document.getElementById("cookieConsent");
+          banner.classList.remove("visible");
+          setTimeout(function () { banner.hidden = true; }, 250);
+        }
+
+        function syncToggles(consent) {
+          document.getElementById("toggle-analytics").checked = Boolean(consent.analytics);
+          document.getElementById("toggle-marketing").checked = Boolean(consent.marketing);
+        }
+
+        function init() {
+          var consent = getConsent();
+          var essential = document.getElementById("toggle-essential");
+
+          // Update toggle visuals on change
+          ["toggle-analytics", "toggle-marketing"].forEach(function (id) {
+            document.getElementById(id).addEventListener("change", function () {
+              consent[id.replace("toggle-", "")] = this.checked;
+              setConsent(consent);
+            });
+          });
+
+          document.getElementById("acceptCookiesBtn").addEventListener("click", function () {
+            consent.essential = true;
+            consent.analytics = Boolean(document.getElementById("toggle-analytics").checked);
+            consent.marketing = Boolean(document.getElementById("toggle-marketing").checked);
+            consent.accepted = true;
+            consent.timestamp = Date.now();
+            setConsent(consent);
+            syncToggles(consent);
+            hideBanner();
+          });
+
+          document.getElementById("declineCookiesBtn").addEventListener("click", function () {
+            consent.essential = true;
+            consent.analytics = Boolean(document.getElementById("toggle-analytics").checked);
+            consent.marketing = Boolean(document.getElementById("toggle-marketing").checked);
+            consent.accepted = true;
+            consent.timestamp = Date.now();
+            setConsent(consent);
+            syncToggles(consent);
+            hideBanner();
+          });
+
+          document.getElementById("resetCookiesBtn").addEventListener("click", function () {
+            setConsent({});
+            showBanner();
+            document.getElementById("toggle-analytics").checked = false;
+            document.getElementById("toggle-marketing").checked = false;
+          });
+
+          if (!consent.accepted) {
+            syncToggles(consent);
+            showBanner();
+          } else {
+            hideBanner();
+          }
+
+          document.getElementById("cookieConsent").addEventListener("keydown", function (e) {
+            if (e.key === "Escape") hideBanner();
+          });
+        }
+
+        document.getElementById("themeToggle").addEventListener("click", function () {
+          var next = currentTheme() === "dark" ? "light" : "dark";
+          localStorage.setItem("cookies-theme", next);
+          applyTheme();
+        });
+        document.getElementById("langToggle").addEventListener("click", function () {
+          var next = currentLang() === "en" ? "id" : "en";
+          localStorage.setItem("cookies-lang", next);
+          applyLang();
+        });
+
+        applyTheme();
+        applyLang();
+        init();
+      })();
+    </script>
   </body>
 </html>

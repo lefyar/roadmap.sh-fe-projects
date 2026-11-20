@@ -17,7 +17,7 @@ function setItemStates() {
 }
 
 function focusItem(index) {
-  dropdownItems[index].focus();
+  if (dropdownItems[index]) dropdownItems[index].focus();
 }
 
 function setOpen(isOpen) {
